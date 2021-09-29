@@ -1,4 +1,29 @@
 """
+source: https://pythongeeks.org/python-operator-precedence/
+
+    precedence of bitwise operators
+
+        <<, >>
+        &
+        ^
+        |
+
+source:
+
+    Associativity of Python Operators
+
+    We can see in the above table that more than one operator exists in the same group.
+    These operators have the same precedence.
+
+    When two operators have the same precedence,
+    associativity helps to determine the order of operations.
+
+    Associativity is the order in which an expression is evaluated that has multiple
+    operators of the same precedence.
+    Almost all the operators have left-to-right associativity.
+"""
+
+"""
 source for docstrings: https://wiki.python.org/moin/BitwiseOperators
 source for examples: EPI in Python + own examples
 """
