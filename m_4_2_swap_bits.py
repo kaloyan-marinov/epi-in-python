@@ -12,7 +12,7 @@ def swap_bits(x: int, i: int, j: int) -> int:
 
     count = 0
     y = 0
-    while x:
+    while count <= j or x:
         bit = x & 1
         if count == i:
             new_bit = int(not bit_i)
@@ -21,7 +21,7 @@ def swap_bits(x: int, i: int, j: int) -> int:
         else:
             new_bit = bit
         y += new_bit * (2 ** count)
-        print(count, new_bit)
+        # print(count, new_bit)
         count += 1
         x >>= 1
 
@@ -29,4 +29,7 @@ def swap_bits(x: int, i: int, j: int) -> int:
 
 
 result = swap_bits(int("01001001", 2), 1, 6)
-print(bin(result))
+print(bin(result), result)
+
+result = swap_bits(int("0b1101010", 2), 3, 7)
+print(bin(result), result)
