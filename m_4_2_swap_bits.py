@@ -1,4 +1,4 @@
-def swap_bits(x: int, i: int, j: int) -> int:
+def swap_bits_1(x: int, i: int, j: int) -> int:
     if i >= j:
         i, j = j, i
 
@@ -29,9 +29,6 @@ def swap_bits(x: int, i: int, j: int) -> int:
 
 
 def swap_bits_2(x: int, i: int, j: int) -> int:
-    if i >= j:
-        i, j = j, i
-
     bit_i = x >> i & 1
     # print(bin(x))
     bit_j = x >> j & 1
@@ -63,8 +60,9 @@ def swap_bits_2(x: int, i: int, j: int) -> int:
     return x
 
 
-result = swap_bits(int("01001001", 2), 1, 6)
-print(bin(result), result)
+if __name__ == "__main__":
+    result = swap_bits_1(int("01001001", 2), 1, 6)
+    print(bin(result), result)
 
-result = swap_bits(int("0b1101010", 2), 3, 7)
-print(bin(result), result)
+    result = swap_bits_2(int("0b1101010", 2), 3, 7)
+    print(bin(result), result)
