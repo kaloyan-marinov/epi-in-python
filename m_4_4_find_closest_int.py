@@ -9,10 +9,10 @@ def swap_bits(x: int, i: int, j: int) -> int:
 
 def closest_int_same_bit_count(x: int) -> int:
     y = None
-    for i in range(1, 63):
-        mask = int((i + 1) * "1", 2)
-        if (x & mask == 2 ** i) or (x & mask == 2 ** i - 1):
-            y = swap_bits(x, i - 1, i)
+    for i in range(63 - 1):
+        mask = int((i + 2) * "1", 2)
+        if (x & mask == 2 ** (i + 1)) or (x & mask == 2 ** (i + 1) - 1):
+            y = swap_bits(x, i, i + 1)
             break
     return y
 
