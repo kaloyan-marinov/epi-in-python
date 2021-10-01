@@ -19,10 +19,16 @@ for x in range(2 ** 16):
     d[x] = y
 
 
-def reverse_bits(x: int) -> int:
+def reverse_bits_1(x: int) -> int:
     bitmask = 0xFFFF
     x_0 = x & bitmask
     x_1 = (x >> 16) & bitmask
     x_2 = (x >> 32) & bitmask
     x_3 = (x >> 48) & bitmask
     return d[x_3] | (d[x_2] << 16) | (d[x_1] << 32) | (d[x_0] << 48)
+
+
+def reverse_bits_2(x: int) -> int:
+    for i in range(32):
+        x = swap_bits(x, i, 63 - i)
+    return x
