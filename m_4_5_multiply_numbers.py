@@ -8,6 +8,22 @@ def _add_single_bits(x: int, y: int) -> int:
 
 
 def add(x: int, y: int) -> int:
+    """
+      ||oo
+       110
+        11
+      ----
+    + 1001
+
+       110
+        11
+      ----
+    ^  101 =: r
+    ^ ||oo =: "global" carry_mask
+      ----
+      1001 = is the sum
+    """
+
     r = x ^ y
 
     apply_carry = False
@@ -23,6 +39,12 @@ def add(x: int, y: int) -> int:
             last_bit_of_x,
             last_bit_of_y,
         )
+        # fmt: off
+        # The last statement can be replaced by the following one:
+        '''
+        leftmost_bit = last_bit_of_x & last_bit_of_y  # equals 1 only if both are 1
+        '''
+        # fmt: on
 
         carry_mask <<= 1
         x >>= 1
