@@ -9,9 +9,14 @@ def _add_single_bits(x: int, y: int) -> int:
 
 def add(x: int, y: int) -> int:
     r = x ^ y
+
     apply_carry = False
     carry_mask = 1
     while x or y or apply_carry:
+        if apply_carry:
+            apply_carry = bool(r & carry_mask)
+            r ^= carry_mask
+
         last_bit_of_x = x & 1
         last_bit_of_y = y & 1
         leftmost_bit, rightmost_bit = _add_single_bits(
@@ -22,15 +27,7 @@ def add(x: int, y: int) -> int:
         carry_mask <<= 1
         x >>= 1
         y >>= 1
-        # fmt: off
-        apply_carry = (leftmost_bit == 1) or apply_carry
-        # fmt: on
-
-        if apply_carry:
-            apply_carry = bool(r & carry_mask)
-            r ^= carry_mask
-        # elif not x and not y:
-        #     r ^= carry_mask
+        apply_carry = bool(leftmost_bit) or apply_carry
     return r
 
 
