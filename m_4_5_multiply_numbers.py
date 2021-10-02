@@ -12,9 +12,6 @@ def add(x: int, y: int) -> int:
     apply_carry = False
     carry_mask = 1
     while x or y or apply_carry:
-        if apply_carry:
-            r ^= carry_mask
-
         last_bit_of_x = x & 1
         last_bit_of_y = y & 1
         leftmost_bit, rightmost_bit = _add_single_bits(
@@ -22,12 +19,18 @@ def add(x: int, y: int) -> int:
             last_bit_of_y,
         )
 
-        # fmt: off
-        apply_carry = (leftmost_bit == 1)
-        # fmt: on
         carry_mask <<= 1
         x >>= 1
         y >>= 1
+        # fmt: off
+        apply_carry = (leftmost_bit == 1) or apply_carry
+        # fmt: on
+
+        if apply_carry:
+            apply_carry = bool(r & carry_mask)
+            r ^= carry_mask
+        # elif not x and not y:
+        #     r ^= carry_mask
     return r
 
 
@@ -35,9 +38,15 @@ if __name__ == "__main__":
     fmt_str = "{0:<10} {1:>70}"
     random.seed(a=42)
 
-    for i in range(10000):
-        x = int("110", 2)  # random.randrange(0, 2 ** 3)
-        y = int("11", 2)  # random.randrange(0, 2 ** 3)
+    for i in range(1000000):
+        x = random.randrange(0, 2 ** 3)
+        y = random.randrange(0, 2 ** 3)
+
+        # x = int("110", 2)  # random.randrange(0, 2 ** 3)
+        # y = int("11", 2)  # random.randrange(0, 2 ** 3)
+
+        # x = int("1", 2)
+        # y = int("0", 2)
 
         s = add(x, y)
         if s != x + y:
