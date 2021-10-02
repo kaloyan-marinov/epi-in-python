@@ -1,3 +1,4 @@
+import datetime
 import random
 
 
@@ -24,14 +25,14 @@ def add(x: int, y: int) -> int:
       1001 = is the sum
     """
 
-    r = x ^ y
+    result = x ^ y
 
     apply_carry = False
     carry_mask = 1
     while x or y or apply_carry:
         if apply_carry:
-            apply_carry = bool(r & carry_mask)
-            r ^= carry_mask
+            apply_carry = bool(result & carry_mask)
+            result ^= carry_mask
 
         last_bit_of_x = x & 1
         last_bit_of_y = y & 1
@@ -50,23 +51,25 @@ def add(x: int, y: int) -> int:
         x >>= 1
         y >>= 1
         apply_carry = bool(leftmost_bit) or apply_carry
-    return r
+    return result
 
 
 def multiply(x: int, y: int) -> int:
-    r = 0
+    result = 0
     position = 0
     while y:
         last_bit_of_y = y & 1
         if last_bit_of_y == 1:
-            r = add(r, x << position)
+            result = add(result, x << position)
         position = add(position, 1)
         y >>= 1
-    return r
+    return result
 
 
 if __name__ == "__main__":
-    fmt_str = "{0:<10} {1:>70}"
+    print(f"{datetime.datetime.utcnow().isoformat()} - starting")
+
+    fmt_str = "{0:<20} {1:>70}"
     random.seed(a=42)
 
     for i in range(1000000):
@@ -79,20 +82,24 @@ if __name__ == "__main__":
         # x = int("1", 2)
         # y = int("0", 2)
 
-        s = add(x, y)
-        if s != x + y:
+        sum_computed = add(x, y)
+        sum_expected = x + y
+        if sum_computed != sum_expected:
             print()
             print(fmt_str.format("x", bin(x)))
             print(fmt_str.format("y", bin(y)))
-            print(fmt_str.format("x + y", bin(x + y)))
-            print(fmt_str.format("s", bin(s)))
-            raise ValueError(f"{s} != {x + y}")
+            print(fmt_str.format("sum_expected", bin(sum_expected)))
+            print(fmt_str.format("sum_computed", bin(sum_computed)))
+            raise ValueError(f"{sum_expected} != {sum_computed}")
 
-        p = multiply(x, y)
-        if p != x * y:
+        prod_computed = multiply(x, y)
+        prod_expected = x * y
+        if prod_computed != prod_expected:
             print()
             print(fmt_str.format("x", bin(x)))
             print(fmt_str.format("y", bin(y)))
-            print(fmt_str.format("x * y", bin(x * y)))
-            print(fmt_str.format("p", bin(p)))
-            raise ValueError(f"{p} != {x * y}")
+            print(fmt_str.format("prod_expected", bin(prod_expected)))
+            print(fmt_str.format("prod_computed", bin(prod_computed)))
+            raise ValueError(f"{prod_expected} != {prod_computed}")
+
+    print(f"{datetime.datetime.utcnow().isoformat()} - ending")
