@@ -53,6 +53,18 @@ def add(x: int, y: int) -> int:
     return r
 
 
+def multiply(x: int, y: int) -> int:
+    r = 0
+    position = 0
+    while y:
+        last_bit_of_y = y & 1
+        if last_bit_of_y == 1:
+            r = add(r, x << position)
+        position = add(position, 1)
+        y >>= 1
+    return r
+
+
 if __name__ == "__main__":
     fmt_str = "{0:<10} {1:>70}"
     random.seed(a=42)
@@ -75,3 +87,12 @@ if __name__ == "__main__":
             print(fmt_str.format("x + y", bin(x + y)))
             print(fmt_str.format("s", bin(s)))
             raise ValueError(f"{s} != {x + y}")
+
+        p = multiply(x, y)
+        if p != x * y:
+            print()
+            print(fmt_str.format("x", bin(x)))
+            print(fmt_str.format("y", bin(y)))
+            print(fmt_str.format("x * y", bin(x * y)))
+            print(fmt_str.format("p", bin(p)))
+            raise ValueError(f"{p} != {x * y}")
