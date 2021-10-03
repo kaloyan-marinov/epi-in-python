@@ -7,7 +7,7 @@ def quotient(x: int, y: int) -> int:
     while next_largest_int_multiple_of_y <= x:
     '''
     # fmt: on
-    while is_greater_or_equal(x, next_largest_int_multiple_of_y):
+    while next_largest_int_multiple_of_y <= x:
         q += 1
         next_largest_int_multiple_of_y += y
     return q
