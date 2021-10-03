@@ -36,6 +36,30 @@ def max_power_of_2(x: int, y: int) -> int:
     return power - 1
 
 
+def least_power_of_2(x: int, y: int) -> int:
+    power = 0
+    while x >= y:
+        y <<= 1
+        power += 1
+    return power
+
+
+def quotient_3(x: int, y: int) -> int:
+    k = least_power_of_2(x, y)
+    q = 0
+    y_times_2_to_the_k = y << k
+
+    while x >= y:
+        while y_times_2_to_the_k > x:
+            y_times_2_to_the_k >>= 1
+            k -= 1
+
+        x -= y_times_2_to_the_k
+        q += 1 << k
+
+    return q
+
+
 if __name__ == "__main__":
     q = quotient_2(64, 1)
 
