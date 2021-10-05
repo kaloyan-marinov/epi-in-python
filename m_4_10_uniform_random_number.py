@@ -1,6 +1,10 @@
 import random
 
 
+def zero_one_random():
+    return random.randrange(2)
+
+
 def uniform_random(a: int, b: int) -> int:
     if a != 0:
         return a + uniform_random(0, b - a)
@@ -9,23 +13,26 @@ def uniform_random(a: int, b: int) -> int:
     while b >= 2 ** k - 1:
         k += 1
 
-    outcomes = set(range(b + 1))
-    retry = True
-    while retry:
+    while True:
         i = _sample_X_k(k)
-        if i in outcomes:
-            retry = False
+        if i <= b:
+            break
 
     return i
 
 
 def _sample_X_k(k: int) -> int:
     """
-    gen. btwn 0 and (2 ** k - 1)
+    Generate a random integer btwn 0 and (2 ** k - 1)
+    with all possible outcomes being equally likely.
+
+    Sample a random integer
+    from the uniform distribution
+    on { 0, ... , (2 ** k) - 1}
     """
     x = 0
-    for i in range(k):
-        digit = random.choice([0, 1])
+    for _ in range(k):
+        digit = zero_one_random()
         x <<= 1
         x = x | digit
 
