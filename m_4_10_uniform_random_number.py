@@ -13,10 +13,9 @@ def uniform_random(a: int, b: int) -> int:
     while b >= 2 ** k - 1:
         k += 1
 
-    while True:
+    i = b + 1  # Anything bigger than b will do.
+    while i > b:
         i = _sample_X_k(k)
-        if i <= b:
-            break
 
     return i
 
