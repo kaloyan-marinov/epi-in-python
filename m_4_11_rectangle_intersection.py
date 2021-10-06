@@ -1,4 +1,5 @@
 import collections
+from typing import Tuple, Optional
 
 
 Point2D = collections.namedtuple(
@@ -8,10 +9,10 @@ Point2D = collections.namedtuple(
 
 
 # fmt: off
-def rectangles_intersection(
+def _rectangles_intersection(
     r_1_llc: Point2D, r_1_urc: Point2D,
     r_2_llc: Point2D, r_2_urc: Point2D,
-):
+) -> Optional[Tuple[Point2D, Point2D]]:
     """
     Determine the intersection of the rectangles r_1 and r_2,
     where each rectangle is specified by its lower-left corner and upper-right corner
@@ -53,3 +54,30 @@ def _intervals_intersection(a_1: float, b_1: float, a_2: float, b_2: float):
         return None
     else:
         return a, b
+
+
+Rect = collections.namedtuple("Rect", ("x", "y", "width", "height"))
+
+
+def intersect_rectangle(r1: Rect, r2: Rect) -> Rect:
+    r1_llc = Point2D(r1.x, r1.y)
+    r1_urc = Point2D(r1.x + r1.width, r1.y + r1.height)
+
+    r2_llc = Point2D(r2.x, r2.y)
+    r2_urc = Point2D(r2.x + r2.width, r2.y + r2.height)
+
+    rect_intersection: Optional[Tuple[Point2D, Point2D]] = _rectangles_intersection(
+        r1_llc, r1_urc, r2_llc, r2_urc
+    )
+    if rect_intersection is None:
+        return None
+    else:
+        x = rect_intersection[0].x
+        y = rect_intersection[0].y
+        width = rect_intersection[1].x - x
+        height = rect_intersection[1].y - y
+        return Rect(x, y, width, height)
+
+
+# def intersect_rectangle_wrapper(r1, r2):
+#     return intersect_rectangle(Rect(*r1), Rect(*r2))
