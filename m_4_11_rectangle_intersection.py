@@ -38,8 +38,8 @@ def _rectangles_intersection(
             intersection_y[1]
         )
         '''
-        llc = (intersection_x[0], intersection_y[0])
-        urc = (intersection_x[1], intersection_y[1])
+        llc = Point2D(intersection_x[0], intersection_y[0])
+        urc = Point2D(intersection_x[1], intersection_y[1])
         return llc, urc
 # fmt: on
 
@@ -70,7 +70,7 @@ def intersect_rectangle(r1: Rect, r2: Rect) -> Rect:
         r1_llc, r1_urc, r2_llc, r2_urc
     )
     if rect_intersection is None:
-        return None
+        return Rect(0, 0, -1, -1)
     else:
         x = rect_intersection[0].x
         y = rect_intersection[0].y
@@ -81,3 +81,37 @@ def intersect_rectangle(r1: Rect, r2: Rect) -> Rect:
 
 # def intersect_rectangle_wrapper(r1, r2):
 #     return intersect_rectangle(Rect(*r1), Rect(*r2))
+
+
+if __name__ == "__main__":
+    # Example for fixing the crash, which was encountered:
+    # `exception message: 'tuple' object has no attribute 'x'`
+
+    # fmt: off
+    '''
+    r1 = Rect(76, 9, 12, 14)
+    r2 = Rect(20, 1, 62, 60)
+
+    rect_intersection = intersect_rectangle(r1, r2)
+    print(rect_intersection)
+    '''
+    # fmt: on
+
+    # Example that indicated a failed unit test:
+
+    # fmt: off
+    '''
+    Arguments
+	r1:       [54, 66, 66, 24]
+	r2:       [27, 97, 68, 95]
+
+    Failure info
+        expected: [0, 0, -1, -1]
+        result:   None
+    '''
+    # fmt: on
+    r1 = Rect(54, 66, 66, 24)
+    r2 = Rect(27, 97, 68, 95)
+
+    rect_intersection = intersect_rectangle(r1, r2)
+    print(rect_intersection)
