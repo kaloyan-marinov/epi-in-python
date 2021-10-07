@@ -24,10 +24,15 @@ The difference between shallow and deep copying is only relevant for compound ob
     found in the original.
 """
 
+import copy
+
 A = [0, 2, 4, 8]
 
-B = A
-C = list(A)
+A_shallow_copy_implicit = A
+A_shallow_copy_explicit = copy.copy(A)
+
+A_deep_copy_implicit = list(A)
+A_deep_copy_explicit = copy.deepcopy(A)
 
 A.remove(4)
 removed_value = 4
@@ -45,6 +50,33 @@ print(
 )
 
 print(fmt_str.format("-" * 25, "-" * 25, "-" * 30))
-print(fmt_str.format("A", A, removed_value in A))
-print(fmt_str.format("B", B, removed_value in B))
-print(fmt_str.format("C", C, removed_value in C))
+print()
+print(
+    fmt_str.format(
+        "A_shallow_copy_implicit",
+        A_shallow_copy_implicit,
+        removed_value in A_shallow_copy_implicit,
+    )
+)
+print(
+    fmt_str.format(
+        "A_shallow_copy_explicit",
+        A_shallow_copy_explicit,
+        removed_value in A_shallow_copy_explicit,
+    )
+)
+print()
+print(
+    fmt_str.format(
+        "A_deep_copy_implicit",
+        A_deep_copy_implicit,
+        removed_value in A_deep_copy_implicit,
+    )
+)
+print(
+    fmt_str.format(
+        "A_deep_copy_explicit",
+        A_deep_copy_explicit,
+        removed_value in A_deep_copy_explicit,
+    )
+)
