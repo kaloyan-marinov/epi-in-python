@@ -12,6 +12,7 @@ def dutch_national_flag(pivot_index: int, A: List[int]) -> List[int]:
         if A[i] > pivot_value:
             continue
         elif A[i] == pivot_value:
+            A[last_ind + 1], A[i] = A[i], A[last_ind + 1]
             last_ind += 1
         else:  # i.e. A[i] < pivot_value
             if i == last_ind + 1:
