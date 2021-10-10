@@ -2,13 +2,28 @@ from typing import List
 
 
 def multiply(A: List[int], B: List[int]) -> List[int]:
+    if A == [0] or B == [0]:
+        return [0]
+
+    sign = 1 if A[0] * B[0] > 0 else -1
+    A[0] = abs(A[0])
+    B[0] = abs(B[0])
     running_sum = [0]  # represents 0
 
-    for b in reversed(range(len(B))):
+    # for i in reversed(range(1, len(B) + 1)):
+    for i in range(1, len(B) + 1):
+        i_th_digit_of_B = B[-i]
+        if i_th_digit_of_B == 0:
+            continue
+
+        contrib_i = _multiply_by_positive_digit(A, i_th_digit_of_B) + (i - 1) * [0]
+
         running_sum = add(
             running_sum,
-            _multiply_by_digit(A, B[b]),
+            contrib_i,
         )
+
+    running_sum[0] *= sign
 
     return running_sum
 
@@ -26,7 +41,7 @@ def add(A: List[int], B: List[int]) -> List[int]:
         except IndexError:
             i_th_digit_of_B = 0
 
-        sum[-i] = i_th_digit_of_A + i_th_digit_of_B
+        sum[-i] += i_th_digit_of_A + i_th_digit_of_B
 
         if sum[-i] >= 10:
             sum[-i] %= 10
@@ -38,7 +53,7 @@ def add(A: List[int], B: List[int]) -> List[int]:
         return sum
 
 
-def _multiply_by_digit(A: List[int], d: int) -> List[int]:
+def _multiply_by_positive_digit(A: List[int], d: int) -> List[int]:
     running_sum = [0]
 
     for i in range(1, len(A) + 1):
@@ -70,15 +85,17 @@ if __name__ == "__main__":
 
     A_mult = [9, 9]
     d_mult = 9
-    prod = _multiply_by_digit(A_mult, d_mult)
+    prod = _multiply_by_positive_digit(A_mult, d_mult)
 
     print()
-    print("_multiply_by_digit")
+    print("_multiply_by_positive_digit")
     print(A_mult)
     print(d_mult)
     print(prod)
 
     for A, B in (
+        ([0], [-1, 0, 0, 0]),
+        ([-1, 0, 0, 0], [0]),
         ([1, 4, 7], [8, 9]),
         ([8, 9], [1, 4, 7]),
     ):
