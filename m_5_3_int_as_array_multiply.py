@@ -150,9 +150,9 @@ def solution_2__multiply_by_positive_digit(A: List[int], d: int) -> List[int]:
     for i in range(1, len(A) + 1):
         p_i = A[-i] * d
 
+        running_sum[-i - 1] += p_i // 10
         running_sum[-i] += p_i % 10
-        if p_i >= 10:
-            running_sum[-i - 1] += p_i // 10
+
         if running_sum[-i] >= 10:
             running_sum[-i - 1] += running_sum[-i] // 10
             running_sum[-i] %= 10
