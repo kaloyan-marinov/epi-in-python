@@ -2,15 +2,27 @@ from typing import List
 
 
 def multiply(A: List[int], B: List[int]) -> List[int]:
+    # Handle the case, in which one of the inputs is zero.
     if A == [0] or B == [0]:
         return [0]
 
+    # Determine the sign of the output.
     sign = 1 if A[0] * B[0] > 0 else -1
+
+    # Multiply the absolute values of the inputs.
     A[0] = abs(A[0])
     B[0] = abs(B[0])
+    product_of_absolute_values = _multiply_strictly_positive_inputs(A, B)
+
+    # Ensure that the sign of the output is correct.
+    product_of_absolute_values[0] *= sign
+
+    return product_of_absolute_values
+
+
+def _multiply_strictly_positive_inputs(A: List[int], B: List[int]) -> List[int]:
     running_sum = [0]  # represents 0
 
-    # for i in reversed(range(1, len(B) + 1)):
     for i in range(1, len(B) + 1):
         i_th_digit_of_B = B[-i]
         if i_th_digit_of_B == 0:
@@ -18,17 +30,34 @@ def multiply(A: List[int], B: List[int]) -> List[int]:
 
         contrib_i = _multiply_by_positive_digit(A, i_th_digit_of_B) + (i - 1) * [0]
 
-        running_sum = add(
+        running_sum = _add(
             running_sum,
             contrib_i,
         )
 
-    running_sum[0] *= sign
+    return running_sum
+
+
+def _multiply_by_positive_digit(A: List[int], d: int) -> List[int]:
+    running_sum = [0]
+
+    for i in range(1, len(A) + 1):
+        p_i = A[-i] * d
+
+        if 0 <= p_i <= 9:
+            contrib_i = [p_i] + (i - 1) * [0]
+        else:  # i.e. if p_i >= 10
+            contrib_i = [p_i // 10, p_i % 10] + (i - 1) * [0]
+
+        running_sum = _add(
+            running_sum,
+            contrib_i,
+        )
 
     return running_sum
 
 
-def add(A: List[int], B: List[int]) -> List[int]:
+def _add(A: List[int], B: List[int]) -> List[int]:
     if len(A) < len(B):
         A, B = B, A
 
@@ -53,29 +82,10 @@ def add(A: List[int], B: List[int]) -> List[int]:
         return sum
 
 
-def _multiply_by_positive_digit(A: List[int], d: int) -> List[int]:
-    running_sum = [0]
-
-    for i in range(1, len(A) + 1):
-        p_i = A[-i] * d
-
-        if 0 <= p_i <= 9:
-            contrib_i = [p_i] + (i - 1) * [0]
-        else:  # i.e. if p_i >= 10
-            contrib_i = [p_i // 10, p_i % 10] + (i - 1) * [0]
-
-        running_sum = add(
-            running_sum,
-            contrib_i,
-        )
-
-    return running_sum
-
-
 if __name__ == "__main__":
     A_add = [9, 9, 7, 0]
     B_add = [3, 4, 2]
-    sum = add(A_add, B_add)
+    sum = _add(A_add, B_add)
 
     print()
     print("add")
