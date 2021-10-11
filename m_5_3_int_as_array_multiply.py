@@ -160,6 +160,33 @@ def solution_2__multiply_by_positive_digit(A: List[int], d: int) -> List[int]:
     return running_sum
 
 
+def solution_3_multiply(A: List[int], B: List[int]) -> List[int]:
+    # Handle the case, in which one of the inputs is zero.
+    if A == [0] or B == [0]:
+        return [0]
+
+    # Determine the sign of the output.
+    sign = 1 if A[0] * B[0] > 0 else -1
+    A[0] = abs(A[0])
+    B[0] = abs(B[0])
+
+    result = [0] * (len(A) + len(B))
+    for i in range(1, len(A) + 1):
+        for j in range(1, len(B) + 1):
+            result[-i - j + 1] += A[-i] * B[-j]
+            result[-i - j] += result[-i - j + 1] // 10
+            result[-i - j + 1] %= 10
+
+    # Determine the first index with a positive digit.
+    ind = 0
+    while result[ind] == 0:
+        ind += 1
+
+    result[ind] *= sign
+
+    return result[ind:]
+
+
 if __name__ == "__main__":
     # A_add = [9, 9, 7, 0]
     # B_add = [3, 4, 2]
@@ -187,7 +214,7 @@ if __name__ == "__main__":
         ([1, 4, 7], [8, 9]),
         ([8, 9], [1, 4, 7]),
     ):
-        product = solution_1_multiply(A, B)
+        product = solution_3_multiply(A, B)
 
         print()
         print("multiply")
