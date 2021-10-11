@@ -30,6 +30,23 @@ print(max(A))  # 16
 
 # fmt: off
 '''
+using `zip` to iterate over two lists of different lengths
+'''
+# fmt: on
+B = [0, 3, 9]
+zip_A_B = [(a, b) for a, b in zip(A, B)]
+
+print()
+print("A")
+print(A)  # [0, 2, 4, 4, 8, 16]
+print("B")
+print(B)  # [0, 3, 9]
+print("zip_A_B")
+print(zip_A_B)  # [(0, 0), (2, 3), (4, 9)]
+
+
+# fmt: off
+'''
 binary search for a sorted list
 '''
 # fmt: on
