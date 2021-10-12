@@ -28,16 +28,12 @@ def delete_duplicates_1(A: List[int]) -> int:
 def delete_duplicates_2(A: List[int]) -> int:
     """
     Test PASSED (2003/2003) [  32 ms]
-    Average running time:   85 us
-    Median running time:    24 us
+    Average running time:   96 us
+    Median running time:    29 us
     """
-    num_valid = len(A)
-
     i = 0
-    while i < num_valid:
-        if i + 1 == num_valid:
-            break
 
+    while i < len(A):
         num_copies_of_a_i = 1  # error!
         while (
             i + num_copies_of_a_i < len(A) and A[i] == A[i + num_copies_of_a_i]
@@ -46,11 +42,10 @@ def delete_duplicates_2(A: List[int]) -> int:
 
         if num_copies_of_a_i >= 2:
             A[i + 1 :] = A[i + num_copies_of_a_i :]  # error!
-            num_valid -= num_copies_of_a_i - 1
 
         i += 1
 
-    return num_valid
+    return len(A)
 
 
 if __name__ == "__main__":
