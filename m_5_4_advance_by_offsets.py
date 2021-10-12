@@ -50,12 +50,16 @@ def can_reach_end_3(A: List[int]) -> bool:
     for i in range(len(A)):
         furthest_reach = max(furthest_reach, i + A[i])
 
+        if i == furthest_reach:
+            return False
+
     return furthest_reach >= len(A) - 1
 
 
 if __name__ == "__main__":
     # A = [3, 3, 1, 0, 2, 0, 1]  # expected: True
-    A = [3, 2, 0, 0, 2, 0, 1]  # expected False
+    # A = [3, 2, 0, 0, 2, 0, 1]  # expected False
+    A = [0]  # expected: True
 
     a = can_reach_end_3(A)
 
