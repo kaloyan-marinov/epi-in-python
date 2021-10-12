@@ -48,12 +48,31 @@ def delete_duplicates_2(A: List[int]) -> int:
     return len(A)
 
 
+def delete_duplicates_3(A: List[int]) -> int:
+    """
+    This solution is based on brute force.
+    time: O(n)
+    space: O(n)
+    """
+    unique_values = set()
+    A_uniques = list()
+    for a in A:
+        if a in unique_values:
+            continue
+        unique_values.add(a)
+        A_uniques.append(a)
+
+    A[:] = A_uniques
+
+    return len(A)
+
+
 if __name__ == "__main__":
     # fmt: off
-    A = [-27, -24, -21, -21, -20, -19, -19, -19, -18, -18, -16, -14, -13, -13, -11, -10, -7, -5, -4, 1, 2, 2, 4, 4, 4, 4, 8, 9, 10, 10, 10, 10, 11, 12, 13, 13, 14, 14, 15, 16, 16, 17, 17, 17, 20, 20, 21, 21, 22, 25, 25, 25, 26, 26]
+    A = [-8, -7, -6, -5, -5, -4, -3, -1, -1, 0, 0, 2, 2, 2, 4]
     # fmt: on
     A_original = copy.deepcopy(A)
-    num_valid = delete_duplicates_2(A)  # outputs [-8, -7, -6, -5, -4, -3, -1, 0, 2, 4]
+    num_valid = delete_duplicates_3(A)  # outputs [-8, -7, -6, -5, -4, -3, -1, 0, 2, 4]
 
     print("A_original")
     print(A_original)
