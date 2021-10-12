@@ -53,7 +53,7 @@ def can_reach_end_3(A: List[int]) -> bool:
     for i in range(len(A)):
         furthest_reach = max(furthest_reach, i + A[i])
 
-        if i == furthest_reach:
+        if i == furthest_reach and i < len(A) - 1:
             return False
 
     return furthest_reach >= len(A) - 1
