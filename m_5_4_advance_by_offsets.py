@@ -53,6 +53,11 @@ def can_reach_end_3(A: List[int]) -> bool:
         if i == furthest_reach and i < len(A) - 1:
             return False
 
+        # The following is not necessary,
+        # but can speed up the function execution in certain cases.
+        if furthest_reach >= len(A) - 1:
+            return True
+
     return furthest_reach >= len(A) - 1
 
 
