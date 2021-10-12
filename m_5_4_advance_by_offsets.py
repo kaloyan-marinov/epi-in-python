@@ -45,9 +45,6 @@ def can_reach_end_2(A: List[int]) -> bool:
 
 
 def can_reach_end_3(A: List[int]) -> bool:
-    if len(A) == 1:
-        return True
-
     furthest_reach = 0
 
     for i in range(len(A)):
