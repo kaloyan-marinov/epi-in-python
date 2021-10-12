@@ -12,7 +12,7 @@ def delete_duplicates(A: List[int]) -> int:
             break
 
         if A[i] == A[i + 1]:
-            A = A[:i] + A[i + 1 :]
+            A[i:] = A[i + 1 :]
             num_valid -= 1
         else:
             i += 1
