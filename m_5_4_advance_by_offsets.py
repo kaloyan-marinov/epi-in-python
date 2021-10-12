@@ -2,6 +2,13 @@ from typing import List
 
 
 def can_reach_end_1(A: List[int]) -> bool:
+    """
+    This function passes all but the last of the EPI Judge tests.
+
+    With respect to that last test,
+    the execution of this function ends up taking a _very_ long time,
+    indicating that its time complexity is _very_ high.
+    """
     reachable_indices = {0}
 
     for i in range(len(A)):
@@ -18,6 +25,13 @@ def can_reach_end_1(A: List[int]) -> bool:
 
 
 def can_reach_end_2(A: List[int]) -> bool:
+    """
+    This function passes all but the last of the EPI Judge tests.
+
+    With respect to that last test,
+    the execution of this function ends up taking a _very_ long time,
+    indicating that its time complexity is _very_ high.
+    """
     if len(A) == 1:
         return True
 
@@ -30,7 +44,20 @@ def can_reach_end_2(A: List[int]) -> bool:
     return 0 in good
 
 
-if __name__ == "__main__":
-    A = [3, 3, 1, 0, 2, 0, 1]
+def can_reach_end_3(A: List[int]) -> bool:
+    furthest_reach = 0
 
-    can_reach_end_2(A)
+    for i in range(len(A)):
+        furthest_reach = max(furthest_reach, i + A[i])
+
+    return furthest_reach >= len(A) - 1
+
+
+if __name__ == "__main__":
+    # A = [3, 3, 1, 0, 2, 0, 1]  # expected: True
+    A = [3, 2, 0, 0, 2, 0, 1]  # expected False
+
+    a = can_reach_end_3(A)
+
+    print(A)
+    print(a)
