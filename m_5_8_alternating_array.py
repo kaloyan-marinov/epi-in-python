@@ -1,7 +1,7 @@
 from typing import List
 
 
-def rearrange(A: List[int]) -> None:
+def rearrange_1(A: List[int]) -> None:
     """
     time:  O(n)
     space: O(1)
@@ -18,3 +18,11 @@ def rearrange(A: List[int]) -> None:
             continue
         else:
             A[i + 1], A[i + 2] = A[i + 2], A[i + 1]
+
+
+def rearrange_2(A: List[int]) -> None:
+    for i in range(len(A)):
+        A[i : i + 2] = sorted(
+            A[i : i + 2],
+            reverse=bool(i % 2),
+        )
