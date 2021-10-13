@@ -43,30 +43,33 @@ def buy_and_sell_stock_twice_2(prices: List[float]) -> float:
     time:  O(n)
     space: O(n)
 
-    Test PASSED (402/402) [  78 ms]
-    Average running time:  525 us
-    Median running time:    85 us
+    Test PASSED (402/402) [  67 ms]
+    Average running time:  486 us
+    Median running time:    81 us
     """
     max_total_profit = 0.0
 
     # Forward phase:
-    # record max profit if we sell on that day.
-    first_buy_and_sell_profits = [0.0] * len(prices)
+    # record max profit if we make the 1st sell on that day.
+    profits_for_1st_sell_on_i_th_day = [0.0] * len(prices)
 
-    min_price_so_far = float("inf")
-    for i, price in enumerate(prices):
-        min_price_so_far = min(min_price_so_far, price)
-        max_total_profit = max(max_total_profit, price - min_price_so_far)
-        first_buy_and_sell_profits[i] = max_total_profit
+    min_price_over_prev_days = float("inf")
+    for i, p_i in enumerate(prices):
+        profit_from_first_sell_on_day_i = p_i - min_price_over_prev_days
+        max_total_profit = max(max_total_profit, profit_from_first_sell_on_day_i)
+        min_price_over_prev_days = min(min_price_over_prev_days, p_i)
+        profits_for_1st_sell_on_i_th_day[i] = max_total_profit
 
     # Backward phase:
-    # find max profit if we make the 2nd buy on that day
-    max_price_so_far = float("-inf")
-    for i, price in reversed(list(enumerate(prices[1:], 1))):
-        max_price_so_far = max(max_price_so_far, price)
+    # find max profit if we make the 2nd buy on that day.
+    max_price_over_next_days = float("-inf")
+    for i in reversed(range(1, len(prices))):
+        p_i = prices[i]
+        profit_from_2nd_buy_on_day_i = max_price_over_next_days - p_i
+        max_price_over_next_days = max(max_price_over_next_days, p_i)
         max_total_profit = max(
             max_total_profit,
-            max_price_so_far - price + first_buy_and_sell_profits[i],
+            profits_for_1st_sell_on_i_th_day[i] + profit_from_2nd_buy_on_day_i,
         )
 
     return max_total_profit
