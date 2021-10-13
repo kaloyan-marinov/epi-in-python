@@ -41,13 +41,13 @@ def buy_and_sell_stock_2(prices: List[float]) -> float:
     max_profit = 0
 
     for price in prices:
-        min_over_previous_days = min(
-            min_over_previous_days,
-            price,
-        )
         max_profit = max(
             price - min_over_previous_days,
             max_profit,
+        )
+        min_over_previous_days = min(
+            min_over_previous_days,
+            price,
         )
 
     return max_profit
