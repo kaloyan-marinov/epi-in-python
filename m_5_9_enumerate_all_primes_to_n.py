@@ -5,7 +5,7 @@ from typing import List
 
 def generate_primes_1(n: int) -> List[int]:
     """
-    time:  O(n^2)
+    time: O(n^2)
 
     Test PASSED (24/24) [3111  s]
     Average running time:  131  s
@@ -31,6 +31,13 @@ def generate_primes_1(n: int) -> List[int]:
 
 
 def generate_primes_2(n: int) -> List[int]:
+    """
+    time: O(n^(3/2))
+
+    Test PASSED (24/24) [   5  s]
+    Average running time:  233 ms
+    Median running time:    23 us
+    """
     primes = list()
 
     if n == 1:
@@ -41,7 +48,7 @@ def generate_primes_2(n: int) -> List[int]:
         is_prime = True
         for j in range(
             2,
-            math.ceil(math.sqrt(i)),
+            math.floor(math.sqrt(i)) + 1,
         ):
             if i % j == 0:
                 is_prime = False
@@ -60,4 +67,4 @@ if __name__ == "__main__":
     print("n")
     print(n)
     print("primes")
-    print(primes)  # [2, 3, 4] which is incorrect
+    print(primes)
