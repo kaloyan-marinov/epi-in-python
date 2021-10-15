@@ -2,7 +2,7 @@ import random
 from typing import List
 
 
-def random_sampling(k: int, A: List[int]) -> None:
+def random_sampling_1(k: int, A: List[int]) -> None:
     """
     Test PASSED (8/8) [ 419 ms]
     Average running time:  368 ms
@@ -15,3 +15,14 @@ def random_sampling(k: int, A: List[int]) -> None:
             _a = random.choice(A)
         _A.append(_a)
     A[:] = _A
+
+
+def random_sampling_2(k: int, A: List[int]) -> None:
+    """
+    Test PASSED (8/8) [ 312 ms]
+    Average running time:  313 ms
+    Median running time:   308 ms
+    """
+    for i in range(k):
+        r = random.randrange(i, len(A))
+        A[i], A[r] = A[r], A[i]
