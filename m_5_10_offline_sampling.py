@@ -24,5 +24,5 @@ def random_sampling_2(k: int, A: List[int]) -> None:
     Median running time:   308 ms
     """
     for i in range(k):
-        r = random.randrange(i, len(A))
+        r = random.randrange(i, len(A))  # equivalent to random.randint(i, len(A) - 1)
         A[i], A[r] = A[r], A[i]
