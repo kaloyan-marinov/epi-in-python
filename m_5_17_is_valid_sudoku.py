@@ -6,36 +6,36 @@ from typing import List, Iterable
 def is_valid_sudoku(
     partial_assignment: List[List[int]],
 ) -> bool:
-    # rows
+    # Check the rows.
     for row in partial_assignment:
-        if not is_list_valid(row):
+        if not is_iterable_valid(row):
             return False
 
-    # columns
+    # Check the columns.
     n_cols = len(partial_assignment)
     n_rows = len(partial_assignment[0])
 
     for col_idx in range(n_cols):
         column = (partial_assignment[r_idx][col_idx] for r_idx in range(n_rows))
-        if not is_list_valid(column):
+        if not is_iterable_valid(column):
             return False
 
-    # subgrids
+    # Check the subgrids.
     for r_ulc in range(0, n_rows, 3):
         for c_ulc in range(0, n_cols, 3):
             subgrid_flattened = itertools.chain.from_iterable(
                 (
-                    row[c_ulc : c_ulc + 3 + 1]
-                    for row in partial_assignment[r_ulc : r_ulc + 3 + 1]
+                    row[c_ulc : c_ulc + 3]
+                    for row in partial_assignment[r_ulc : r_ulc + 3]
                 ),
             )
-            if not is_list_valid(subgrid_flattened):
+            if not is_iterable_valid(subgrid_flattened):
                 return False
 
     return True
 
 
-def is_list_valid(numbers: Iterable[int]) -> bool:
+def is_iterable_valid(numbers: Iterable[int]) -> bool:
     seen = set()
     for n in numbers:
         if n in seen and n != 0:
@@ -57,9 +57,9 @@ if __name__ == "__main__":
         [1, 3, 0, 0, 0, 2, 8, 0, 7],
     ]
 
-    is_valid = is_valid_sudoku(partial_assignment)
+    is_valid = is_valid_sudoku(partial_assignment)  # should be True
 
     print("partial_assignment:")
     print(partial_assignment)
     print("is_valid:")
-    print(is_valid)  # False but should instead be True
+    print(is_valid)
