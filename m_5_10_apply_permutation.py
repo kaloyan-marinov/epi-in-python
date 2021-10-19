@@ -6,8 +6,9 @@ def apply_permutation(perm: List[int], A: List[int]) -> None:
 
     for i in range(n):
         while perm[i] != i:
-            A[i], A[perm[i]] = A[perm[i]], A[i]
-            perm[i], perm[perm[i]] = perm[perm[i]], perm[i]
+            source_idx, target_idx = i, perm[i]
+            A[source_idx], A[target_idx] = A[target_idx], A[source_idx]
+            perm[source_idx], perm[target_idx] = perm[target_idx], perm[source_idx]
 
 
 if __name__ == "__main__":
@@ -17,16 +18,9 @@ if __name__ == "__main__":
     perm = [2, 0, 1, 3]
     A = ["a", "b", "c", "d"]
 
-    # fmt: off
-    '''
-    instead of modifying `A` in-place into `['b', 'c', 'a', 'd'],
-    the next statement gets stuck in an infinite loop
-
-    the reason is that the first pass through the first `while` loop
-    updates the arrays to the following state:
-
-    A =     ['c', 'b', 'a', 'd']
-    perm =  [  1,   2,   1,   3]   # should instead be [1, 0, 2, 3]
-    '''
-    # fmt : on
     apply_permutation(perm, A)
+
+    # fmt: off
+    print(A)     # ['b', 'c', 'a', 'd']
+    print(perm)  # [  0,   1,   2,   3]
+    # fmt: on
