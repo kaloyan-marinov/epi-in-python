@@ -1,9 +1,11 @@
+import collections
 import itertools
+import math
 
 from typing import List, Iterable
 
 
-def is_valid_sudoku(
+def solution_1_is_valid_sudoku(
     partial_assignment: List[List[int]],
 ) -> bool:
     # Check the rows.
@@ -44,6 +46,31 @@ def is_iterable_valid(numbers: Iterable[int]) -> bool:
     return True
 
 
+def solution_3_is_valid_sudoku_pythonic(
+    partial_assignment: List[List[int]],
+) -> bool:
+    n = len(partial_assignment)
+    region_size = int(math.sqrt(n))
+
+    return (
+        max(
+            collections.Counter(
+                k
+                for i, row in enumerate(partial_assignment)
+                for j, c in enumerate(row)
+                if c != 0
+                for k in (
+                    (i, str(c)),
+                    (str(c), j),
+                    (i // region_size, j // region_size, str(c)),
+                )
+            ).values(),
+            default=0,
+        )
+        <= 1
+    )
+
+
 if __name__ == "__main__":
     partial_assignment = [
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -57,9 +84,25 @@ if __name__ == "__main__":
         [1, 3, 0, 0, 0, 2, 8, 0, 7],
     ]
 
-    is_valid = is_valid_sudoku(partial_assignment)  # should be True
+    is_valid = solution_1_is_valid_sudoku(partial_assignment)  # should be True
 
     print("partial_assignment:")
     print(partial_assignment)
     print("is_valid:")
     print(is_valid)
+
+    # Attempt to understand the Pythonic solution
+    # by peering into its heavy-lifting portion.
+    print(
+        collections.Counter(
+            k
+            for i, row in enumerate(partial_assignment)
+            for j, c in enumerate(row)
+            if c != 0
+            for k in (
+                (i, str(c)),
+                (str(c), j),
+                (i // 3, j // 3, str(c)),
+            )
+        )
+    )
