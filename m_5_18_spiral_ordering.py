@@ -42,3 +42,45 @@ def s_1_matrix_in_spiral_order_refactored(square_matrix: List[List[int]]) -> Lis
         )
 
     return spiral_ordering
+
+
+def s_2_matrix_in_spiral_order(square_matrix: List[List[int]]) -> List[int]:
+    value_absent_from_original_input = 0
+    directions = ((0, 1), (1, 0), (0, -1), (-1, 0))
+
+    d_idx = 0
+    x = y = 0
+    spiral_ordering = []
+    for _ in range(len(square_matrix) ** 2):
+        spiral_ordering.append(square_matrix[x][y])
+
+        square_matrix[x][y] = value_absent_from_original_input
+
+        next_x = x + directions[d_idx][0]
+        next_y = y + directions[d_idx][1]
+        if (
+            next_x not in range(len(square_matrix))
+            or next_y not in range(len(square_matrix))
+            or square_matrix[next_x][next_y] == value_absent_from_original_input
+        ):
+            d_idx = (
+                d_idx + 1
+            ) & 3  # Equivalent to `(d_idx + 1) % 4`, since `d_idx in range(4)`.
+            next_x = x + directions[d_idx][0]
+            next_y = y + directions[d_idx][1]
+
+        x, y = next_x, next_y
+
+    return spiral_ordering
+
+
+if __name__ == "__main__":
+    A = [[1]]
+
+    s_2_matrix_in_spiral_order(A)
+
+    B = [
+        [4, 2],
+        [3, 1],
+    ]
+    s_2_matrix_in_spiral_order(B)
