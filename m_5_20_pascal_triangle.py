@@ -3,7 +3,7 @@ from typing import List
 
 def generate_pascal_triangle(n: int) -> List[List[int]]:
     if n == 0:
-        return [[]]
+        return []
 
     rows = [[1]]
     if n == 1:
