@@ -11,7 +11,7 @@ def is_palindrome(s: str) -> bool:
             j -= 1
             continue
 
-        if s[i] != s[j]:
+        if s[i].lower() != s[j].lower():
             return False
         else:
             i += 1
