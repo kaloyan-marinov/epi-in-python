@@ -18,3 +18,13 @@ def is_palindrome(s: str) -> bool:
             j -= 1
 
     return True
+
+
+def is_palindrome_pythonic(s: str) -> bool:
+    return all(
+        a == b
+        for a, b in zip(
+            map(str.lower, filter(str.isalnum, s)),
+            map(str.lower, filter(str.isalnum, reversed(s))),
+        )
+    )
