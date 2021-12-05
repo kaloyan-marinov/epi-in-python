@@ -16,17 +16,17 @@ def roman_to_integer(s: str) -> int:
     i = 0
 
     while i < len(s):
-        if i + 1 < len(s) and symbol_2_value[s[i]] >= symbol_2_value[s[i + 1]]:
-            value += symbol_2_value[s[i]]
-            i += 1
-            continue
+        if i + 1 < len(s):
+            if symbol_2_value[s[i]] >= symbol_2_value[s[i + 1]]:
+                value += symbol_2_value[s[i]]
+                i += 1
+                continue
 
-        if i + 1 < len(s) and symbol_2_value[s[i]] < symbol_2_value[s[i + 1]]:
-            value += symbol_2_value[s[i + 1]] - symbol_2_value[s[i]]
-            i += 2
-            continue
-
-        if i + 1 == len(s):
+            if symbol_2_value[s[i]] < symbol_2_value[s[i + 1]]:
+                value += symbol_2_value[s[i + 1]] - symbol_2_value[s[i]]
+                i += 2
+                continue
+        else:
             value += symbol_2_value[s[i]]
             i += 1
 
