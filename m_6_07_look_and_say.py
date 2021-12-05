@@ -29,6 +29,16 @@ def _next_in_look_and_say_sequence(s: str) -> str:
     return "".join(digits)
 
 
+def look_and_say_pythonic(n: int) -> str:
+    current_string = "1"
+    for _ in range(1, n):
+        current_string = "".join(
+            str(len(list(group))) + key
+            for key, group in itertools.groupby(current_string)
+        )
+    return current_string
+
+
 if __name__ == "__main__":
     n = 3
 
