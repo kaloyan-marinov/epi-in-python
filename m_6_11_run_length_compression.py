@@ -13,9 +13,6 @@ def encoding(s: str) -> str:
 
         result.extend([str(count), character])
 
-        if i == len(s):
-            break
-
     return "".join(result)
 
 
