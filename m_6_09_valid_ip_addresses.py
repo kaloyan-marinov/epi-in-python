@@ -3,7 +3,7 @@ from typing import List
 
 def get_valid_ip_addresses(s: str) -> List[str]:
     def _is_valid(part: str) -> bool:
-        return int(part) <= 255
+        return len(part) == 1 or (part[0] != "0" and int(part) <= 255)
 
     valid_ips = []
 
