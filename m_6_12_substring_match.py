@@ -1,7 +1,7 @@
 def substring_match(t: str, s: str) -> int:
     start_idx = 0
 
-    while start_idx < len(t):
+    while start_idx < len(t) - len(s) + 1:
         count_matches = 0
         while (
             start_idx + count_matches < len(t)
@@ -13,10 +13,7 @@ def substring_match(t: str, s: str) -> int:
         if count_matches == len(s):
             return start_idx
 
-        if count_matches == 0:
-            start_idx += 1
-        else:
-            start_idx += count_matches
+        start_idx += 1
 
     return -1
 
