@@ -1,7 +1,7 @@
 from typing import List
 
 
-def get_valid_ip_addresses(s: str) -> List[str]:
+def get_valid_ip_addresses_1(s: str) -> List[str]:
     def _is_valid(part: str) -> bool:
         return len(part) == 1 or (part[0] != "0" and int(part) <= 255)
 
@@ -27,5 +27,36 @@ def get_valid_ip_addresses(s: str) -> List[str]:
                     continue
 
                 valid_ips.append(".".join([part_1, part_2, part_3, part_4]))
+
+    return valid_ips
+
+
+def get_valid_ip_addresses_2(s: str) -> List[str]:
+    def _is_valid(part: str) -> bool:
+        return len(part) == 1 or (part[0] != "0" and int(part) <= 255)
+
+    valid_ips = []
+    parts = [""] * 4
+
+    for i in range(1, min(4, len(s))):
+        parts[0] = s[:i]
+
+        if not _is_valid(parts[0]):
+            continue
+
+        for j in range(1, min(4, len(s) - i)):
+            parts[1] = s[i : i + j]
+
+            if not _is_valid(parts[1]):
+                continue
+
+            for k in range(1, min(4, len(s) - i - j)):
+                parts[2] = s[i + j : i + j + k]
+                parts[3] = s[i + j + k :]
+
+                if not _is_valid(parts[2]) or not _is_valid(parts[3]):
+                    continue
+
+                valid_ips.append(".".join(parts))
 
     return valid_ips
