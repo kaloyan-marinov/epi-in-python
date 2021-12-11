@@ -3,7 +3,7 @@ from typing import Optional
 from m_7_00_common import ListNode, length
 
 
-def overlapping_no_cycle_lists(l0: ListNode, l1: ListNode) -> Optional[ListNode]:
+def overlapping_no_cycle_lists_1(l0: ListNode, l1: ListNode) -> Optional[ListNode]:
     if l0 is None or l1 is None:
         return None
 
@@ -41,3 +41,34 @@ def overlapping_no_cycle_lists(l0: ListNode, l1: ListNode) -> Optional[ListNode]
             return l0
         l0 = l0.next
         l1 = l1.next
+
+
+def overlapping_no_cycle_lists_2(l0: ListNode, l1: ListNode) -> Optional[ListNode]:
+    """
+    This is the official solution.
+    It is empirically observed to be two times faster than the earlier solution,
+    but its implementation is a little more difficult to understand.
+    """
+
+    length_0 = length(l0)
+    length_1 = length(l1)
+
+    # To simplify the code, ensure that `l1` is the longer linked list.
+    if length_0 > length_1:
+        l0, l1 = l1, l0
+
+    # Advance `l1` by the length difference.
+    for _ in range(abs(length_0 - length_1)):
+        l1 = l1.next
+
+    # fmt: off
+    while (
+        l0
+        and l1
+        and l0 is not l1
+    ):
+    # fmt: on
+        l0 = l0.next
+        l1 = l1.next
+    
+    return l0  # None implies no overlap
