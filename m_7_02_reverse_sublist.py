@@ -4,11 +4,9 @@ from m_7_00_common import ListNode
 
 
 def reverse_sublist(L: ListNode, start: int, finish: int) -> Optional[ListNode]:
-    """
-    This is the book's official solution.
-    """
-    dummy_head = sublist_head = ListNode(data=0, next=L)
+    dummy_head = ListNode(data=0, next=L)
 
+    sublist_head = dummy_head
     for _ in range(1, start):
         sublist_head = sublist_head.next
 
