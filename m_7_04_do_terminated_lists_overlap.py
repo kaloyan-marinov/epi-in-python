@@ -4,6 +4,9 @@ from m_7_00_common import ListNode
 
 
 def overlapping_no_cycle_lists(l0: ListNode, l1: ListNode) -> Optional[ListNode]:
+    if l0 is None or l1 is None:
+        return None
+
     t0 = l0
     while t0.next:
         t0 = t0.next
