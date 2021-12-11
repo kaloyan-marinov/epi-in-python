@@ -3,28 +3,27 @@ from typing import Optional
 from m_7_00_common import ListNode
 
 
-def merge_two_sorted_lists(
+def merge_two_sorted_lists_2(
     L1: Optional[ListNode],
     L2: Optional[ListNode],
 ) -> Optional[ListNode]:
-    head_node = L1 if L1.data <= L2.data else L2
+    # Create a placeholder for the result.
+    dummy_head = tail = ListNode()
 
-    while L1.next is not None and L2.next is not None:
-        print(L1.data)
-        if L1.next.data <= L2.data:
+    while L1 and L2:
+        if L1.data <= L2.data:
+            tail.next = L1
             L1 = L1.next
-            continue
+        else:
+            tail.next = L2
+            L2 = L2.next
 
-        L2_next = L2.next
-        L2.next = L1.next
-        L1.next = L2
+        tail = tail.next
 
-        L2 = L2_next
+    # Append the remaining nodes of L1 or L2.
+    tail.next = L1 or L2
 
-    if L2 is not None:
-        L1.next = L2
-
-    return head_node
+    return dummy_head.next
 
 
 if __name__ == "__main__":
