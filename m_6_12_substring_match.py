@@ -59,20 +59,13 @@ def robin_karp(t: str, s: str) -> int:
     (Such a hash function is sometimes called a _rolling hash function_
     or an _incremental hash function_.)
     """
-    def ord(c):
-        return {
-            "A": 0,
-            "C": 1,
-            "G": 2,
-            "T": 3,
-        }.get(c, "ninja")
 
     if len(s) > len(t):
         # s is not a substring of t.
         return -1
 
     # Hash code for s.
-    base = 10
+    base = 26
     s_hash = functools.reduce(
         lambda h, c: h * base + ord(c),
         s,
@@ -96,7 +89,7 @@ def robin_karp(t: str, s: str) -> int:
 
         # Update the current substring's hash
         # into the subsequent substring's hash.
-        t_hash -= ord(t[start_idx]) ** power_s
+        t_hash -= ord(t[start_idx]) * power_s
         t_hash = t_hash * base + ord(t[final_idx])
 
     # Check the very last substring.
