@@ -6,19 +6,26 @@ from m_7_00_common import ListNode
 def reverse_sublist(L: ListNode, start: int, finish: int) -> Optional[ListNode]:
     dummy_head = ListNode(data=0, next=L)
 
-    sublist_head = dummy_head
-    for _ in range(1, start):
-        sublist_head = sublist_head.next
+    s_prev = dummy_head
+    # Advance `s_prev` until it becomes the sublist's head.
+    for _ in range(1, start):  # 1, ..., start - 1
+        s_prev = s_prev.next
 
-    # Reverse sublist.
-    sublist_iter = sublist_head.next
+    # Reverse the sublist.
+    s = s_prev.next
     for _ in range(finish - start):
-        temp = sublist_iter.next
-        sublist_iter.next, temp.next, sublist_head.next = (
-            temp.next,
-            sublist_head.next,
-            temp,
+        s_next = s.next
+        # fmt: off
+        (
+            s_prev.next,
+            s.next,
+            s_next.next,
+        ) = (
+            s_next,
+            s_next.next,
+            s_prev.next,
         )
+        # fmt: on
 
     return dummy_head.next
 
