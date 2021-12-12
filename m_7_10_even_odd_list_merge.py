@@ -3,11 +3,7 @@ from typing import Optional
 from m_7_00_common import ListNode
 
 
-def even_odd_merge(L: ListNode) -> Optional[ListNode]:
-    """
-    Test 1/1015 gets stuck in an infinite loop.
-    """
-
+def even_odd_merge(L: Optional[ListNode]) -> Optional[ListNode]:
     if L is None:
         return
 
@@ -15,14 +11,15 @@ def even_odd_merge(L: ListNode) -> Optional[ListNode]:
     odd = L.next
 
     while odd and odd.next:
+        odd_next = odd.next
         # fmt: off
         (
             even.next,
             odd.next,
-            odd.next.next,
+            odd_next.next,
         ) = (
             odd.next,
-            odd.next.next,
+            odd_next.next,
             even.next
         )
         # fmt: on
