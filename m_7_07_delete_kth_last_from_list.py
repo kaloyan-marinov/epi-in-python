@@ -14,11 +14,14 @@ def remove_kth_last(L: ListNode, k: int) -> Optional[ListNode]:
     for _ in range(k):
         fast = fast.next
 
-    while fast.next:
-        slow = slow.next
-        fast = fast.next
+    if fast is None:  # NB: if the k-th last element is the original head node
+        L = L.next
+    else:
+        while fast.next:
+            slow = slow.next
+            fast = fast.next
 
-    slow.next = slow.next.next
+        slow.next = slow.next.next
 
     return L  # NB: return the head node of the resulting list
 
