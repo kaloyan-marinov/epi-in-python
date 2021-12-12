@@ -18,9 +18,6 @@ def is_linked_list_a_palindrome(L: ListNode) -> bool:
     """
     n = length(L)
 
-    if n == 0:
-        return True
-
     right_it = L
     for _ in range(n // 2 + n % 2):
         right_it = right_it.next
