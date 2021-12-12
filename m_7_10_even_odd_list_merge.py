@@ -44,8 +44,8 @@ def even_odd_merge_2(L: Optional[ListNode]) -> Optional[ListNode]:
 
     # Allocate 2 new nodes,
     # which will serve as dummy heads of 2 initially single-node lists.
-    even_dummy_head = ListNode(data=0, next=L)
-    odd_dummy_head = ListNode(data=0, next=L)
+    even_dummy_head = ListNode(data=17)
+    odd_dummy_head = ListNode(data=17)
 
     # Re-use the nodes of the input list
     # by iterating through the list
@@ -55,9 +55,11 @@ def even_odd_merge_2(L: Optional[ListNode]) -> Optional[ListNode]:
     turn = 0  # represents a 0/1 variable to indicate which list to append to.
     while L:
         tails[turn].next = L
-        L = L.next
         tails[turn] = tails[turn].next
+
         turn ^= 1  # achieves alternation between even and odd.
+
+        L = L.next
 
     # Append "the odd list" to "the even one".
     tails[1].next = None
