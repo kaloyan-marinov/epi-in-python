@@ -2,13 +2,27 @@ from m_7_00_common import ListNode, length
 
 
 def is_linked_list_a_palindrome(L: ListNode) -> bool:
+    """
+    strategy/approach:
+        - compare the 1st and last nodes
+        - compare the 2nd and 2nd-to-last nodes
+        - etc.
+
+    time: O(n^2),
+          n := the # of nodes in L
+
+    ---
+
+    This function passes all 203 of the test cases within the EPIJudge,
+    but the very last one takes significantly longer than the others to run.
+    """
     n = length(L)
 
     if n == 0:
         return True
 
     right_it = L
-    for _ in range(n // 2 + 1):
+    for _ in range(n // 2 + n % 2):
         right_it = right_it.next
 
     for shift_for_left_it in reversed(range(n // 2)):
@@ -37,4 +51,4 @@ if __name__ == "__main__":
     )
     # fmt: on
     r = is_linked_list_a_palindrome(L)
-    print(r)  # False (but `True` is expected)
+    print(r)  # True (as expected)
