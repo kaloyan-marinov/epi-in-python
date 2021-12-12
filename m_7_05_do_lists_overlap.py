@@ -18,10 +18,17 @@ def overlapping_lists(l0: ListNode, l1: ListNode) -> Optional[ListNode]:
         return None
 
     # At this stage, both lists are known to have cycles.
+    # Determine whether both lists end in a common cycle
+    # by making one pass through the 1st cycle:
+    #   at each iteration,
+    #   check if that iteration's node _is_ the 2nd cycle's start node.
     temp = cycle_start_0
-    while temp:
-        temp = temp.next
-        if temp is cycle_start_0 or temp is cycle_start_1:
-            break
+    have_overlap = temp is cycle_start_1
 
-    return cycle_start_0 if temp is cycle_start_1 else None
+    while temp.next is not cycle_start_0:
+        if have_overlap:
+            break
+        temp = temp.next
+        have_overlap = temp is cycle_start_1
+
+    return cycle_start_0 if have_overlap else None
