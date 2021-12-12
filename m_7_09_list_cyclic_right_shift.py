@@ -4,12 +4,20 @@ from m_7_00_common import ListNode, length as compute_length
 
 
 def cyclically_right_shift_list(L: Optional[ListNode], k: int) -> Optional[ListNode]:
-    length = compute_length(L)
-    if length == 0:
+    # Guard clause against an empty linked list.
+    if not L:
         return
 
-    k %= length
+    length = compute_length(L)
 
+    # Handle the special case,
+    # in which the resulting list is the identical to the input list.
+    k %= length
+    if k == 0:
+        return L
+
+    # Handle the general case,
+    # in which the head of the resulting list is different from that of the input list.
     head = L
     new_tail = None
     new_head = None
@@ -27,12 +35,9 @@ def cyclically_right_shift_list(L: Optional[ListNode], k: int) -> Optional[ListN
         L = L.next
         idx += 1
 
-    if new_tail is not tail:
-        tail.next = head
-        new_tail.next = None
-        L = new_head
-    else:
-        L = head
+    tail.next = head
+    new_tail.next = None
+    L = new_head
 
     return L
 
