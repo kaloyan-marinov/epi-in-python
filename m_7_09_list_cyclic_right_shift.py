@@ -31,6 +31,8 @@ def cyclically_right_shift_list(L: Optional[ListNode], k: int) -> Optional[ListN
         tail.next = head
         new_tail.next = None
         L = new_head
+    else:
+        L = head
 
     return L
 
@@ -46,4 +48,4 @@ if __name__ == "__main__":
     L = ListNode(data=1)
     k = 0
     new_head = cyclically_right_shift_list(L, k)
-    print(new_head)  # None (but `<ListNode(data=1)>` is expected)
+    print(new_head)  # <ListNode(data=1)> (as expected)
