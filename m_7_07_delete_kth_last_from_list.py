@@ -4,6 +4,10 @@ from m_7_00_common import ListNode
 
 
 def remove_kth_last(L: ListNode, k: int) -> Optional[ListNode]:
+    """
+    Remove the k-th last element from (the linked list starting at) L.
+    Return the head node of the resulting list.
+    """
     slow = L
     fast = L
 
@@ -15,6 +19,8 @@ def remove_kth_last(L: ListNode, k: int) -> Optional[ListNode]:
         fast = fast.next
 
     slow.next = slow.next.next
+
+    return L  # NB: return the head node of the resulting list
 
 
 if __name__ == "__main__":
