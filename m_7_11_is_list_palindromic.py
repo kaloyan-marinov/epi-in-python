@@ -4,6 +4,9 @@ from m_7_00_common import ListNode, length
 def is_linked_list_a_palindrome(L: ListNode) -> bool:
     n = length(L)
 
+    if n == 0:
+        return True
+
     right_it = L
     for _ in range(n // 2 + 1):
         right_it = right_it.next
@@ -24,12 +27,14 @@ def is_linked_list_a_palindrome(L: ListNode) -> bool:
 if __name__ == "__main__":
     # Test: 1/203
     L = None
-
-    # When the next statement is executed, the script crashes with
-    #   ```
-    #     File "m_7_11_is_list_palindromic.py", line 9, in is_linked_list_a_palindrome
-    #       right_it = right_it.next
-    #   AttributeError: 'NoneType' object has no attribute 'next'
-    #   ```
     r = is_linked_list_a_palindrome(L)
-    print(r)
+    print(r)  # True (as expected)
+
+    # Test: 3/203
+    # fmt: off
+    L = ListNode.from_list(
+        [2, 5, 3, 1, 3, 5, 3, 4, 2, 5, 5, 6, 3, 2, 2, 4, 3, 4, 5, 6, 6, 5, 4, 3, 4, 2, 2, 3, 6, 5, 5, 2, 4, 3, 5, 3, 1, 3, 5, 2]
+    )
+    # fmt: on
+    r = is_linked_list_a_palindrome(L)
+    print(r)  # False (but `True` is expected)
