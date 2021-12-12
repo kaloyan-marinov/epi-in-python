@@ -13,6 +13,9 @@ class ListNode:
             nodes[i].next = nodes[i + 1]
         return nodes[0]
 
+    def __repr__(self):
+        return f"<ListNode(data={self.data})>"
+
 
 def length(L: ListNode) -> int:
     l = 0

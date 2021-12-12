@@ -1,16 +1,12 @@
-from typing import Optional
+from typing import List, Optional
 
 from m_7_00_common import ListNode, length as compute_length
 
 
-def cyclically_right_shift_list(L: ListNode, k: int) -> Optional[ListNode]:
-    # fmt: off
-    '''
-    (L: Optional[ListNode], k:int) -> Optional[ListNode]
-    '''
-    # fmt: on
-
+def cyclically_right_shift_list(L: Optional[ListNode], k: int) -> Optional[ListNode]:
     length = compute_length(L)
+    if length == 0:
+        return
 
     k %= length
 
@@ -43,11 +39,11 @@ if __name__ == "__main__":
     # Test 1/507
     L = None
     k = 0
-
-    # When the next statement is executed, the script crashes with
-    #   ```
-    #     File "m_7_09_list_cyclic_right_shift.py", line 15, in cyclically_right_shift_list
-    #       k %= length
-    #   ZeroDivisionError: integer division or modulo by zero
-    #   ```
     new_head = cyclically_right_shift_list(L, k)
+    print(new_head)  # None (as expected)
+
+    # Test 9/507
+    L = ListNode(data=1)
+    k = 0
+    new_head = cyclically_right_shift_list(L, k)
+    print(new_head)  # None (but `<ListNode(data=1)>` is expected)
