@@ -16,12 +16,14 @@ def examine_buildings_with_sunset(sequence: Iterator[int]) -> List[int]:
     height_index_pairs: List[HeightIndexPair] = []
 
     for i, s_i in enumerate(sequence):
-        if height_index_pairs and height_index_pairs[-1].height <= s_i:
-            while height_index_pairs and height_index_pairs[-1].height <= s_i:
-                height_index_pairs.pop()
-            height_index_pairs.append(HeightIndexPair(s_i, i))
-        else:
-            height_index_pairs.append(HeightIndexPair(s_i, i))
+        # Discard all buildings, which
+        # (a) appear(ed) prior to (= to the east of) the current building,
+        # and (b) are of height <= that of the current building.
+        while height_index_pairs and height_index_pairs[-1].height <= s_i:
+            height_index_pairs.pop()
+
+        # Append the current [western-most] building.
+        height_index_pairs.append(HeightIndexPair(s_i, i))
 
     return [h_i_p.idx for h_i_p in reversed(height_index_pairs)]
 
