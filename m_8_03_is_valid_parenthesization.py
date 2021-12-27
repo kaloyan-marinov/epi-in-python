@@ -34,15 +34,18 @@ def is_well_formed_2(s: str) -> bool:
         "(": ")",
     }
 
-    left_characters = []
+    opening_parentheses = []
     for c in s:
         if c in opening_2_closing:
-            left_characters.append(c)
-        elif not left_characters or opening_2_closing[left_characters.pop()] != c:
-            # Unmatched right character.
+            opening_parentheses.append(c)
+        elif (
+            not opening_parentheses or opening_2_closing[opening_parentheses.pop()] != c
+        ):
+            # The current character is a right/closing one,
+            # but is not matched by the correct opening/left one.
             return False
 
-    return not left_characters
+    return not opening_parentheses
 
 
 if __name__ == "__main__":
