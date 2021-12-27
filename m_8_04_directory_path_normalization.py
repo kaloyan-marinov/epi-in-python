@@ -7,15 +7,22 @@ def shortest_equivalent_path(path: str) -> str:
         parts = []
 
     for o_p in original_parts:
-        if o_p == "" or o_p == ".":
+        # fmt: off
+        if o_p == "":  # i.e. if `path` is an absolute one, or if it contains consecutive slash chars (like "/a//b///c")
             continue
-        elif o_p == "..":
+        # fmt: on
+
+        if o_p == ".":
+            continue
+
+        if o_p == "..":
             if parts and parts[-1] != o_p:
                 parts.pop()
-            else:
+            else:  # i.e. the normalized path starts with 1 or more copies of '..'
                 parts.append(o_p)
-        else:
-            parts.append(o_p)
+            continue
+
+        parts.append(o_p)
 
     if parts == [""]:
         return "/"
