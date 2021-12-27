@@ -29,7 +29,7 @@ def add_two_numbers(L1: ListNode, L2: ListNode) -> Optional[ListNode]:
         L_next = ListNode(data=L.data // 10, next=None)
         L.data %= 10
         L.next = L_next
-        L = L_next  # can be commented out
+        # L = L_next  # can be commented out
 
     return dummy_head.next
 
@@ -58,7 +58,7 @@ def add_two_numbers_2(L1: ListNode, L2: ListNode) -> Optional[ListNode]:
         L_next = ListNode(data=s, next=None)
         L.next = L_next
 
-        L = L.next  # can be commented out
+        # L = L.next  # can be commented out
 
     return dummy_head.next
 
