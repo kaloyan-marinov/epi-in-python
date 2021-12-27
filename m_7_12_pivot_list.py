@@ -4,11 +4,11 @@ from m_7_00_common import ListNode
 
 
 def list_pivoting(L: ListNode, k: int) -> Optional[ListNode]:
-    l = ListNode()
+    l = ListNode(data=0, next=None)
     latest_l = l
-    e = ListNode()
+    e = ListNode(data=0, next=None)
     latest_e = e
-    g = ListNode()
+    g = ListNode(data=0, next=None)
     latest_g = g
 
     while L:
@@ -27,16 +27,8 @@ def list_pivoting(L: ListNode, k: int) -> Optional[ListNode]:
 
         L = L_next
 
-    it = l
-    while it.next:
-        it = it.next
-
-    if e.next:
-        it.next = e.next
-    while it.next:
-        it = it.next
-
-    if g.next:
-        it.next = g.next
+    latest_g.next = None
+    latest_e.next = g.next
+    latest_l.next = e.next
 
     return l.next
