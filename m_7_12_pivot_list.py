@@ -4,9 +4,6 @@ from m_7_00_common import ListNode
 
 
 def list_pivoting(L: ListNode, k: int) -> Optional[ListNode]:
-    if L is None:
-        return
-
     l = ListNode()
     latest_l = l
     e = ListNode()
