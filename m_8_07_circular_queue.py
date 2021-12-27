@@ -5,6 +5,9 @@ class Queue:
     at any given moment,
     the queue's head is `self._available_entries[self._start]`
     and its tail is `self._available_entries[self._final]`.
+
+    time:   for m combined enqueue and dequeue operations,
+            O(m)
     """
 
     SCALE_FACTOR = 2
