@@ -20,14 +20,10 @@ def add_two_numbers(L1: ListNode, L2: ListNode) -> Optional[ListNode]:
         L.next = L_next
 
         L = L_next
-        # fmt: off
-        '''
         if L1:
             L1 = L1.next
         if L2:
             L2 = L2.next
-        '''
-        # fmt: on
 
     if L.data > 9:
         L_next = ListNode(data=L.data // 10, next=None)
