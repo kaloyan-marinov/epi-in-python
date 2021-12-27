@@ -6,7 +6,10 @@ def shortest_equivalent_path(path: str) -> str:
         if o_p == ".":
             continue
         elif o_p == "..":
-            parts.pop()
+            if parts:
+                parts.pop()
+            else:
+                parts.append(o_p)
         else:
             parts.append(o_p)
 
@@ -15,4 +18,5 @@ def shortest_equivalent_path(path: str) -> str:
 
 if __name__ == "__main__":
     path = "./../"
-    p = shortest_equivalent_path(path)  # `IndexError: pop from empty list`
+    p = shortest_equivalent_path(path)
+    print(p)  # `../` but expected `..`
