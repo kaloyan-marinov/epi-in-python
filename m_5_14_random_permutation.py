@@ -3,7 +3,7 @@ from typing import List
 import random
 
 
-def compute_random_permutation(n: int) -> List[int]:
+def compute_random_permutation_1(n: int) -> List[int]:
     """
     space: O(n)
            beyond that of the result array
@@ -28,16 +28,40 @@ def compute_random_permutation(n: int) -> List[int]:
     Median running time:     7  s
     *** You've passed ALL tests. Congratulations! ***
     """
-    perm = [None] * n
-    added = set()
+    permutation = [None] * n
+    added_indices = set()
 
     i = 0
-    while len(added) < n:
+    while len(added_indices) < n:
         candidate = random.randrange(n)
 
-        if candidate not in added:
-            perm[i] = candidate
-            added.add(candidate)
+        if candidate not in added_indices:
+            permutation[i] = candidate
+            added_indices.add(candidate)
             i += 1
 
-    return perm
+    return permutation
+
+
+from m_5_12_offline_sampling import (
+    random_sampling as generate_random_sample_in_inplace_manner,
+)
+
+
+def compute_random_permutation_2(n: int) -> List[int]:
+    """
+    space: none
+           outside of the needed for the result array itself
+
+    time:  O(n)
+
+    Test PASSED (6/6) [   8  s]
+    Average running time:    5  s
+    Median running time:     5  s
+    *** You've passed ALL tests. Congratulations! ***
+    """
+    permutation = list(range(n))
+
+    generate_random_sample_in_inplace_manner(n, permutation)
+
+    return permutation
