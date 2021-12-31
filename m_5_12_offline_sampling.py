@@ -18,6 +18,13 @@ def random_sampling(k: int, A: List[int]) -> None:
       (a) _the elements of_ the generated random sample are in the `A[:k]` subarray, and
       (b) the remaining elements are in the last `n - k` slots.
     In other words, the generated [random] sample is `set(A[:k])`.
+
+    ---
+
+    time:  O(k)
+
+    space: O(1)
+           in addition to the inputs
     """
     for i in range(k):
         r = random.randrange(i, len(A))  # equivalent to random.randint(i, len(A) - 1)
