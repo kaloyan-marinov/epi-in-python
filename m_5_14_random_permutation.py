@@ -5,6 +5,9 @@ import random
 
 def compute_random_permutation_1(n: int) -> List[int]:
     """
+    Generate a (uniformly random) permutation of `n` elements
+    / Sample an element from S_n at random.
+
     space: O(n)
            beyond that of the result array
 
@@ -50,6 +53,9 @@ from m_5_12_offline_sampling import (
 
 def compute_random_permutation_2(n: int) -> List[int]:
     """
+    Generate a (uniformly random) permutation of `n` elements
+    / Sample an element from $S_n$ at random.
+
     space: none
            outside of the needed for the result array itself
 

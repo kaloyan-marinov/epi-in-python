@@ -6,7 +6,10 @@ def random_sampling(k: int, A: List[int]) -> None:
     """
     Assume that `A` is an array of distinct elements.
 
-    Generate - in a uniformly random manner! - a sample of size `k` from `A`.
+    Generate a (uniformly random) sample of size `k`
+    from (offline data available as) an in-memory array `A`
+    (in an in-place manner).
+
     (
     Return - at random! - a subset of size `k` from `A`,
     in such a way that

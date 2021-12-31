@@ -11,7 +11,7 @@ def random_subset_1(n: int, k: int) -> List[int]:
     """
     Assume that n >= k.
 
-    Generate - in a uniformly random manner! - a sample of size `k` from {0, ..., n - 1}.
+    Generate a (uniformly random) sample of size `k` from ${0, ..., n - 1}$.
 
     -----------
 

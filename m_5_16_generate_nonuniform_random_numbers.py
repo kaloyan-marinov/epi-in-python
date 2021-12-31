@@ -10,6 +10,12 @@ def nonuniform_random_number_1(
     probabilities: List[float],
 ) -> int:
     """
+    Given a (not-necessarily-uniform-)probability vector,
+    generate (at random) one of the possible outcome( indice)s
+    according to the provided probabilities.
+
+    ---
+
     time:  need to check the documentation of Python's Standard Library
 
     space: need to check the documentation of Python's Standard Library
@@ -33,6 +39,12 @@ def nonuniform_random_number_2(
     probabilities: List[float],
 ) -> int:
     """
+    Given a (not-necessarily-uniform-)probability vector,
+    generate (at random) one of the possible outcome( indice)s
+    according to the provided probabilities.
+
+    ---
+
     time:  <= O(n)
            where n := len(values)
 
@@ -60,6 +72,12 @@ def nonuniform_random_number_3(
     probabilities: List[float],
 ) -> int:
     """
+    Given a (not-necessarily-uniform-)probability vector,
+    generate (at random) one of the possible outcome( indice)s
+    according to the provided probabilities.
+
+    ---
+
     time:  to compute a single value
            O(n) [which is the time to create the array of intervals]
 
