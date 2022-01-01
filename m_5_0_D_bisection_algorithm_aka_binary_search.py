@@ -61,3 +61,21 @@ print(bisect.bisect_right(A, x))  # 4
 print()
 print("bisect.bisect(A, x)")
 print(bisect.bisect(A, x))  # 4
+
+# indices
+#      0    1    2    3  4
+B = [0.0, 0.5, 0.8, 0.9, 1]
+idx = bisect.bisect(B, 0.3)  # 1
+print()
+print(idx)
+idx = bisect.bisect(B, 0.5)  # 2
+print(idx)
+idx = bisect.bisect(B, 0.6)  # 2
+print(idx)
+idx = bisect.bisect(B, 0.85)  # 3
+print(idx)
+idx = bisect.bisect(B, 0.95)  # 4
+print(idx)
+
+idx = bisect.bisect(B, -1)  # -1
+print(idx)
