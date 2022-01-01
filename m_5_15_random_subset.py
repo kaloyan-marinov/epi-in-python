@@ -2,12 +2,11 @@ from typing import Dict, List
 
 import random
 
-from m_5_12_offline_sampling import (
-    random_sampling as generate_random_sample_in_inplace_manner,
-)
+from m_5_12_offline_sampling import generate_random_sample_inplace
 
 
-def random_subset_1(n: int, k: int) -> List[int]:
+# def random_subset_1(n: int, k: int) -> List[int]:
+def generate_random_sample_1(n: int, k: int) -> List[int]:
     """
     Assume that n >= k.
 
@@ -22,7 +21,7 @@ def random_subset_1(n: int, k: int) -> List[int]:
     A = list(range(n))
 
     # The next statement is identical to the following commented-out block of code.
-    generate_random_sample_in_inplace_manner(k, A)
+    generate_random_sample_inplace(k, A)
     # fmt: off
     '''
     for i in range(k):
@@ -34,7 +33,8 @@ def random_subset_1(n: int, k: int) -> List[int]:
     return A[:k]
 
 
-def random_subset_2(n: int, k: int) -> List[int]:
+# def random_subset_2(n: int, k: int) -> List[int]:
+def generate_random_sample_2(n: int, k: int) -> List[int]:
     """
     [
     This function basically/essentially implements the same algorithm as the one above,

@@ -14,10 +14,11 @@ def online_random_sample(
     Given a `stream` of datapoints,
     maintain a uniform random subset of size `k`
     from the datapoints processed/seen/read so far.
-
+    [
     Maintain a subset of the datapoints processed/seen/read so far
     so that it is always an unbiased sample of the datapoints processed/seen/read so far
     (by adding and evicting elements according to appropriately chosen probability).
+    ]
     """
     # Store the 1st k elements.
     reservoir_elements = list(

@@ -3,7 +3,8 @@ from typing import List
 import random
 
 
-def compute_random_permutation_1(n: int) -> List[int]:
+# def compute_random_permutation_1(n: int) -> List[int]:
+def generate_random_permutation_1(n: int) -> List[int]:
     """
     Generate a (uniformly random) permutation of `n` elements
     / Sample an element from S_n at random.
@@ -46,18 +47,17 @@ def compute_random_permutation_1(n: int) -> List[int]:
     return permutation
 
 
-from m_5_12_offline_sampling import (
-    random_sampling as generate_random_sample_in_inplace_manner,
-)
+from m_5_12_offline_sampling import generate_random_sample_inplace
 
 
-def compute_random_permutation_2(n: int) -> List[int]:
+# def compute_random_permutation_2(n: int) -> List[int]:
+def generate_random_permutation_2(n: int) -> List[int]:
     """
     Generate a (uniformly random) permutation of `n` elements
     / Sample an element from $S_n$ at random.
 
     space: none
-           outside of the needed for the result array itself
+           outside of that needed for the result array itself
 
     time:  O(n)
 
@@ -68,6 +68,8 @@ def compute_random_permutation_2(n: int) -> List[int]:
     """
     permutation = list(range(n))
 
-    generate_random_sample_in_inplace_manner(n, permutation)
+    # The next statement does the job,
+    # thanks to observation (b) in the called function's docstring.
+    generate_random_sample_inplace(n, permutation)
 
     return permutation

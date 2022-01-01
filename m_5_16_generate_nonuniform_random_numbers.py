@@ -5,7 +5,8 @@ import random
 from typing import List
 
 
-def nonuniform_random_number_1(
+# def nonuniform_random_number_1(
+def generate_nonuniform_random_number_1(
     values: List[int],
     probabilities: List[float],
 ) -> int:
@@ -34,7 +35,8 @@ def nonuniform_random_number_1(
     return choices[0]
 
 
-def nonuniform_random_number_2(
+# def nonuniform_random_number_2(
+def generate_nonuniform_random_number_2(
     values: List[int],
     probabilities: List[float],
 ) -> int:
@@ -67,7 +69,8 @@ def nonuniform_random_number_2(
     return values[idx]
 
 
-def nonuniform_random_number_3(
+# def nonuniform_random_number_3(
+def generate_nonuniform_random_number_3(
     values: List[int],
     probabilities: List[float],
 ) -> int:
@@ -79,7 +82,8 @@ def nonuniform_random_number_3(
     ---
 
     time:  to compute a single value
-           O(n) [which is the time to create the array of intervals]
+           O(n)
+           [which is the time to create the array of intervals]
 
            once the array is constructed,
            O(log n)
