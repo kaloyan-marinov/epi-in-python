@@ -11,6 +11,11 @@ x = 4
 
 # fmt: off
 '''
+Return the index of the first entry in A that is >= x.
+(If all elements in the list are < x, the returned values is len(A).)
+
+---
+
 Locate the insertion point for x in A to maintain sorted order.
 
 If x is already present in A,
@@ -34,6 +39,11 @@ print(bisect.bisect_left(A, x))  # 2
 
 # fmt: off
 '''
+Return the index of the first entry in A that is > x.
+(If all elements in the list are <= x, the returned value is len(A).)
+
+---
+
 Similar to bisect_left(),
 but returns an insertion point
 which comes after (to the right of) any existing entries of x in a.
