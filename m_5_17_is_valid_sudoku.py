@@ -8,6 +8,12 @@ from typing import List, Iterable
 def solution_1_is_valid_sudoku(
     partial_assignment: List[List[int]],
 ) -> bool:
+    """
+    `partial_assignment` represents a partial assignment of a 9-by-9 Sudoku board.
+
+    Assume that each empty cell in `partial_assignment` holds the integer 0.
+    """
+
     # Check the rows.
     for row in partial_assignment:
         if not is_iterable_valid(row):
@@ -49,6 +55,12 @@ def is_iterable_valid(numbers: Iterable[int]) -> bool:
 def solution_3_is_valid_sudoku_pythonic(
     partial_assignment: List[List[int]],
 ) -> bool:
+    """
+    `partial_assignment` represents a partial assignment of a 9-by-9 Sudoku board.
+
+    Assume that each empty cell in `partial_assignment` holds the integer 0.
+    """
+
     n = len(partial_assignment)
     region_size = int(math.sqrt(n))
 
