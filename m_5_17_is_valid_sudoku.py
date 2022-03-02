@@ -5,7 +5,7 @@ import math
 from typing import List, Iterable
 
 
-_EMPTY_CELL_CONTENT = 0
+_EMPTY_CELL_CONTENT: int = 0
 
 
 def solution_1_is_valid_sudoku(
