@@ -18,11 +18,15 @@ class LruCache:
 
     def insert(self, isbn: int, price: int) -> None:
         if isbn in self._isbn_2_price:
-            price = self._isbn_2_price.pop(isbn)
-        elif len(self._isbn_2_price) == self._capacity:
+            p = self._isbn_2_price.pop(isbn)
+            self._isbn_2_price[isbn] = p
+            return
+
+        if len(self._isbn_2_price) == self._capacity:
             self._isbn_2_price.popitem(
                 last=False
             )  # causes a pop in FIFO (instead of LIFO) order!
+
         self._isbn_2_price[isbn] = price
 
     def erase(self, isbn: int) -> bool:
