@@ -56,6 +56,10 @@ def union_of_intervals(intervals: List[Interval]) -> List[Interval]:
             right_endpoint_is_closed = curr_result_piece.right.is_closed
             if curr_result_piece.right.val < interval.right.val:
                 right_endpoint_is_closed = interval.right.is_closed
+            elif curr_result_piece.right.val == interval.right.val:
+                right_endpoint_is_closed = (
+                    curr_result_piece.right.is_closed or interval.right.is_closed
+                )
 
             curr_result_piece = Interval(
                 Endpoint(left_endpoint_is_closed, left_endpoint_val),
