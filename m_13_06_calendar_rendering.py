@@ -10,6 +10,15 @@ Event = collections.namedtuple(
 
 
 def find_max_simultaneous_events_1(A: List[Event]) -> int:
+    """
+    This works but is very slow.
+
+    Test PASSED (97/97) [ 101  s]
+    Average running time:    1  s
+    Median running time:    36 us
+    *** You've passed ALL tests. Congratulations! ***
+    """
+
     # fmt: off
     endpoints: List[int] = [
         p for event in A
@@ -38,6 +47,13 @@ Endpoint = collections.namedtuple(
 
 
 def find_max_simultanous_events_2(A: List[Event]) -> int:
+    """
+    Test PASSED (97/97) [  89 ms]
+    Average running time:  976 us
+    Median running time:    39 us
+    *** You've passed ALL tests. Congratulations! ***
+    """
+
     # fmt: off
     endpoints: List[Endpoint] = [
         e_p for event in A
@@ -78,6 +94,13 @@ class Endpoint(NamedTuple):
 
 
 def find_max_simultaneous_events_2(A: List[Event]) -> int:
+    """
+    Test PASSED (97/97) [  81 ms]
+    Average running time:  894 us
+    Median running time:    31 us
+    *** You've passed ALL tests. Congratulations! ***
+    """
+
     # fmt: off
     endpoints: List[Endpoint] = [
         e_p for event in A
