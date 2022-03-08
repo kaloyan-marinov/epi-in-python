@@ -87,33 +87,17 @@ def add_interval_2(
 
     # Process all (if any!) entries in `disjoint_intervals`,
     # each of which comes[/appears/is located] strictly before `new_interval`.
-    while disjoint_intervals[ii].right < new_interval.left:
-        # fmt: off
-        '''
     while (
         ii < len(disjoint_intervals)
         and disjoint_intervals[ii].right < new_interval.left
     ):
-        '''
-        # fmt: on
         result.append(disjoint_intervals[ii])
         ii += 1
 
     # Process all (if any!) entries in `disjoint_intervals`,
     # each of which has a non-empty intersection with `new_interval`.
     union = new_interval
-    while (
-        union.left <= disjoint_intervals[ii].left <= union.right
-        or union.left <= disjoint_intervals[ii].right <= union.right
-    ):
-        # fmt: off
-        '''
-    while (
-        ii < len(disjoint_intervals)
-        and disjoint_intervals[ii].left <= union.right
-    ):
-        '''
-        # fmt: on
+    while ii < len(disjoint_intervals) and disjoint_intervals[ii].left <= union.right:
         union = Interval(
             min(union.left, disjoint_intervals[ii].left),
             max(union.right, disjoint_intervals[ii].right),
