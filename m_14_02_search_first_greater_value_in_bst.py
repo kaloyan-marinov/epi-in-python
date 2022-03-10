@@ -41,15 +41,13 @@ def find_first_greater_than_k_2(tree: BstNode, k: int) -> Optional[BstNode]:
     space: O(h)
     """
 
-    global prev
     prev = None
-    global node
     node = None
 
     def _helper(t: BstNode, k: int) -> None:
 
-        global prev
-        global node
+        nonlocal prev
+        nonlocal node
 
         if node:
             return
@@ -57,17 +55,12 @@ def find_first_greater_than_k_2(tree: BstNode, k: int) -> Optional[BstNode]:
         if t:
             _helper(t.left, k)
 
-            print(t.data)
-
             if prev and t.data > k >= prev.data:
                 node = t
-                return
 
             prev = t
 
             _helper(t.right, k)
-
-    print()
 
     _helper(tree, k)
 
