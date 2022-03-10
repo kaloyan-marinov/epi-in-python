@@ -11,16 +11,7 @@ def rebuild_bst_from_preorder_1(preorder_sequence: List[int]) -> Optional[BstNod
     if not preorder_sequence:
         return None
 
-    # The following is unnecessary.
-    if len(preorder_sequence) == 1:
-        return BstNode(data=preorder_sequence[0])
-
     i = 1
-    # fmt: off
-    '''
-    while preorder_sequence[i] <= preorder_sequence[0]:
-    '''
-    # fmt: on
     while i < len(preorder_sequence) and preorder_sequence[i] < preorder_sequence[0]:
         i += 1
 
@@ -56,22 +47,24 @@ def rebuild_bst_from_preorder_3(preorder_sequence: List[int]) -> Optional[BstNod
     Assume that `preorder_sequence` is composed of unique keys.
     """
 
-    root_idx = [0]
+    root_idx = 0
 
     def _rebuild_bst_from_preorder_on_value_range(
         lower_bound: int, upper_bound: int
     ) -> Optional[BstNode]:
-        if root_idx[0] == len(preorder_sequence):
+        nonlocal root_idx
+
+        if root_idx == len(preorder_sequence):
             return None
 
-        root_value = preorder_sequence[root_idx[0]]
+        root_value = preorder_sequence[root_idx]
 
         if not lower_bound <= root_value <= upper_bound:  # each ineq can be strict!
             return None
 
-        root_idx[0] += 1
+        root_idx += 1
 
-        # Note that, since this function updates `root_idx[0]`,
+        # Note that, since this function updates `root_idx`,
         # the order of the following two calls is critical.
         left_subtree = _rebuild_bst_from_preorder_on_value_range(
             lower_bound,
