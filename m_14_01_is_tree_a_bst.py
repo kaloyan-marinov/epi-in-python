@@ -1,4 +1,6 @@
-from typing import List, NamedTuple, Optional
+from typing import List, Union, Literal, Optional, Tuple, Deque
+
+import typing
 
 import collections
 
@@ -6,61 +8,16 @@ import collections
 from m_9_00_common import BinaryTreeNode
 
 
-ExtremesPair = collections.namedtuple(
-    "ExtremesPair",
-    ("min", "max"),
-)
-
-
-# fmt: off
-'''
-def is_binary_tree_bst_1_a(tree: BinaryTreeNode) -> bool:
-    def _helper(t: BinaryTreeNode) -> ExtremesPair:
-        print()
-        print(t)
-        
-        if t is None:
-            return ExtremesPair(
-                min=float('inf'),
-                max=float('-inf'),
-            )
-
-
-        t_left_result = _helper(t.left)
-        t_right_result = _helper(t.right)
-
-        print('    ', t.data)
-        print('    ', t_left_result)
-        print('    ', t_right_result)
-        if ( 
-            t_left_result.max <= t.data
-         and
-            t.data <= t_right_result.min
-        and
-            t_right_result.min is not float('inf')
-        ):
-            e = ExtremesPair(
-                min=min(t_left_result.min, t.data, t_right_result.min),
-                max=max(t_left_result.max, t.data, t_right_result.max),
-            )
-            print(t.data, e)
-            return e
-        else:
-            e = ExtremesPair(
-                min=float("-inf"),
-                max=float("inf"),
-            )
-            print(t.data, e)
-            return e
-
-    max_min = _helper(tree)
-
-    return max_min.max != float("inf")
-'''
-# fmt: on
+class ExtremesPair(typing.NamedTuple):
+    min: Union[int, Literal[float("inf")]]
+    max: Union[int, Literal[float("-inf")]]
 
 
 def is_binary_tree_bst_1_a(tree: BinaryTreeNode) -> bool:
+    """
+    This is a solution by me.
+    """
+
     def _helper(t: BinaryTreeNode) -> ExtremesPair:
         if t is None:
             return ExtremesPair(
@@ -71,7 +28,7 @@ def is_binary_tree_bst_1_a(tree: BinaryTreeNode) -> bool:
         result_left = _helper(t.left)
         result_right = _helper(t.right)
 
-        if result_left.max < t.data <= result_right.min:  # <= t.data
+        if result_left.max <= t.data <= result_right.min:
             return ExtremesPair(
                 min=min(result_left.min, t.data),
                 max=max(t.data, result_right.max),
@@ -84,10 +41,22 @@ def is_binary_tree_bst_1_a(tree: BinaryTreeNode) -> bool:
 
     max_min = _helper(tree)
 
-    return max_min.max is not float("inf")  # !=
+    return max_min.max != float("inf")
+    # fmt: off
+    '''
+    >>> float('inf') is float('inf')
+    False
+    >>> float('inf') == float('inf')
+    True
+    '''
+    # fmt: on
 
 
 def is_binary_tree_bst_1_b(tree: BinaryTreeNode) -> bool:
+    """
+    This is 1 of the official solutions.
+    """
+
     def _are_keys_in_range(
         t: BinaryTreeNode,
         lower_bdd=float("-inf"),
@@ -99,8 +68,14 @@ def is_binary_tree_bst_1_b(tree: BinaryTreeNode) -> bool:
             return False
         else:
             return _are_keys_in_range(
-                t.left, lower_bdd=lower_bdd, upper_bdd=t.data
-            ) and _are_keys_in_range(t.right, lower_bdd=t.data, upper_bdd=upper_bdd)
+                t.left,
+                lower_bdd=lower_bdd,
+                upper_bdd=t.data,
+            ) and _are_keys_in_range(
+                t.right,
+                lower_bdd=t.data,
+                upper_bdd=upper_bdd,
+            )
 
     return _are_keys_in_range(
         tree,
@@ -111,6 +86,8 @@ def is_binary_tree_bst_1_b(tree: BinaryTreeNode) -> bool:
 
 def is_binary_tree_bst_2_a(tree: BinaryTreeNode) -> bool:
     """
+    This is a solution by me.
+
     time:  O(n * log n)
 
     space: O(n)
@@ -127,7 +104,7 @@ def is_binary_tree_bst_2_a(tree: BinaryTreeNode) -> bool:
     return lst == sorted(lst)
 
 
-def is_binary_tree_bst_2_b(tree: BinaryTreeNode) -> bool:
+def is_binary_tree_bst_2_b_1(tree: BinaryTreeNode) -> bool:
     """
     time:  O(n)
 
@@ -137,12 +114,11 @@ def is_binary_tree_bst_2_b(tree: BinaryTreeNode) -> bool:
     https://www.geeksforgeeks.org/a-program-to-check-if-a-binary-tree-is-bst-or-not/
     """
 
-    global prev
     prev = None
 
     def _helper(t: BinaryTreeNode) -> bool:
 
-        global prev
+        nonlocal prev
 
         if t is None:
             return True
@@ -160,135 +136,26 @@ def is_binary_tree_bst_2_b(tree: BinaryTreeNode) -> bool:
     return _helper(tree)
 
 
-def is_binary_tree_bst_2_c_1(tree: BinaryTreeNode) -> bool:
-    """
-    not yet working!
-
-    when the recursion "arrives back" at the node holding 1,
-    `prev` does NOT equal the expected (= the node holding 0) but instead equals `None`!
-
-    reference:
-    https://www.geeksforgeeks.org/a-program-to-check-if-a-binary-tree-is-bst-or-not/
-        - the reference has two typos in its corresponding function
-        - this file corrects both of the reference's typos
-    """
-
+def is_binary_tree_bst_2_b_2(tree: BinaryTreeNode) -> bool:
     def _helper(
         t: BinaryTreeNode,
-        prev: Optional[BinaryTreeNode] = None,
-    ) -> bool:
+    ) -> Tuple[bool, Optional[BinaryTreeNode]]:
+        # ...
+        return is_t_not_less_than_prev, prev
 
-        if t is None:
-            return True
-
-        a = _helper(t.left, prev)
-        if a is False:  # corrects the reference's typo #1
-            return False
-
-        print(t.data)
-
-        if prev is not None and prev.data > t.data:  # corrects the reference's typo #2
-            return False
-
-        prev = t
-
-        b = _helper(t.right, prev)
-
-        return b
-
-    print()
-
-    return _helper(tree, None)
+    raise NotImplementedError(
+        "Attempt to implement this, as an alternative to the previous function",
+    )
 
 
-OkPrevPair = collections.namedtuple(
-    "OkPrevPair",
-    ("ok", "prev"),
-)
-
-
-def is_binary_tree_bst_2_c_2(tree: BinaryTreeNode) -> bool:
-    """
-    not yet working!
-    """
-
-    def _helper(
-        t: BinaryTreeNode,
-        aux: Optional[OkPrevPair] = OkPrevPair(True, None),
-    ) -> OkPrevPair:
-
-        if aux.ok is False:
-            return aux
-
-        if t is None:
-            return OkPrevPair(True, aux.prev)
-
-        a = _helper(t.left, aux)
-        if a.ok is False:
-            return OkPrevPair(False, aux.prev)
-
-        print(t.data)
-
-        if a.prev is not None and a.prev.data > t.data:
-            return OkPrevPair(False, aux.prev)
-
-        b = _helper(t.right, OkPrevPair(True, t))
-
-        return OkPrevPair(b.ok, t.right)
-
-    return _helper(
-        tree,
-        OkPrevPair(True, None),
-    ).ok
-
-
-def is_binary_tree_bst_2_c_3(tree: BinaryTreeNode) -> bool:
-    """
-    a hacky way of "hacking" is_binary_tree_bst_2_c_1 into working as expected
-
-    in fact, one can say that
-    this implementation combines ideas from each of the following:
-        - is_binary_tree_bst_2_b
-        - is_binary_tree_bst_2_c_1
-    (but that _actually_ defeats the point of trying to eliminate the global variable)
-    """
-
-    def _helper(
-        t: BinaryTreeNode,
-        prev_2_node={"prev": None},
-    ) -> bool:
-
-        if t is None:
-            return True
-
-        a = _helper(t.left, prev_2_node)
-        if a is False:
-            return False
-
-        print(t.data)
-
-        if prev_2_node["prev"] is not None and prev_2_node["prev"].data > t.data:
-            return False
-
-        prev_2_node["prev"] = t
-
-        b = _helper(t.right, prev_2_node)
-
-        return b
-
-    print()
-
-    return _helper(tree)
-
-
-NodeBoundsTuple = collections.namedtuple(
-    "NodeBoundsTuple",
-    ("node", "lower", "upper"),
-)
+class NodeBoundsTuple(typing.NamedTuple):
+    node: BinaryTreeNode
+    lower: float
+    upper: float
 
 
 def is_binary_tree_bst_3(tree: BinaryTreeNode) -> bool:
-    bfs_queue = collections.deque(
+    bfs_queue: Deque[NodeBoundsTuple] = collections.deque(
         [
             NodeBoundsTuple(tree, float("-inf"), float("inf")),
         ],
