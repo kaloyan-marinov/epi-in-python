@@ -8,10 +8,19 @@ def pair_includes_ancestor_and_descendant_of_m_1(
 ) -> bool:
     """
     Assume all keys are unique.
-    """
 
-    # if possible_anc_or_desc_0 is m or possible_anc_or_desc_1 is m:
-    #     return False
+    time:  O(h)
+
+    shortcoming:    in the scenario,
+                    where the 3 nodes are totally ordered
+                          (= this function is expected to return `True`),
+                          and the 3 nodes are very close [together],
+                    if this function begins the search from the lower of the 2 nodes,
+                    it will incur the full O(h) time complexity
+
+    each of this module's other functions
+    handles the above-described scenario more efficiently
+    """
 
     def _has_as_proper_descendant(
         start_n: BstNode,
@@ -54,6 +63,7 @@ def pair_includes_ancestor_and_descendant_of_m_2(
     """
     Assume all keys are unique.
     """
+
     search_0 = possible_anc_or_desc_0
     search_1 = possible_anc_or_desc_1
 
@@ -114,6 +124,7 @@ def pair_includes_ancestor_and_descendant_of_m_3(
 
     This is a cleaner refactoring of the *_2 function.
     """
+
     search_0 = possible_anc_or_desc_0
     search_1 = possible_anc_or_desc_1
 
