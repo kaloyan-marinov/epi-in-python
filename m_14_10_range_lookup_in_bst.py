@@ -12,6 +12,18 @@ Interval = collections.namedtuple(
 
 
 def range_lookup_in_bst_1(tree: BstNode, interval: Interval) -> List[int]:
+    """
+    This is based on brute force.
+
+    time:  O(n)
+    space: O(h)
+
+    shortcoming:    this f-n does not take advantage of the fact that
+                    the `tree` is not a general binary tree,
+                    whose keys are all of a data type that's "comparable",
+                    but actually is a BST
+    """
+
     def _helper(
         t: BstNode,
         interval: Interval,
@@ -33,36 +45,24 @@ def range_lookup_in_bst_1(tree: BstNode, interval: Interval) -> List[int]:
 
 
 def range_lookup_in_bst_2(tree: BstNode, interval: Interval) -> List[int]:
+    """
+    TODO: compare this with `range_lookup_in_bst_3`
+    """
+
     def _helper(
         t: BstNode,
         interval: Interval,
         keys: List[int],
     ) -> None:
         if t:
-            if t.data < interval.left:
-                return
-            _helper(t.left, interval, keys)
-            # fmt: off
-            # Replace the previous block with the following:
-            '''
             if interval.left <= t.data:
                 _helper(t.left, interval, keys)
-            '''
-            # fmt: on
 
             if interval.left <= t.data <= interval.right:
                 keys.append(t.data)
 
-            if t.data > interval.right:
-                return
-            _helper(t.right, interval, keys)
-            # fmt: off
-            # Replace the previous block with the following:
-            '''
             if t.data <= interval.right:
                 _helper(t.right, interval, keys)
-            '''
-            # fmt: on
 
     result: List[int] = []
 
@@ -72,6 +72,10 @@ def range_lookup_in_bst_2(tree: BstNode, interval: Interval) -> List[int]:
 
 
 def range_lookup_in_bst_3(tree: BstNode, interval: Interval) -> List[int]:
+    """
+    TODO: compare this with `range_lookup_in_bst_2`
+    """
+
     result: List[int] = []
 
     def _helper(
