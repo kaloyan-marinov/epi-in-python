@@ -4,24 +4,14 @@ import bintrees
 
 
 class ClientsCreditsInfo:
-    r_b_tree = bintrees.RBTree()
-    client_id_2_credit: Dict[str, int] = {}
-    # fmt: off
-    '''
     def __init__(self):
         self.r_b_tree = bintrees.RBTree()
         self.client_id_2_credit: Dict[str, int] = {}
-    '''
-    # fmt: on
 
     def insert(self, client_id: str, c: int) -> None:
-        # fmt: off
-        '''
         if client_id in self.client_id_2_credit:
             credit = self.client_id_2_credit.pop(client_id)
             self.r_b_tree.discard((credit, client_id))
-        '''
-        # fmt: on
 
         self.r_b_tree.insert((c, client_id), None)
         self.client_id_2_credit[client_id] = c
@@ -41,15 +31,13 @@ class ClientsCreditsInfo:
 
     def lookup(self, client_id: str) -> int:
         credit = self.client_id_2_credit.get(client_id)
-        return credit  # `credit if credit else -1`
+        return credit if credit else -1
 
     def add_all(self, C: int) -> None:
         for client_id, credit in self.client_id_2_credit.items():
             self.r_b_tree.discard((credit, client_id))
-            self.r_b_tree.insert(
-                (credit + 1, client_id)  # >> `(credit + C, client_id), None`
-            )
-            self.client_id_2_credit[client_id] = credit + 1  # >> `+ C`
+            self.r_b_tree.insert((credit + C, client_id), None)
+            self.client_id_2_credit[client_id] = credit + C
 
         return
 
