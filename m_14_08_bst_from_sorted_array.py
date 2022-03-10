@@ -6,6 +6,13 @@ from m_14_00_common import BstNode
 def build_min_height_bst_from_sorted_array_1(A: List[int]) -> Optional[BstNode]:
     """
     Assume that `A` is sorted.
+
+    TODO: check whether the following holds true
+
+        T(n) = 2 T(n/2) + O(n)
+                            |
+                            |
+                            is this actually true, due to using list slicing?
     """
 
     n = len(A)
@@ -17,9 +24,7 @@ def build_min_height_bst_from_sorted_array_1(A: List[int]) -> Optional[BstNode]:
 
     return BstNode(
         data=A[mid],
-        left=build_min_height_bst_from_sorted_array_1(
-            A[: mid - 1]
-        ),  # change `mid - 1` to `mid`
+        left=build_min_height_bst_from_sorted_array_1(A[:mid]),
         right=build_min_height_bst_from_sorted_array_1(A[mid + 1 :]),
     )
 
@@ -33,7 +38,7 @@ def build_min_height_bst_from_sorted_array_2(A: List[int]) -> Optional[BstNode]:
         if lo_idx == hi_idx:
             return None
 
-        mid = (hi_idx - lo_idx + 1) // 2  # change to `(hi_idx + low_idx) // 2`
+        mid = (lo_idx + hi_idx) // 2
 
         return BstNode(
             data=A[mid],
@@ -41,4 +46,4 @@ def build_min_height_bst_from_sorted_array_2(A: List[int]) -> Optional[BstNode]:
             right=_min_height_bst_from_index_range(mid + 1, hi_idx),
         )
 
-    return _min_height_bst_from_index_range(0, len(A) - 1)  # change to `(0, len(A))`
+    return _min_height_bst_from_index_range(0, len(A))
