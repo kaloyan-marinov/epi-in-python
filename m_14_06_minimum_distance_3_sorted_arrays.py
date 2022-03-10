@@ -11,8 +11,10 @@ def find_closest_elements_in_sorted_arrays(
     Return the length of the shortest interval
     that contains >= 1 element from each of the `sorted_arrays`.
 
-    Assume that each of the `sorted_arrays` doesn't contain any duplicate values.
-    But a single value may be present in more than 1 array.
+    Assume that:
+        - each of the `sorted_arrays` is non-empty
+        - each of the `sorted_arrays` doesn't contain any duplicate values
+        - a single value may be present in more than 1 array
 
     time:  O(n * log k),
            where `n := sum(len(array) for array in sorted_arrays)`
@@ -30,11 +32,10 @@ def find_closest_elements_in_sorted_arrays(
         it_idx = iter(array_idx)
 
         next_value_from_it_idx = next(it_idx, None)
-        if next_value_from_it_idx is not None:
-            r_b_tree.insert(
-                (next_value_from_it_idx, idx),  # TODO: understand why `idx` is needed
-                it_idx,
-            )
+        r_b_tree.insert(
+            (next_value_from_it_idx, idx),  # TODO: understand why `idx` is needed
+            it_idx,
+        )
 
     currently_shortest_interval_length = float("inf")
     while True:
