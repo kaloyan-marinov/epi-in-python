@@ -4,20 +4,16 @@ from m_14_00_common import BstNode
 
 
 def find_k_largest_in_bst_1(tree: BstNode, k: int) -> List[int]:
-    # global greatest_values
+    """
+    These are solutions by me.
+    """
+
     # fmt: off
     '''
-    For some reason that I don't yet understand,
-    the next statement causes a crash with
-    ```
-    SyntaxError: annotated name 'greatest_values' can't be global
-    ```
-    '''
-    # fmt: on
     greatest_values: List[int] = []
 
-    def _helper(t: BstNode, k) -> None:
-        global greatest_values
+    def _helper(t: BstNode, k: int) -> None:
+        nonlocal greatest_values  # not actually needed, but makes the intent clearer
 
         if len(greatest_values) == k:
             return
@@ -25,7 +21,9 @@ def find_k_largest_in_bst_1(tree: BstNode, k: int) -> List[int]:
         if t:
             _helper(t.right, k)
 
-            if greatest_values and greatest_values[-1] != t.data:
+            if not greatest_values or (
+                greatest_values and len(greatest_values) < k and greatest_values[-1] != t.data
+            ):
                 greatest_values.append(t.data)
 
             _helper(t.left, k)
@@ -33,9 +31,9 @@ def find_k_largest_in_bst_1(tree: BstNode, k: int) -> List[int]:
     _helper(tree, k)
 
     return greatest_values
+    '''
+    # fmt: on
 
-
-def find_k_largest_in_bst_2(tree: BstNode, k: int) -> List[int]:
     def _helper(t: BstNode, k: int, greatest_vals: List[int]) -> None:
 
         if len(greatest_vals) == k:
@@ -59,10 +57,12 @@ def find_k_largest_in_bst_2(tree: BstNode, k: int) -> List[int]:
     return greatest_values
 
 
-def find_k_largest_in_bst_3(tree: BstNode, k: int) -> List[int]:
+def find_k_largest_in_bst_2(tree: BstNode, k: int) -> List[int]:
     k_greatest_values: List[int] = []
 
     def _helper(t: BstNode) -> None:
+        # nonlocal k_greatest_values  # not actually needed, but makes the intent clearer
+
         if t and len(k_greatest_values) < k:
             _helper(t.right)
 
