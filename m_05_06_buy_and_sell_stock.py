@@ -7,7 +7,7 @@ def buy_and_sell_stock_1(prices: List[float]) -> float:
 
     The `prices` represent the daily prices of a particular stock.
 
-    Return the max profit that can be made
+    Return the max profit that can be achieved
     by buying 1 share of the stock in question
     and selling the bought share on some later day.
     (If it is impossible to achieve a profit, there is no need to trade at all.)
@@ -15,26 +15,14 @@ def buy_and_sell_stock_1(prices: List[float]) -> float:
     time:  O(n^2)
     space: O(1)
     """
-    max_profit = 0
-
-    if len(prices) == 1:
-        return max_profit
-
-    for i in range(len(prices) - 1):
-        for j in range(i + 1, len(prices)):
-            max_profit = max(
-                max_profit,
-                prices[j] - prices[i],
-            )
-
-    return max_profit
+    pass
 
 
 def buy_and_sell_stock_2(prices: List[float]) -> float:
     """
     The `prices` represent the daily prices of a particular stock.
 
-    Return the max profit that can be made
+    Return the max profit that can be achieved
     by buying 1 share of the stock in question
     and selling the bought share on some later day.
     (If it is impossible to achieve a profit, there is no need to trade at all.)
