@@ -33,10 +33,7 @@ def get_max_trapped_water_2(heights: List[int]) -> int:
 
         if heights[i] < heights[j]:
             i += 1
-        elif heights[i] > heights[j]:
-            j -= 1
-        else:  # i.e. `heights[i] == heights[j]`
-            i += 1
+        else:  # i.e. `heights[i] <= heights[j]`
             j -= 1
 
     return max_water
