@@ -21,10 +21,6 @@ def combinations(n: int, k: int) -> List[List[int]]:
         elif len(selected_values) > k:
             return
 
-        # This is unnecessary.
-        if next_value_to_select > n:
-            return
-
         if next_value_to_select <= n:
             _helper(
                 next_value_to_select + 1,
@@ -36,12 +32,6 @@ def combinations(n: int, k: int) -> List[List[int]]:
                 [next_value_to_select] + selected_values,
             )
 
-    # This is unnecessary.
-    if k == 0:
-        return [[]]
-
-    # for i in range(n):
-    #   helper(i + 1, [])
     _helper(1, [])
 
     return size_k_subsets
@@ -57,7 +47,7 @@ def combinations_2(n: int, k: int) -> List[List[int]]:
 
     size_k_subsets: List[List[int]] = []
 
-    def _directed_combinations(
+    def _guided_combinations(
         offset: int,
         partial_combination: List[int],
     ) -> None:
@@ -70,13 +60,13 @@ def combinations_2(n: int, k: int) -> List[List[int]]:
         num_remaining = k - len(partial_combination)
         i = offset
         while i <= n and num_remaining <= n - i + 1:
-            _directed_combinations(
+            _guided_combinations(
                 i + 1,
                 partial_combination + [i],
             )
             i += 1
 
-    _directed_combinations(1, [])
+    _guided_combinations(1, [])
 
     return size_k_subsets
 
