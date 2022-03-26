@@ -9,33 +9,6 @@ class Interval(typing.NamedTuple):
 
 
 def find_minimum_visits(intervals: List[Interval]) -> int:
-    """
-    Fails on the following input:
-    [
-        [1, 5],
-        [2, 3],
-        [3, 4],
-    ]
-    by returning 2 instead of 1.
-    """
-    intervals.sort(key=lambda i: (i.left, i.right - i.left))
-
-    points: List[int] = []
-    idx = 0
-    while idx < len(intervals):
-        points.append(intervals[idx].right)
-
-        idx += 1
-        while (
-            idx < len(intervals)
-            and intervals[idx].left <= points[-1] <= intervals[idx].right
-        ):
-            idx += 1
-
-    return len(points)
-
-
-def find_minimum_visits(intervals: List[Interval]) -> int:
     intervals.sort(key=lambda i: (i.left, i.right - i.left))
 
     points: List[int] = []
