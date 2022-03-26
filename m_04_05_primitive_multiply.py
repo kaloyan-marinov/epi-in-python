@@ -1,14 +1,10 @@
-import datetime
-import random
-
-
-def _add_single_bits(x: int, y: int) -> int:
+def _add_single_bits_1(x: int, y: int) -> int:
     leftmost_bit = x & y  # 1 only when x = y
     rightmost_bit = x ^ 1
     return leftmost_bit, rightmost_bit
 
 
-def add(x: int, y: int) -> int:
+def add_1(x: int, y: int) -> int:
     """
       ||oo
        110
@@ -36,16 +32,10 @@ def add(x: int, y: int) -> int:
 
         last_bit_of_x = x & 1
         last_bit_of_y = y & 1
-        leftmost_bit, rightmost_bit = _add_single_bits(
+        leftmost_bit, rightmost_bit = _add_single_bits_1(
             last_bit_of_x,
             last_bit_of_y,
         )
-        # fmt: off
-        # The last statement can be replaced by the following one:
-        '''
-        leftmost_bit = last_bit_of_x & last_bit_of_y  # equals 1 only if both are 1
-        '''
-        # fmt: on
 
         carry_mask <<= 1
         x >>= 1
@@ -54,19 +44,59 @@ def add(x: int, y: int) -> int:
     return result
 
 
-def multiply(x: int, y: int) -> int:
+def multiply_1(x: int, y: int) -> int:
     result = 0
     position = 0
     while y:
         last_bit_of_y = y & 1
         if last_bit_of_y == 1:
-            result = add(result, x << position)
-        position = add(position, 1)
+            result = add_1(result, x << position)
+        position = add_1(position, 1)
         y >>= 1
     return result
 
 
+def add_2(a: int, b: int) -> int:
+    """
+    time:  O(n)
+           where n := the # of bits needed to represent the operands
+    """
+
+    if b == 0:
+        return a
+
+    sum_ignoring_carry = a ^ b
+    global_carried_amount = (a & b) << 1  # NB: the parentheses are necessary!
+    return add_2(sum_ignoring_carry, global_carried_amount)
+
+
+def multiply_2(x: int, y: int) -> int:
+    """
+    TODO: double-check the following
+
+    time:  O(n ** 2)
+           where n := the # of bits needed to represent the operands
+    """
+
+    running_sum = 0
+
+    while y:
+        if y & 1:
+            running_sum = add_2(
+                running_sum,
+                x,
+            )
+
+        y >>= 1
+        x <<= 1
+
+    return running_sum
+
+
 if __name__ == "__main__":
+    import datetime
+    import random
+
     print(f"{datetime.datetime.utcnow().isoformat()} - starting")
 
     fmt_str = "{0:<20} {1:>70}"
@@ -76,13 +106,17 @@ if __name__ == "__main__":
         x = random.randrange(0, 2 ** 3)
         y = random.randrange(0, 2 ** 3)
 
-        # x = int("110", 2)  # random.randrange(0, 2 ** 3)
-        # y = int("11", 2)  # random.randrange(0, 2 ** 3)
+        # fmt: off
+        '''
+        x = int("110", 2)  # random.randrange(0, 2 ** 3)
+        y = int("11", 2)  # random.randrange(0, 2 ** 3)
 
-        # x = int("1", 2)
-        # y = int("0", 2)
+        x = int("1", 2)
+        y = int("0", 2)
+        '''
+        # fmt: on
 
-        sum_computed = add(x, y)
+        sum_computed = add_2(x, y)
         sum_expected = x + y
         if sum_computed != sum_expected:
             print()
@@ -92,7 +126,7 @@ if __name__ == "__main__":
             print(fmt_str.format("sum_computed", bin(sum_computed)))
             raise ValueError(f"{sum_expected} != {sum_computed}")
 
-        prod_computed = multiply(x, y)
+        prod_computed = multiply_2(x, y)
         prod_expected = x * y
         if prod_computed != prod_expected:
             print()
