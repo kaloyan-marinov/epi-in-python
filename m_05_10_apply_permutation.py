@@ -2,6 +2,48 @@ from typing import List
 
 
 def apply_permutation(perm: List[int], A: List[int]) -> None:
+    """
+    Assume that
+    (a) `len(A) = len(perm)`, and
+    (b) `perm` is/represents a permutation of ${0, ..., n - 1}$.
+
+    Perform an in-place modification of `A` by applying `perm` to `A`
+    (where it is allowed to modify `perm`).
+
+    time:  O(n)
+    space: ?
+    """
+
+    n = len(A)
+
+    for i in range(n):
+        while perm[i] != i:
+            A[i], A[perm[i]] = A[perm[i]], A[i]
+
+            # NB:
+            # If the order on the LHS of the following statement is swapped,
+            # then running this module will cause this f-n to get stuck in an infinite loop.
+            perm[perm[i]], perm[i] = perm[i], perm[perm[i]]
+            # fmt: off
+            '''
+            perm[i], perm[perm[i]] = perm[perm[i]], perm[i]
+            '''
+            # fmt: on
+
+
+def apply_permutation_2(perm: List[int], A: List[int]) -> None:
+    """
+    Assume that
+    (a) `len(A) = len(perm)`, and
+    (b) `perm` is/represents a permutation of ${0, ..., n - 1}$.
+
+    Perform an in-place modification of `A` by applying `perm` to `A`
+    (where it is allowed to modify `perm`).
+
+    time:  O(n)
+    space: ?
+    """
+
     n = len(A)
 
     for i in range(n):
