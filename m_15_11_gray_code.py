@@ -5,11 +5,8 @@ def gray_code(num_bits: int) -> List[int]:
     """
     Assume that `num_bits >= 0`.
     """
-    if num_bits == 0:  # need this!
+    if num_bits == 0:
         return [0]
-
-    if num_bits == 1:  # can remove this
-        return [0, 1]
 
     gr_c = gray_code(num_bits - 1)
 
@@ -29,10 +26,10 @@ def gray_code(num_bits: int) -> List[int]:
     # fmt: on
     mask = 1 << num_bits
 
-    return gr_c + [value | mask for value in gr_c]  # Need to reverse the latter `gr_c`!
+    return gr_c + [value | mask for value in reversed(gr_c)]
 
 
-def differ_by_1_bit(a: int, b: int) -> bool:  # Need this!
+def differ_by_1_bit(a: int, b: int) -> bool:
     # Ensure that a <= b.
     if a > b:
         a, b = b, a
@@ -55,7 +52,7 @@ which is both shorter and more efficient (but also more slick):
 '''
     bit_difference = a ^ b
 
-    return bit_difference !=0 and (
+    return bit_difference != 0 and (
         bit_difference & (bit_difference - 1) == 0
     )
 '''
@@ -65,17 +62,25 @@ which is both shorter and more efficient (but also more slick):
 def gray_code_3(num_bits: int) -> List[int]:
     """
     Assume that `num_bits >= 0`.
+
+    Compared to this module's other functions,
+    this one is more based on brute force than on analysis.
+
+    Build a Gray-code sequence incrementally,
+    adding a value only if
+    it distinct from all values currently in the sequence
+    and [it] differs in exactly 1 [bit] from the previous value.
+    (
+    For the last value, we ahve to check [whether]
+    it differs in [exactly] one [bit] from the 1st value.
+    )
     """
 
     result: List[int] = [0]
 
-    def _directed_gray_code(history: Set[int]) -> bool:
-        def _differs_by_one_bit(x: int, y: int) -> bool:
-            bit_difference = x ^ y
-            return bit_difference and not (bit_difference & (bit_difference - 1))
-
+    def _guided_gray_code(history: Set[int]) -> bool:
         if len(result) == 1 << num_bits:
-            return _differs_by_one_bit(result[-1], result[0])
+            return differ_by_1_bit(result[-1], result[0])
 
         for i in range(num_bits):
             previous_value = result[-1]
@@ -85,7 +90,7 @@ def gray_code_3(num_bits: int) -> List[int]:
                 history.add(candidate_next_value)
                 result.append(candidate_next_value)
 
-                if _directed_gray_code(history):
+                if _guided_gray_code(history):
                     return True
 
                 del result[-1]
@@ -93,7 +98,7 @@ def gray_code_3(num_bits: int) -> List[int]:
 
         return False
 
-    _directed_gray_code(set([0]))
+    _guided_gray_code(set([0]))
 
     return result
 
@@ -101,6 +106,8 @@ def gray_code_3(num_bits: int) -> List[int]:
 def gray_code_4(num_bits: int) -> List[int]:
     """
     Assume that `num_bits >= 0`.
+
+    This is identical to the `gray_code` f-n.
     """
 
     if num_bits == 0:
