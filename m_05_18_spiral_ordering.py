@@ -8,40 +8,12 @@ def s_1_matrix_in_spiral_order(square_matrix: List[List[int]]) -> List[int]:
     time: O(n^2)
     """
 
-    spiral_ordering: List[int] = []
-
-    def matrix_layer_in_clockwise(offset):
-        if offset == len(square_matrix) - offset - 1:
-            # `square_matrix` has odd dimension, and we are at its center.
-            spiral_ordering.append(square_matrix[offset][offset])
-            return
-
-        spiral_ordering.extend(square_matrix[offset][offset : -1 - offset])
-        spiral_ordering.extend(
-            list(zip(*square_matrix))[-1 - offset][offset : -1 - offset]
-        )
-        spiral_ordering.extend(square_matrix[-1 - offset][-1 - offset : offset : -1])
-        spiral_ordering.extend(
-            list(zip(*square_matrix))[offset][-1 - offset : offset : -1]
-        )
-
-    for offset in range((len(square_matrix) + 1) // 2):
-        matrix_layer_in_clockwise(offset)
-
-    return spiral_ordering
-
-
-def s_1_matrix_in_spiral_order_refactored(square_matrix: List[List[int]]) -> List[int]:
-    """
-    Return the "spiral ordering" of the `square_matrix`.
-
-    time: O(n^2)
-    """
+    n = len(square_matrix)
 
     spiral_ordering: List[int] = []
 
-    for offset in range((len(square_matrix) + 1) // 2):
-        if offset == len(square_matrix) - offset - 1:
+    for offset in range((n + 1) // 2):
+        if offset == n - offset - 1:
             # `square_matrix` has odd dimension, and we are at its center.
             spiral_ordering.append(square_matrix[offset][offset])
             break
@@ -58,30 +30,36 @@ def s_1_matrix_in_spiral_order_refactored(square_matrix: List[List[int]]) -> Lis
     return spiral_ordering
 
 
-def s_2_matrix_in_spiral_order(square_matrix: List[List[int]]) -> List[int]:
+def s_2_matrix_in_spiral_order(
+    square_matrix: List[List[int]],
+    absent_value=0,
+) -> List[int]:
     """
+    Assume that `absent_value` is not present in the `square_matrix`.
+
     Return the "spiral ordering" of the `square_matrix`.
 
     time: O(n^2)
     """
 
-    value_absent_from_original_input = 0
+    n = len(square_matrix)
+
     directions = ((0, 1), (1, 0), (0, -1), (-1, 0))
 
     d_idx = 0
     x = y = 0
     spiral_ordering = []
-    for _ in range(len(square_matrix) ** 2):
+    for _ in range(n ** 2):
         spiral_ordering.append(square_matrix[x][y])
 
-        square_matrix[x][y] = value_absent_from_original_input
+        square_matrix[x][y] = absent_value
 
         next_x = x + directions[d_idx][0]
         next_y = y + directions[d_idx][1]
         if (
-            next_x not in range(len(square_matrix))
-            or next_y not in range(len(square_matrix))
-            or square_matrix[next_x][next_y] == value_absent_from_original_input
+            next_x not in range(n)
+            or next_y not in range(n)
+            or square_matrix[next_x][next_y] == absent_value
         ):
             d_idx = (
                 d_idx + 1
