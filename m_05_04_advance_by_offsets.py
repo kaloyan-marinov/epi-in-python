@@ -1,64 +1,29 @@
 from typing import List
 
 
-def can_reach_end_1(A: List[int]) -> bool:
+def can_reach_end(A: List[int]) -> bool:
     """
-    This function passes all but the last of the EPI Judge tests.
+    Assume that `A` represents a [linear] board for a game,
+    in which the goal is to advance from the start index of `A` to its last index.
 
-    With respect to that last test,
-    the execution of this function ends up taking a _very_ long time,
-    indicating that its time complexity is _very_ high.
+    For each index `i`,
+    `A[i]` denotes the max # of cells that the player is allowed to advance from `i`.
+
+    Returns whether it is possible to achieve the goal of the game.
     """
-    reachable_indices = {0}
 
-    for i in range(len(A)):
-        if i not in reachable_indices:
-            continue
+    last_index = len(A) - 1
 
-        if A[i] == 0:
-            continue
+    furthest_reachable_idx = 0
+    i = 0
+    while i <= furthest_reachable_idx and furthest_reachable_idx < last_index:
+        furthest_reachable_idx = max(
+            furthest_reachable_idx,
+            i + A[i],
+        )
+        i += 1
 
-        for j in range(A[i]):
-            reachable_indices.add(i + j + 1)
-
-    return len(A) - 1 in reachable_indices
-
-
-def can_reach_end_2(A: List[int]) -> bool:
-    """
-    This function passes all but the last of the EPI Judge tests.
-
-    With respect to that last test,
-    the execution of this function ends up taking a _very_ long time,
-    indicating that its time complexity is _very_ high.
-    """
-    if len(A) == 1:
-        return True
-
-    good = {len(A) - 1}
-    for i in reversed(range(len(A) - 1)):
-        reachables_from_i = {i + a_i for a_i in range(1, A[i] + 1)}
-        if reachables_from_i.intersection(good):
-            good.add(i)
-
-    return 0 in good
-
-
-def can_reach_end_3(A: List[int]) -> bool:
-    furthest_reach = 0
-
-    for i in range(len(A)):
-        furthest_reach = max(furthest_reach, i + A[i])
-
-        if i == furthest_reach and i < len(A) - 1:
-            return False
-
-        # The following is not necessary,
-        # but can speed up the function execution in certain cases.
-        if furthest_reach >= len(A) - 1:
-            return True
-
-    return furthest_reach >= len(A) - 1
+    return furthest_reachable_idx >= last_index
 
 
 if __name__ == "__main__":
@@ -67,7 +32,7 @@ if __name__ == "__main__":
     # A = [0]  # expected: True
     A = [5, 1, 4, 0, 1, 0, 0]  #  expected: True
 
-    a = can_reach_end_3(A)
+    a = can_reach_end(A)
 
     print(A)
     print(a)
