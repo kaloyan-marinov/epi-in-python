@@ -1,17 +1,16 @@
 import functools
 
 
-"""
-Assume that the client-provided input will satisfy `top >= maximum_step`.
-"""
-
-
 @functools.lru_cache(maxsize=None)
-def number_of_ways_to_top(
-    top: int,
-    maximum_step: int,
-) -> int:
-    if top == 1:  # change to 0
+def number_of_ways_to_top(top: int, maximum_step: int) -> int:
+    """
+    (
+    Observation:
+    in each of the provided test cases, it holds true that `top >= maximum_step`.
+    )
+    """
+
+    if top == 0:
         return 1
 
     return sum(
@@ -19,7 +18,7 @@ def number_of_ways_to_top(
         for last_step in range(1, maximum_step + 1)
         if last_step <= top
     )
-
+    # The previous statement achieves the same as the following commented-out block:
     # fmt: off
     '''
     options: List[int] = []
@@ -38,7 +37,10 @@ def number_of_ways_to_top(
     maximum_step: int,
 ) -> int:
     """
-    Assume that `top >= maximum_step`.
+    (
+    Observation:
+    in each of the provided test cases, it holds true that `top >= maximum_step`.
+    )
     """
 
     @functools.lru_cache(maxsize=None)
