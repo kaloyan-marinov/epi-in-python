@@ -17,8 +17,8 @@ def maximum_revenue(coins: List[int]) -> int:
         (b) the (remaining) coins on the table are `coins[a : b + 1]`.
         """
 
-        if a == b:  # change to a > b
-            return coins[a]  # change to 0
+        if a > b:
+            return 0
 
         pick_a_remaining_value = min(
             _optimum_achievable_revenue(a + 2, b),
@@ -35,4 +35,4 @@ def maximum_revenue(coins: List[int]) -> int:
             coins[b] + pick_b_remaining_value,
         )
 
-    return _optimum_achievable_revenue(0, 0)  # change to (0, len(coins) - 1)
+    return _optimum_achievable_revenue(0, len(coins) - 1)
