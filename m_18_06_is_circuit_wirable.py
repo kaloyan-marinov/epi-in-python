@@ -37,7 +37,6 @@ def is_any_placement_feasible(graph: List[GraphVertex]) -> bool:
             v = q.popleft()
 
             for u in v.edges:
-                # u_d = -1 if v in left_vertices else 1
                 u_d = (-1) * v.d
 
                 if (u_d == -1 and u in right_vertices) or (
@@ -52,7 +51,7 @@ def is_any_placement_feasible(graph: List[GraphVertex]) -> bool:
                     else:  # i.e. `u_d == 1`
                         right_vertices.add(u)
 
-                q.append(u)  # Shift this statement one indent to the right.
+                    q.append(u)
 
         return True
 
@@ -101,6 +100,20 @@ def is_any_placement_feasible(graph: List[GraphVertex]) -> bool:
                     return False
 
             del q[0]
+
+            # This loop's body can be equivalently re-written as follows:
+            # fmt: off
+            '''
+            v = q.popleft()
+
+            for u in v.edges:
+                if u.d == -1:  # i.e. `u` has not been visited yet.
+                    u.d = v.d + 1
+                    q.append(u)
+                elif u.d == v.d:
+                    return False
+            '''
+            # fmt: on
 
         return True
 
