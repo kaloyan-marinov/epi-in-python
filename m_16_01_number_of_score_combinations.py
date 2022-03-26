@@ -5,45 +5,6 @@ def num_combinations_for_final_score(
     final_score: int,
     individual_play_scores: List[int],
 ) -> int:
-    """
-    This solution is wrong - delete it!
-    """
-    if len(individual_play_scores) == 0:
-        return 0
-    elif len(individual_play_scores) == 1:
-        return (
-            final_score // individual_play_scores[0]
-            if final_score % individual_play_scores[0] == 0
-            else 0
-        )
-
-    count = 0
-
-    w_0 = individual_play_scores[0]
-    count_w_0 = 0
-
-    while count_w_0 * w_0 <= final_score:
-        count += num_combinations_for_final_score(
-            final_score - count_w_0 * w_0,
-            individual_play_scores[1:],
-        )
-
-        count_w_0 += 1
-
-    # fmt: off
-    '''
-    if count_w_0 * w_0 == final_score:
-        count += 1
-    '''
-    # fmt: on
-
-    return count
-
-
-def num_combinations_for_final_score_2(
-    final_score: int,
-    individual_play_scores: List[int],
-) -> int:
     # There is only 1 way to achieve a final score of 0.
     A: List[List[int]] = [[1] + [0] * final_score for _ in individual_play_scores]
 
