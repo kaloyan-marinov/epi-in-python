@@ -15,6 +15,9 @@ def solution_1_is_valid_sudoku(
     `partial_assignment` represents a partial assignment of a 9-by-9 Sudoku board.
 
     Assume that each empty cell in `partial_assignment` holds the integer 0.
+
+    time:  O(n^2)
+    space: O(1)
     """
 
     # Check the rows.
@@ -47,12 +50,28 @@ def solution_1_is_valid_sudoku(
 
 
 def _is_iterable_valid(numbers: Iterable[int]) -> bool:
+    """
+    Check whether `numbers` contains a duplicated value,
+    which is different from `_EMPTY_CELL_CONTENT`.
+
+    Each of the provided implementations works correctly.
+    """
+
+    # fmt: off
+    '''
     seen = set()
     for n in numbers:
         if n in seen and n != _EMPTY_CELL_CONTENT:
             return False
         seen.add(n)
     return True
+    '''
+    # fmt: on
+
+    nonzero_numbers = list(
+        filter(lambda x: x != _EMPTY_CELL_CONTENT, numbers),
+    )
+    return len(set(nonzero_numbers)) == len(nonzero_numbers)
 
 
 def solution_2_is_valid_sudoku(
@@ -62,28 +81,25 @@ def solution_2_is_valid_sudoku(
     `partial_assignment` represents a partial assignment of a 9-by-9 Sudoku board.
 
     Assume that each empty cell in `partial_assignment` holds the integer 0.
-    """
 
-    def _has_duplicates(block: Iterable[int]):
-        block_lst = list(
-            filter(lambda x: x != _EMPTY_CELL_CONTENT, block),
-        )
-        return len(set(block_lst)) < len(block_lst)
+    time:  O(n^2)
+    space: O(1)
+    """
 
     n = len(partial_assignment)
 
     # Check row and columnt contraints.
     if any(
-        _has_duplicates(partial_assignment[i][j] for j in range(n))
-        or _has_duplicates((partial_assignment[j][i] for j in range(n)))
+        not _is_iterable_valid(partial_assignment[i][j] for j in range(n))
+        or not _is_iterable_valid((partial_assignment[j][i] for j in range(n)))
         for i in range(n)
-    ):  # Note: the pair of parentheses inside the `_has_duplicates(...)` is optional!
+    ):  # Note: the pair of parentheses inside the `not _is_iterable_valid(...)` is optional!
         return False
 
     # Check region constraints.
     region_size = int(math.sqrt(n))
     return all(
-        not _has_duplicates(
+        _is_iterable_valid(
             (
                 partial_assignment[a][b]
                 for a in range(region_size * I, region_size * (I + 1))
@@ -113,7 +129,7 @@ def solution_3_is_valid_sudoku_pythonic(
                 k
                 for i, row in enumerate(partial_assignment)
                 for j, c in enumerate(row)
-                if c != 0
+                if c != _EMPTY_CELL_CONTENT
                 for k in (
                     (i, str(c)),
                     (str(c), j),

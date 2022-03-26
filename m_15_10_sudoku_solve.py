@@ -2,7 +2,7 @@ import itertools
 import math
 from typing import List
 
-from m_5_17_is_valid_sudoku import _EMPTY_CELL_CONTENT
+from m_05_17_is_valid_sudoku import _EMPTY_CELL_CONTENT
 
 
 def solve_sudoku(partial_assignment: List[List[int]]) -> bool:
