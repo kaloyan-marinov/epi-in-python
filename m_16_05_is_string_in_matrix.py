@@ -6,58 +6,6 @@ def is_pattern_contained_in_grid(
     grid: List[List[int]],
     pattern: List[int],
 ) -> bool:
-    """
-    This is incorrect.
-
-    Test FAILED ( 23/186) [  21 us]
-    Arguments
-        grid:     [[21, 7, 7], [7, 7, 7], [9, 21, 25]]
-        pattern:  [7, 7, 9]
-
-    Failure info
-        expected: True
-        result:   False
-    """
-
-    def _helper(
-        p_idx: int,
-        row: Optional[int] = None,
-        col: Optional[int] = None,
-    ) -> bool:
-
-        if p_idx >= len(pattern):
-            return True
-
-        if row is None and col is None:  # i.e. `p_idx == 0`
-            for ii in range(len(grid)):
-                for jj in range(len(grid[0])):
-
-                    if grid[ii][jj] == pattern[p_idx]:
-                        is_next_available = _helper(p_idx + 1, row=ii, col=jj)
-                        return is_next_available
-
-        # Now, it is known/guaranteed that `p_idx > 0`.
-        elif row - 1 >= 0 and grid[row - 1][col] == pattern[p_idx]:
-            return _helper(p_idx + 1, row=row - 1, col=col)
-
-        elif row + 1 <= len(grid) - 1 and grid[row + 1][col] == pattern[p_idx]:
-            return _helper(p_idx + 1, row=row + 1, col=col)
-
-        elif col - 1 >= 0 and grid[row][col - 1] == pattern[p_idx]:
-            return _helper(p_idx + 1, row=row, col=col - 1)
-
-        elif col + 1 <= len(grid[0]) - 1 and grid[row][col + 1] == pattern[p_idx]:
-            return _helper(p_idx + 1, row=row, col=col + 1)
-
-        return False
-
-    return _helper(0)
-
-
-def is_pattern_contained_in_grid(
-    grid: List[List[int]],
-    pattern: List[int],
-) -> bool:
     @functools.lru_cache(maxsize=None)
     def _search_pattern_suffix_starting_at_xy(
         x: int,
