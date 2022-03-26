@@ -8,48 +8,27 @@ class GraphVertex:
         self.edges: List["GraphVertex"] = []
 
 
-def clone_graph(graph: GraphVertex) -> GraphVertex:
-    if not graph.edges:
-        return GraphVertex(graph.label)
+def clone_graph_1(g_vrtx: GraphVertex) -> GraphVertex:
+    """
+    Observe that `original_v_2_parent` can be easily eliminated from this f-n.
 
-    g = GraphVertex(graph.label)
-    g.edges = [clone_graph(neighbor_of_graph) for neighbor_of_graph in graph.edges]
+    TODO: eliminate `original_v_2_parent`
+          (and note that the resulting f-n will be nearly identical to the next one)
+    """
 
-    return g
-
-
-def clone_graph(graph: GraphVertex) -> GraphVertex:
-    original_v_2_clone_of_v: Dict[GraphVertex, GraphVertex] = {}
-
-    def _helper(g: GraphVertex):
-        original_v_2_clone_of_v[g] = GraphVertex(g.label)
-
-        edges_of_clone = []
-        for neighbor_of_g in g.edges:
-            if neighbor_of_g not in original_v_2_clone_of_v:
-                edges_of_clone.append(clone_graph(neighbor_of_g))
-            else:
-                edges_of_clone.append(neighbor_of_g)
-
-        original_v_2_clone_of_v[g].edges = edges_of_clone
-
-    _helper(graph)
-
-    return original_v_2_clone_of_v[graph]
-
-
-def clone_graph(graph: GraphVertex) -> GraphVertex:
-    # Perform a BFS traversal of `graph`,
+    # Perform a BFS traversal of `g_vrtx`,
     # as part of which - in addition to one of BFS's usual data structures! -
     # a map from vertices in the original graph to their counterparts in the clone
     # gets populated.
-    original_v_2_clone_of_v: Dict[
-        GraphVertex, GraphVertex
-    ] = {}  # Change to `{graph: GraphVertex(graph.label)}`
+    original_v_2_clone_of_v: Dict[GraphVertex, GraphVertex] = {
+        g_vrtx: GraphVertex(g_vrtx.label)
+    }
 
-    original_v_2_parent: Dict[GraphVertex, GraphVertex] = {graph: None}
+    original_v_2_parent: Dict[GraphVertex, GraphVertex] = {g_vrtx: None}
 
-    q: Deque[GraphVertex] = collections.deque(graph)  # Change to `[graph]`
+    q: Deque[GraphVertex] = collections.deque(
+        [g_vrtx],
+    )
 
     while q:
         v = q.popleft()
@@ -57,7 +36,7 @@ def clone_graph(graph: GraphVertex) -> GraphVertex:
         for u in v.edges:
             if u not in original_v_2_parent:
                 original_v_2_parent[u] = v
-                q.extend(u.edges)  # Change to `q.append(u)`
+                q.append(u)
 
                 original_v_2_clone_of_v[u] = GraphVertex(u.label)
 
@@ -66,17 +45,17 @@ def clone_graph(graph: GraphVertex) -> GraphVertex:
     for original_v, clone_v in original_v_2_clone_of_v.items():
         clone_v.edges = [original_v_2_clone_of_v[u] for u in original_v.edges]
 
-    return original_v_2_clone_of_v[graph]
+    return original_v_2_clone_of_v[g_vrtx]
 
 
-def clone_graph(graph: GraphVertex) -> GraphVertex:
-    if graph is None:
+def clone_graph_2(g_vrtx: GraphVertex) -> GraphVertex:
+    if g_vrtx is None:
         return None
 
-    q: Deque[GraphVertex] = collections.deque([graph])
+    q: Deque[GraphVertex] = collections.deque([g_vrtx])
 
     original_v_2_clone_of_v: Dict[GraphVertex, GraphVertex] = {
-        graph: GraphVertex(graph.label)
+        g_vrtx: GraphVertex(g_vrtx.label)
     }
 
     while q:
@@ -92,8 +71,8 @@ def clone_graph(graph: GraphVertex) -> GraphVertex:
             original_v_2_clone_of_v[v].edges.append(
                 original_v_2_clone_of_v[u],
             )
-    
-    return original_v_2_clone_of_v[graph]
+
+    return original_v_2_clone_of_v[g_vrtx]
 
 
 if __name__ == "__main__":
@@ -146,4 +125,4 @@ if __name__ == "__main__":
     for e in edges:
         vertices[e[0]].edges.append(vertices[e[1]])
 
-    clone_0 = clone_graph(vertices[0])
+    clone_0 = clone_graph_1(vertices[0])
