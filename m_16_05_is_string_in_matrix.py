@@ -1,50 +1,24 @@
 import functools
-from typing import List, Optional, Tuple
-
-
-# def is_pattern_contained_in_grid(
-#     grid: List[List[int]],
-#     pattern: List[int],
-# ) -> bool:
-#     start_loc = {"i": None, "j": None}
-#     global final_loc
-#     final_loc = {"i": None, "j": None}
-
-#     # fmt: off
-#     '''
-#     def _helper(i: int, j: int, p_idx: int) -> Tuple[int, int]:
-#     '''
-#     # fmt: on
-#     def _helper(p_idx: int) -> bool:
-#         global final_loc
-
-#         if p_idx >= len(pattern):
-#             return True
-
-#         if p_idx == 0:
-#             for row in range(len(grid)):
-#                 for col in range(len(grid[0])):
-#                     if grid[row][col] == pattern[p_idx]:
-#                         start_loc = {"i": row, "j": col}
-#                         final_loc = {"i": row, "j": col}
-
-#                         is_next_available = _helper(p_idx + 1)
-#                         return is_next_available
-
-#         i= final_loc['i']
-#         j = final_loc['j']
-#         if i - 1 >= 0 and grid[i - 1][j] == pattern[p_idx]:
-
-#         above = grid[i - 1][j]
-#         below =
-#         left =
-#         right =
+from typing import List, Optional
 
 
 def is_pattern_contained_in_grid(
     grid: List[List[int]],
     pattern: List[int],
 ) -> bool:
+    """
+    This is incorrect.
+
+    Test FAILED ( 23/186) [  21 us]
+    Arguments
+        grid:     [[21, 7, 7], [7, 7, 7], [9, 21, 25]]
+        pattern:  [7, 7, 9]
+
+    Failure info
+        expected: True
+        result:   False
+    """
+
     def _helper(
         p_idx: int,
         row: Optional[int] = None,
@@ -62,8 +36,6 @@ def is_pattern_contained_in_grid(
                         is_next_available = _helper(p_idx + 1, row=ii, col=jj)
                         return is_next_available
 
-        # TODO: change the remaining `if`s to `elif`s
-
         # Now, it is known/guaranteed that `p_idx > 0`.
         elif row - 1 >= 0 and grid[row - 1][col] == pattern[p_idx]:
             return _helper(p_idx + 1, row=row - 1, col=col)
@@ -76,6 +48,8 @@ def is_pattern_contained_in_grid(
 
         elif col + 1 <= len(grid[0]) - 1 and grid[row][col + 1] == pattern[p_idx]:
             return _helper(p_idx + 1, row=row, col=col + 1)
+
+        return False
 
     return _helper(0)
 
@@ -96,8 +70,7 @@ def is_pattern_contained_in_grid(
 
         # "Return early"
         #   if (x, y) lies outside the `grid`
-        #   or the current match attempt fails
-        #   or we have already tried this [cell].
+        #   or the current match attempt fails.
         # fmt: off
         if (
             not (
