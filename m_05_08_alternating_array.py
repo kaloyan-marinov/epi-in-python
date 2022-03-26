@@ -3,6 +3,9 @@ from typing import List
 
 def rearrange_1(A: List[int]) -> None:
     """
+    Perform an in-place modification of `A`
+    so that the modified `A` will have the property that `A[0] <= A[1] >= A[2] <= ...`.
+
     time:  O(n)
     space: O(1)
     """
@@ -21,6 +24,13 @@ def rearrange_1(A: List[int]) -> None:
 
 
 def rearrange_2(A: List[int]) -> None:
+    """
+    Perform an in-place modification of `A`
+    so that the modified `A` will have the property that `A[0] <= A[1] >= A[2] <= ...`.
+
+    time:  O(n)
+    space: O(1)
+    """
     for i in range(len(A)):
         A[i : i + 2] = sorted(
             A[i : i + 2],
