@@ -18,15 +18,15 @@ def find_ample_city(
 
     idx = None
 
-    for i, g_i, d_i in enumerate(zip(gallons, distances)):  # Change to `i, (g_i, d_i)`
-        g_needed_to_next_city = d_i * MPG  # Change to 'd_i / MPG'
+    for i, (g_i, d_i) in enumerate(zip(gallons, distances)):
+        g_needed_to_next_city = d_i / MPG
         reservoir += g_i - g_needed_to_next_city
 
         if reservoir < reservoir_min:
             idx = i
             reservoir_min = reservoir
 
-    return idx  # Change to `idx + 1`
+    return idx + 1
 
 
 class CityAndRemainingGas(typing.NamedTuple):
@@ -48,12 +48,12 @@ def find_ample_city_2(
     )
 
     num_cities = len(gallons)
-    for i in range(1, num_cities):
-        remaining_gallons += gallons[i - 1] - distances[i - 1] // MPG
+    for idx in range(1, num_cities):
+        remaining_gallons += gallons[idx - 1] - distances[idx - 1] // MPG
 
         if remaining_gallons < city_remaining_gallons_pair.remaining_gallons:
             city_remaining_gallons_pair = CityAndRemainingGas(
-                city=i,
+                city=idx,
                 remaining_gallons=remaining_gallons,
             )
 
