@@ -1,10 +1,12 @@
 from typing import DefaultDict, Deque, Dict, List, Optional, Set, Tuple
 
+import collections
+
 
 def flip_color(
     x: int,
     y: int,
-    image: List[List[int]],  # change `int` to `bool` (or to `Literal[0, 1]`)
+    image: List[List[bool]],
 ) -> None:
     """
     Flip the values/colors of the connected component of the `image`,
@@ -15,7 +17,7 @@ def flip_color(
     adj: DefaultDict[
         Tuple[int, int],
         Set[Tuple[int, int]],
-    ] = {}  # change to `collections.defaultdict(set)`
+    ] = collections.defaultdict(set)
 
     m = len(image)
     for i in range(m):
@@ -25,16 +27,16 @@ def flip_color(
             v_i_j = (i, j)
 
             if i - 1 >= 0 and image[i - 1][j] == image[i][j]:
-                adj[v_i_j].append((i - 1, j))  # change to `.add`
+                adj[v_i_j].add((i - 1, j))
 
             if i + 1 <= m - 1 and image[i + 1][j] == image[i][j]:
-                adj[v_i_j].append((i + 1, j))  # change to `.add`
+                adj[v_i_j].add((i + 1, j))
 
             if j - 1 >= 0 and image[i][j - 1] == image[i][j]:
-                adj[v_i_j].append((i, j - 1))  # change to `.add`
+                adj[v_i_j].add((i, j - 1))
 
             if j + 1 <= n - 1 and image[i][j + 1] == image[i][j]:
-                adj[v_i_j].append((i, j + 1))  # change to `.add`
+                adj[v_i_j].add((i, j + 1))
 
     # Perform a BFS traversal starting at `(x, y)`.
     def _bfs_visit(
@@ -67,13 +69,10 @@ def flip_color(
         image[v[0]][v[1]] = not image[v[0]][v[1]]
 
 
-import collections
-
-
 def flip_color_v2(
     x: int,
     y: int,
-    image: List[List[bool]],  # change `int` to `bool` (or to `Literal[0, 1]`)
+    image: List[List[bool]],
 ) -> None:
     """
     Flip the values/colors of the connected component of the `image`,
@@ -109,7 +108,7 @@ def flip_color_v2(
 def flip_color_v3(
     x: int,
     y: int,
-    image: List[List[bool]],  # change `int` to `bool` (or to `Literal[0, 1]`)
+    image: List[List[bool]],
 ) -> None:
     """
     Flip the values/colors of the connected component of the `image`,
