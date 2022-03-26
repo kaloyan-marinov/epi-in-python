@@ -9,42 +9,15 @@ class GraphVertex:
         self.max_distance = 0
 
 
-def find_largest_number_teams(graph: List[GraphVertex]) -> int:
-    """
-    This is wrong.
-    """
-
-    def _largest_num_teams_with_s_at_back(s: GraphVertex):
-        max_num_teams = 1
-
-        q: Deque[GraphVertex] = collections.deque(
-            [s],
-        )
-
-        while q:
-            v = q.popleft()
-
-            for u in v.edges:
-                if u.max_distance == 0:
-                    u.max_distance = v.max_distance + 1
-                    q.append(u)
-
-                    max_num_teams = max(
-                        max_num_teams,
-                        u.max_distance,  # Change to `u.max_distance + 1`
-                    )
-
-        for v in graph:
-            v.max_distance = 0
-
-        return max_num_teams
-
-    return max(
-        (_largest_num_teams_with_s_at_back(s) for s in graph),
-    )  # The generator (expression) must be in parentheses.
-
-
 def find_largest_number_teams_v2(graph: List[GraphVertex]) -> int:
+    """
+    TODO: look into what a "topological sort" is
+          and how it is leveraged by this solution
+
+    TODO: would it be possible to write a variant of this solution
+          that implements DFS by relying on a `vertex_2_distance` hash table?
+    """
+
     def _dfs(curr: GraphVertex) -> int:
         curr.max_distance = max(
             (
