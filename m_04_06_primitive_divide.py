@@ -8,25 +8,11 @@ Return:
 """
 
 
-def solution_1_divide(x: int, y: int) -> int:
-    """
-    This works,
-    but is very slow
-    (e.g. when `x = 2**31 - 1` and `y = 1`, it will take `2**31 - 1` iterations.)
-    """
-
-    q = 0
-    next_largest_int_multiple_of_y = y
-
-    while next_largest_int_multiple_of_y <= x:
-        q += 1
-        next_largest_int_multiple_of_y += y
-
-    return q
-
-
 def solution_2_divide(x: int, y: int) -> int:
     """
+    This works,
+    but can easily be made more efficient.
+
     time:  O(n**2)
            where n := the # of bits required to represent `x / y`
 
@@ -43,7 +29,7 @@ def solution_2_divide(x: int, y: int) -> int:
 
 def solution_2_max_power_of_2(x: int, y: int) -> int:
     """
-    Compute the largest integer `k` s.t. `x >= y * (2**k)`.
+    Compute the maximum integer `k` s.t. `x >= y * (2**k)`.
 
     time:  O(n)
            where n := the # of bits required to represent `x / y`
@@ -57,7 +43,11 @@ def solution_2_max_power_of_2(x: int, y: int) -> int:
 
 def solution_3_divide(x: int, y: int) -> int:
     """
-    This f-n is based on the same idea as but is more efficient than the previous f-n.
+    This f-n
+        is based on the same idea as
+        but is more efficient than
+    the previous f-n.
+
     This f-n achieves greater efficiency
     by taking advantage of the fact that
     the `power`/`k` quantity is guaranteed to decrease across consecutive iterations.
@@ -68,7 +58,7 @@ def solution_3_divide(x: int, y: int) -> int:
            assuming that each of the individual shift and add operations takes O(1)
     """
 
-    k = solution_3_least_power_of_2(x, y)
+    k = solution_3_min_power_of_2(x, y)
     q = 0
     y_times_2_to_the_k = y << k
 
@@ -83,9 +73,9 @@ def solution_3_divide(x: int, y: int) -> int:
     return q
 
 
-def solution_3_least_power_of_2(x: int, y: int) -> int:
+def solution_3_min_power_of_2(x: int, y: int) -> int:
     """
-    Compute the smallest integer `k` s.t. `x < y * (2**k)`.
+    Compute the minimum integer `k` s.t. `x < y * (2**k)`.
 
     time:  O(n)
            where n := the # of bits required to represent `x / y`
@@ -99,12 +89,5 @@ def solution_3_least_power_of_2(x: int, y: int) -> int:
 
 
 if __name__ == "__main__":
-    q = solution_2_divide(64, 1)
-
-    q = solution_1_divide(64, 1)
-
-    print()
-    q = solution_1_divide(64, 1)
-    print(q)
-    q = solution_1_divide(64, 3)
+    q = solution_3_divide(64, 1)
     print(q)
