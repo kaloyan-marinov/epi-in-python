@@ -6,16 +6,24 @@ def zero_one_random():
 
 
 def uniform_random(a: int, b: int) -> int:
+    """
+    Generate (at random) an integer `i` from `{a, ..., b}`
+    according to the uniform probability distribution on the set of possible outcomes.
+    """
+
     if a != 0:
         return a + uniform_random(0, b - a)
 
-    k = 0
-    while b >= 2 ** k - 1:
-        k += 1
+    # Determine the # of bits needed to represent `b`.
+    num_bits_needed_for_b = 0
+    while b >= 2 ** num_bits_needed_for_b - 1:
+        num_bits_needed_for_b += 1
 
-    i = b + 1  # Anything bigger than b will do.
+    # Generate (at random) one positive integer,
+    # whose binary representation contains at most `num_bits_needed_for_b` bits that are set.
+    i = b + 1  # Anything bigger than `b` will do.
     while i > b:
-        i = _sample_X_k(k)
+        i = _sample_X_k(num_bits_needed_for_b)
 
     return i
 
@@ -30,12 +38,33 @@ def _sample_X_k(k: int) -> int:
     on { 0, ... , (2 ** k) - 1}
     """
     x = 0
+
     for _ in range(k):
         digit = zero_one_random()
         x <<= 1
         x = x | digit
 
     return x
+
+
+def uniform_random_2(lower_bound: int, upper_bound: int) -> int:
+    """
+    This is the official solution.
+    """
+
+    number_of_outcomes = upper_bound - lower_bound + 1
+
+    while True:
+        result = 0
+        i = 0
+        while (1 << i) < number_of_outcomes:
+            result = (result << 1) | zero_one_random()
+            i += 1
+
+        if result < number_of_outcomes:
+            break
+
+    return result + lower_bound
 
 
 if __name__ == "__main__":
