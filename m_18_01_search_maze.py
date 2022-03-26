@@ -1,4 +1,4 @@
-from typing import List, DefaultDict, Optional, Set, Dict
+from typing import List, DefaultDict, Optional, Set, Dict, Literal
 
 import collections
 import typing
@@ -12,8 +12,8 @@ class Coordinate(typing.NamedTuple):
     y: int
 
 
-def search_maze(
-    maze: List[List[int]],  # `List[List[Literal[WHITE, BLACK]]]`
+def search_maze_1(
+    maze: List[List[Literal[WHITE, BLACK]]],  # TODO: fix this type annotation
     s: Coordinate,
     e: Coordinate,
 ) -> List[Coordinate]:
@@ -53,7 +53,7 @@ def search_maze(
     vertex_2_parent: Dict[
         Coordinate,
         Optional[Coordinate],
-    ] = {}  # Change to `{s: None}`
+    ] = {s: None}
 
     def _dfs_visit(start_vertex: Coordinate) -> None:
         for v in vertex_2_neighboring_vertices[start_vertex]:
@@ -78,8 +78,8 @@ def search_maze(
     return []
 
 
-def search_maze(
-    maze: List[List[int]],  # `List[List[Literal[WHITE, BLACK]]]`
+def search_maze_2(
+    maze: List[List[Literal[WHITE, BLACK]]],  # TODO: fix this type annotation
     s: Coordinate,
     e: Coordinate,
 ) -> List[Coordinate]:
