@@ -12,7 +12,14 @@ def is_palindrome(text: str) -> bool:
 
 
 def palindrome_decompositions(text: str) -> List[List[str]]:
-    def _helper(t: str, i: int) -> List[List[str]]:
+    """
+    This is a solution by me.
+    """
+
+    def _helper(
+        t: str,
+        min_final_idx_for_prefix: int,
+    ) -> List[List[str]]:
         if len(t) == 0:
             return []
         elif len(t) == 1:
@@ -20,28 +27,28 @@ def palindrome_decompositions(text: str) -> List[List[str]]:
 
         r: List[List[str]] = []
 
-        count = i
-        while count <= len(t):
+        prefix_final_idx = min_final_idx_for_prefix
+        while prefix_final_idx <= len(t):
 
-            if is_palindrome(t[:count]):
-                if count == len(t):
+            if is_palindrome(t[:prefix_final_idx]):
+                if prefix_final_idx == len(t):
                     r.append([t])
                 else:
                     # fmt: off
                     '''
                     r.extend(
                         (
-                            t[:count] + decomposition
-                            for decomposition in _helper(t[count:], 1)
+                            t[:prefix_final_idx] + decomposition
+                            for decomposition in _helper(t[prefix_final_idx:], 1)
                         ),
                     )
                     '''
                     # fmt: on
-                    decompositions = _helper(t[count:], 1)
+                    decompositions = _helper(t[prefix_final_idx:], 1)
                     for d in decompositions:
-                        r.append([t[:count]] + d)
+                        r.append([t[:prefix_final_idx]] + d)
 
-            count += 1
+            prefix_final_idx += 1
 
         return r
 
@@ -52,24 +59,24 @@ def palindrome_decompositions_2(text: str) -> List[List[str]]:
 
     result: List[List[str]] = []
 
-    def _directed_palindrome_decompositions(
+    def _guided_palindrome_decompositions(
         start_idx: int,
         partial_decomposition: List[str],
     ) -> None:
         if start_idx == len(text):
-            result.append(partial_decomposition.copy())
+            result.append(partial_decomposition.copy())  # NB: unnecessary to `.copy()`!
             return
 
         for final_idx in range(start_idx + 1, len(text) + 1):
             prefix = text[start_idx:final_idx]
 
-            if prefix == prefix[::-1]:
-                _directed_palindrome_decompositions(
+            if prefix == prefix[::-1]:  # Seems faster than `is_palindrome(prefix)`.
+                _guided_palindrome_decompositions(
                     final_idx,
                     partial_decomposition + [prefix],
                 )
 
-    _directed_palindrome_decompositions(0, [])
+    _guided_palindrome_decompositions(0, [])
 
     return result
 
