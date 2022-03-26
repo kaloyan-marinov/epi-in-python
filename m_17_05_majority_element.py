@@ -6,8 +6,14 @@ import collections
 
 def majority_search(stream: Iterator[str]) -> str:
     """
+    Assume that `stream` is non-empty.
+
     Assume that more than half of the strings are repetitions of a single string
-    (the "majority element" [in the stream]).
+    (the "majority element" [in the `stream`]).
+
+    While this f-n works,
+    it is not an acceptable solution,
+    because its space complexity is worse than O(1).
     """
 
     element_2_count = collections.defaultdict(int)
@@ -30,7 +36,9 @@ def majority_search_2(stream: Iterator[str]) -> str:
     Assume that `stream` is non-empty.
 
     Assume that more than half of the strings are repetitions of a single string
-    (the "majority element" [in the stream]).
+    (the "majority element" [in the `stream`]).
+
+    TODO: work through the mathematical justification
     """
 
     candidate_count = 0
@@ -38,35 +46,11 @@ def majority_search_2(stream: Iterator[str]) -> str:
     for x in stream:
         if candidate_count == 0:
             candidate = x
-            candidate_count += 1  # or just `candidate_count = 1`
+            candidate_count = 1
         elif x == candidate:
             candidate_count += 1
         else:  # i.e. `candidate_count > 0 and x != candidate`
             candidate_count -= 1
-
-    return candidate
-
-
-def majority_search_3(stream: Iterator[str]) -> str:
-    """
-    Assume that `stream` is non-empty.
-
-    Assume that more than half of the strings are repetitions of a single string
-    (the "majority element" [in the stream]).
-    """
-
-    candidate = next(stream)
-    candidate_count = 1
-
-    for x in stream:
-        if x == candidate:
-            candidate_count += 1
-        else:
-            candidate_count -= 1
-
-        if candidate_count == 0:
-            candidate = next(stream)
-            candidate_count = 1
 
     return candidate
 
