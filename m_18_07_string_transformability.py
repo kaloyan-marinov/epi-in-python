@@ -19,6 +19,10 @@ def _differ_in_exactly_1_character(s: str, t: str) -> bool:
 
 def transform_string(D: Set[str], s: str, t: str) -> int:
     """
+    This function
+    works
+    but is _very_ slow.
+
     Assume that `s`, `t`, and every string in `D` is of the same length.
 
     (The auxiliary function relies on that assumption to hold true.)
@@ -33,9 +37,10 @@ def transform_string(D: Set[str], s: str, t: str) -> int:
         q_word = q.popleft()
 
         for d_word in D:
-            if _differ_in_exactly_1_character(
-                q_word, d_word
-            ):  # add `and d_word not in vertex_2_parent`
+            if (
+                _differ_in_exactly_1_character(q_word, d_word)
+                and d_word not in vertex_2_parent
+            ):
                 vertex_2_parent[d_word] = q_word
                 q.append(d_word)
 
@@ -45,9 +50,7 @@ def transform_string(D: Set[str], s: str, t: str) -> int:
                     while w:
                         production_sequence.append(w)
                         w = vertex_2_parent[w]
-                    return production_sequence[
-                        ::-1
-                    ]  # change to `len(production_sequence) - 1`
+                    return len(production_sequence) - 1
 
     return -1
 
@@ -58,6 +61,8 @@ import string
 def transform_string_v2(D: Set[str], s: str, t: str) -> int:
     """
     Assume that all characters are lowercase alphabet characters.
+
+    "Assume that `s`, `t`, and every string in `D` is of the same length."
     """
     vertex_2_parent: Dict[str, Optional[str]] = {s: None}
 
@@ -68,7 +73,7 @@ def transform_string_v2(D: Set[str], s: str, t: str) -> int:
     while q:
         q_word = q.popleft()
 
-        q_word_characters = q_word.split()  # change to `list(q_word)`
+        q_word_characters = list(q_word)
         for i in range(len(q_word_characters)):
             old_character_i = q_word_characters[i]
 
@@ -78,7 +83,8 @@ def transform_string_v2(D: Set[str], s: str, t: str) -> int:
                 q_next_word_candidate = "".join(q_word_characters)
                 if (
                     q_next_word_candidate in D
-                ):  # add `and q_next_word_candidate not in vertex_2_parent`
+                    and q_next_word_candidate not in vertex_2_parent
+                ):
                     vertex_2_parent[q_next_word_candidate] = q_word
                     q.append(q_next_word_candidate)
 
@@ -88,9 +94,7 @@ def transform_string_v2(D: Set[str], s: str, t: str) -> int:
                         while w:
                             production_sequence.append(w)
                             w = vertex_2_parent[w]
-                        return production_sequence[
-                            ::-1
-                        ]  # change to `len(production_sequence) - 1`
+                        return len(production_sequence) - 1
 
                 q_word_characters[i] = old_character_i
 
@@ -100,6 +104,8 @@ def transform_string_v2(D: Set[str], s: str, t: str) -> int:
 def transform_string_v3(D: Set[str], s: str, t: str) -> int:
     """
     Assume that all characters are lowercase alphabet characters.
+
+    "Assume that `s`, `t`, and every string in `D` is of the same length."
     """
     vertex_2_level: Dict[str, int] = {s: 0}
 
@@ -110,7 +116,7 @@ def transform_string_v3(D: Set[str], s: str, t: str) -> int:
     while q:
         q_word = q.popleft()
 
-        q_word_characters = q_word.split()  # change to `list(q_word)`
+        q_word_characters = list(q_word)
         for i in range(len(q_word_characters)):
             old_character_i = q_word_characters[i]
 
@@ -120,7 +126,8 @@ def transform_string_v3(D: Set[str], s: str, t: str) -> int:
                 q_next_word_candidate = "".join(q_word_characters)
                 if (
                     q_next_word_candidate in D
-                ):  # add `and q_next_word_candidate not in vertex_2_level`
+                    and q_next_word_candidate not in vertex_2_level
+                ):
                     vertex_2_level[q_next_word_candidate] = vertex_2_level[q_word] + 1
                     q.append(q_next_word_candidate)
 
@@ -143,7 +150,11 @@ def transform_string_v4(
     t: str,
 ) -> int:
     """
+    (This is the official solution.)
+
     Assume that all characters are lowercase alphabet characters.
+
+    "Assume that `s`, `t`, and every string in `D` is of the same length."
     """
     q: Deque[StringDistancePair] = collections.deque(
         [StringDistancePair(s, 0)],
