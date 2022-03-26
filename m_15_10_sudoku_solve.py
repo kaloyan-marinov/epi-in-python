@@ -12,17 +12,43 @@ def solve_sudoku(partial_assignment: List[List[int]]) -> bool:
     Assume that each empty cell in `partial_assignment` holds the integer 0.
 
     TODO:
-        (a) determine whether the input is assumed to be valid
+        (a) determine whether the input actually holds the integer 0 in its emtpy cells
 
-        (b) record, within this docstring, whether the input gets modified in-place
+        (b) determine whether the input is assumed to be valid
 
-        (c) refactoring ideas
+        (c) record, within this docstring, whether the input gets modified in-place
+
+        (d) refactoring ideas
 
             (1) extract the computation of common values
+                (including but not limited to `region_size` and `len(partial_assignment)`)
                 to within the outermost function's scope
-
-            (2) no innermost function
     """
+
+    def _is_val_admissible_for_cell_at(
+        i: int,
+        j: int,
+        val: int,
+    ) -> bool:
+        # Check column constraints.
+        if val in (partial_assignment[k][j] for k in range(len(partial_assignment))):
+            return False
+
+        # Check row constraints.
+        if val in partial_assignment[i]:
+            return False
+
+        # Check region constraints.
+        region_size = int(
+            math.sqrt(len(partial_assignment)),
+        )
+        I = i // region_size
+        J = j // region_size
+
+        return not any(
+            val == partial_assignment[region_size * I + a][region_size * J + b]
+            for a, b in itertools.product(range(region_size), repeat=2)
+        )
 
     def _fill_in_the_cell_at(i: int, j: int) -> bool:
         if i == len(partial_assignment):
@@ -39,41 +65,6 @@ def solve_sudoku(partial_assignment: List[List[int]]) -> bool:
         # proceed straight on to the next cell.
         if partial_assignment[i][j] != _EMPTY_CELL_CONTENT:
             return _fill_in_the_cell_at(i + 1, j)
-
-        def _is_val_admissible_for_cell_at(
-            i: int,
-            j: int,
-            val: int,
-        ) -> bool:
-            # Check column constraints.
-            if any(
-                val == partial_assignment[k][j] for k in range(len(partial_assignment))
-            ):
-                return False
-
-            # Check row constraints.
-            # fmt: off
-            '''
-            if any(
-                val == partial_assignment[i][k]
-                for k in range(len(partial_assignment[0]))
-            ):
-            '''
-            # fmt: on
-            if val in partial_assignment[i]:
-                return False
-
-            # Check region constraints.
-            region_size = int(
-                math.sqrt(len(partial_assignment)),
-            )
-            I = i // region_size
-            J = j // region_size
-
-            return not any(
-                val == partial_assignment[region_size * I + a][region_size * J + b]
-                for a, b in itertools.product(range(region_size), repeat=2)
-            )
 
         # Exhaust the possibilities for filling in the cell at (i, j).
         for value in range(1, len(partial_assignment) + 1):
