@@ -22,30 +22,20 @@ def longest_nondecreasing_subsequence_length(A: List[int]) -> int:
         if idx == 0:
             return 1
 
-        length = float("-inf")  # change to 1
+        length = 1
         for j in range(idx):
             if A[j] <= A[idx]:
                 length = max(
                     length,
-                    _longest_nondecreasing_subsequence_ending_at(j),  # add 1
+                    _longest_nondecreasing_subsequence_ending_at(j) + 1,
                 )
 
         return length
 
-    return _longest_nondecreasing_subsequence_ending_at(len(A) - 1)
-    # fmt: off
-    '''
-    Replace the above with
-    
-    return max(
-        _longest_nondecreasing_subsequence_ending_at(l)
-        for l in range(len(A))
-    )
-    '''
-    # fmt: on
+    return max(_longest_nondecreasing_subsequence_ending_at(l) for l in range(len(A)))
 
 
-def longest_nondecreasing_subsequence_length_2(A: List[int]) -> int:
+def longest_nondecreasing_subsequence_length_2_a(A: List[int]) -> int:
     """
     For example, if `A = [0, 8, 4, 12, 2, 10, 6, 14, 1, 9]`,
     then the length of a longest nondecreasing subsequence is 4.
@@ -66,14 +56,28 @@ def longest_nondecreasing_subsequence_length_2(A: List[int]) -> int:
                     solution_for_subarray_ending_at[j] + 1,
                 )
 
-    return solution_for_subarray_ending_at[len(A) - 1]
-    # fmt: off
-    '''
-    Replace the above with
-    
     return max(solution_for_subarray_ending_at)
-    '''
-    # fmt: on
+
+
+def longest_nondecreasing_subsequence_length_2_b(A: List[int]) -> int:
+    """
+    For example, if `A = [0, 8, 4, 12, 2, 10, 6, 14, 1, 9]`,
+    then the length of a longest nondecreasing subsequence is 4.
+    There are multiple subsequences which achieve that length
+    (such as `[0, 4, 10, 14]` and `[0, 2, 6, 9]`).
+
+    Note that the elements of a nondecreasing subsequence
+    are not required to immediately follow each other.
+    """
+
+    max_lengths = [1] * len(A)
+
+    for idx in range(1, len(A)):
+        max_lengths[idx] = (
+            max((max_lengths[j] for j in range(idx) if A[j] <= A[idx]), default=0) + 1
+        )
+
+    return max(max_lengths)
 
 
 if __name__ == "__main__":
