@@ -1,7 +1,17 @@
 from typing import List
 
 
-def solution_1_dutch_national_flag(pivot_index: int, A: List[int]) -> List[int]:
+def solution_1_dutch_national_flag(pivot_index: int, A: List[int]) -> None:
+    """
+    Assume that `pivot_index in range(len(A))`.
+
+    Perform an in-place modification of `A`,
+    which consists in re-arranging its elements s.t.
+        - all elements < "the pivot value" appear first,
+        - followed by all elements = "the pivot value",
+        - followed by all elements > "the pivot value".
+    """
+
     pivot_value = A[pivot_index]
 
     A[0], A[pivot_index] = A[pivot_index], A[0]
@@ -26,45 +36,6 @@ def solution_1_dutch_national_flag(pivot_index: int, A: List[int]) -> List[int]:
             first_ind += 1
             last_ind += 1
 
-    return A
-
-
-def solution_2_dutch_national_flag(pivot_index: int, A: List[int]) -> None:
-    pivot_value = A[pivot_index]
-
-    # fmt: off
-    '''
-    During partitioning
-    / During processing
-    / While constructing the [desired] partitioning,
-    maintain the following as "supporting invariants":
-        smaller          A[: first_equal]
-        equal            A[first_equal:first_unclassified]
-        unclassified     A[first_unclassified:first_larger]
-        larger           A[first_larger:]
-    '''
-    # fmt: on
-    first_equal = 0
-    first_unclassified = 0
-    first_larger = len(A)
-
-    while first_unclassified < first_larger:
-        if A[first_unclassified] < pivot_value:
-            A[first_equal], A[first_unclassified] = (
-                A[first_unclassified],
-                A[first_equal],
-            )
-            first_equal += 1
-            first_unclassified += 1
-        elif A[first_unclassified] == pivot_value:
-            first_unclassified += 1
-        else:  # i.e. A[first_unclassified] > pivot_value
-            A[first_unclassified], A[first_larger - 1] = (
-                A[first_larger - 1],
-                A[first_unclassified],
-            )
-            first_larger -= 1
-
 
 if __name__ == "__main__":
     import copy
@@ -82,24 +53,3 @@ if __name__ == "__main__":
         print()
         print("solution_1", A_initial)
         print("solution_1", A_final)
-
-    # Tests for solution #2.
-    print()
-    print()
-    print()
-
-    # Note that
-    # the previous loop modified the value of `input` in-place,
-    # which means that we now have to re-initialize `intputs`.
-    inputs = (
-        (2, [0, 1, 1, 2]),
-        (0, [1, 0, 2, 0, 2, 1]),
-    )
-
-    for pivot_index, A in inputs:
-        A_initial = copy.deepcopy(A)
-        solution_2_dutch_national_flag(pivot_index, A)
-
-        print()
-        print("solution_2", A_initial)
-        print("solution_2", A)
