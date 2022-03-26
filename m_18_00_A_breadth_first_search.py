@@ -35,20 +35,3 @@ def bfs(
         i += 1
 
     return vertex_2_level
-
-
-if __name__ == "__main__":
-    adj: Dict[Vertex, List[Vertex]] = {
-        "a": ["s", "z"],
-        "z": ["a"],
-        "s": ["a", "x"],
-        "x": ["s", "c", "d"],
-        "d": ["x", "c", "f"],
-        "c": ["x", "d", "f", "v"],
-        "f": ["d", "c", "v"],
-        "v": ["c", "f"],
-    }
-
-    v_2_lvl: Dict[Vertex, int] = bfs(adj, "s")
-
-    print(v_2_lvl)
