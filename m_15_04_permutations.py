@@ -12,12 +12,12 @@ def permutations(A: List[int]) -> List[List[int]]:
     result: List[List[int]] = []
     for i, a_i in enumerate(A):
         B = []
-        B.append(A[:i])  # replace with `extend`
-        B.append(A[i + 1 :])  # replace with `extend`
+        B.extend(A[:i])
+        B.extend(A[i + 1 :])
 
         result.extend(
-            (a_i + partial_permutation for partial_permutation in permutations(B))
-        )  # replace `a_i` with `[a_i]`
+            ([a_i] + partial_permutation for partial_permutation in permutations(B))
+        )
 
     return result
 
@@ -29,7 +29,7 @@ def permutation_2(A: List[int]) -> List[List[int]]:
 
     result: List[List[int]] = []
 
-    def _directed_permutation(i: int) -> None:
+    def _guided_permutation(i: int) -> None:
         """
         Generate each permutation for A[i:]
         and, as soon as "the next such permutation" is generated, append it to `result`.
@@ -41,10 +41,10 @@ def permutation_2(A: List[int]) -> List[List[int]]:
         # Try every possibility for A[i].
         for j in range(i, len(A)):
             A[i], A[j] = A[j], A[i]
-            _directed_permutation(i + 1)
+            _guided_permutation(i + 1)
             A[i], A[j] = A[j], A[i]
 
-    _directed_permutation(0)
+    _guided_permutation(0)
 
     return result
 
@@ -59,7 +59,9 @@ def permutation_3(A: List[int]) -> List[List[int]]:
 
     result: List[List[int]] = []
 
-    # perhaps a call to `A.sort()` is needed here?
+    # (Although each of the provided test cases provides a sorted array for `A`,)
+    # it seems that,
+    # strictly speaking, a call to `A.sort()` is actually needed at this exact point.
 
     while True:
         result.append(A.copy())
