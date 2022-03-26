@@ -4,7 +4,7 @@ import functools
 
 
 def number_of_ways(n: int, m: int) -> int:
-    # Must add `functools.lru_cache(None)` here!
+    @functools.lru_cache(None)
     def _helper(rows: int, cols: int) -> int:
         if rows == 1 or cols == 1:
             return 1
