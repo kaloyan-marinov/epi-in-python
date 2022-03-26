@@ -1,3 +1,17 @@
+def swap_bits(x: int, i: int, j: int) -> int:
+    if x >> i & 1 != x >> j & 1:  # i.e. if the bits of interest differ
+        # Construct a bit mask for selecting the bits of interest.
+        bitmask = (1 << i) | (1 << j)
+
+        # Since x ^ 0 = 1 when x = 1,
+        #       x ^ 1 = 1 when x = 0,
+        #      (x ^ 0 = 0 when x = 0),
+        # the XOR operator with the `bitmask` will flip each of the bits of interest.
+        x ^= bitmask
+
+    return x
+
+
 def swap_bits_1(x: int, i: int, j: int) -> int:
     if i >= j:
         i, j = j, i
