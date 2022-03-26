@@ -18,9 +18,6 @@ def optimum_task_assignment(
     task_id_pairs = [(t_d_i, i) for i, t_d_i in enumerate(task_durations)]
     task_id_pairs.sort(key=lambda pair: pair[0])
 
-    """
-    return [PairedTasks(task_1=idx, task_2=n - 1 - idx) for idx in range(n // 2)]
-    """
     return [
         PairedTasks(task_1=task_id_pairs[idx][0], task_2=task_id_pairs[n - 1 - idx][0])
         for idx in range(n // 2)
@@ -39,7 +36,7 @@ def optimum_task_assignment_2(
     return [
         PairedTasks(
             task_1=task_durations[i],
-            task_2=task_durations[~i],
+            task_2=task_durations[~i],  # Same effect as `len(task_durations) - 1 - i`.
         )
         for i in range(len(task_durations) // 2)
     ]
