@@ -1,18 +1,7 @@
 from typing import List
 
 
-def solution_1_rotate_matrix(square_matrix: List[List[int]]) -> None:
-    """
-    Perform an in-place rotation of the `square_matrix`
-    by 90 degrees in the clockwise direction.
-
-    time:  O(n^2)
-    space: O(n^2)
-    """
-    square_matrix[:] = [list(row[::-1]) for row in zip(*square_matrix)]
-
-
-def solution_2_rotate_matrix(square_matrix: List[List[int]]) -> None:
+def rotate_matrix(square_matrix: List[List[int]]) -> None:
     """
     Perform an in-place rotation of the `square_matrix`
     by 90 degrees in the clockwise direction.
@@ -23,7 +12,7 @@ def solution_2_rotate_matrix(square_matrix: List[List[int]]) -> None:
 
     n = len(square_matrix)
 
-    for r in range((n + 1) // 2):
+    for r in range(n // 2):
         for c in range(r, n - r - 1):
             (
                 square_matrix[c][-1 - r],
@@ -44,6 +33,6 @@ if __name__ == "__main__":
         [3, 4],
     ]
 
-    solution_2_rotate_matrix(A)
+    rotate_matrix(A)
 
     print(A)  #  [[3, 1], [4, 2]]
