@@ -1,14 +1,22 @@
 import copy
+
 from typing import List
 
 
 def solution_1_plus_one(A: List[int]) -> List[int]:
-    D = copy.deepcopy(A)
-    _incr_by_1(D)
-    return D
+    """
+    Assume that
+    each entry of `A` is a decimal digit,
+    and `A` represents an arbitrary-precision non-negative integer `d`.
 
+    Return an array of digits encoding the integer `d + 1`.
 
-def _incr_by_1(D: List[int]) -> None:
+    time:  O(n)
+           where n := len(A)
+    """
+
+    D = copy.deepcopy(A)  # NB: `D = A` also passes the tests, but modifies the input!
+
     for i in reversed(range(len(D))):
         if 0 <= D[i] <= 8:
             D[i] += 1
@@ -19,8 +27,27 @@ def _incr_by_1(D: List[int]) -> None:
     if D[0] == 0:
         D.insert(0, 1)
 
+    return D
+
 
 def solution_2_plus_one(A: List[int]) -> List[int]:
+    """
+    This is the official solution.
+    My impression about it is that it:
+        - reads "kind of backwards",
+        - seems hard to come up with, but
+        - is undeniably slick.
+
+    Assume that
+    each entry of `A` is a decimal digit,
+    and `A` represents an arbitrary-precision non-negative integer `d`.
+
+    Return an array of digits encoding the integer `d + 1`.
+
+    time:  O(n)
+           where n := len(A)
+    """
+
     A[-1] += 1
 
     for i in reversed(range(1, len(A))):
