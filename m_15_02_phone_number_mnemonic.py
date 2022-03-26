@@ -2,7 +2,13 @@ from typing import List, Tuple
 
 
 def phone_mnemonic(phone_number: str) -> List[str]:
+    """
+    Assume that
+    each of `phone_number`'s characters is one of "0", ..., "9".
+    """
     DIGIT_2_CHARACTERS = {
+        "0": "0",
+        "1": "1",
         "2": "ABC",
         "3": "DEF",
         "4": "GHI",
@@ -11,14 +17,13 @@ def phone_mnemonic(phone_number: str) -> List[str]:
         "7": "PQRS",
         "8": "TUV",
         "9": "WXYZ",
-    }  # add '0': '0' and '1': '1'
-
-    if len(phone_number) == 1:
-        return [
-            c for c in DIGIT_2_CHARACTERS[phone_number].split()
-        ]  # remove `'.split()`
+    }
 
     mnemonics_from_first_digit = [c for c in DIGIT_2_CHARACTERS[phone_number[0]]]
+
+    if len(phone_number) == 1:
+        return mnemonics_from_first_digit
+
     mnemonics_from_remaining_digits = phone_mnemonic(phone_number[1:])
 
     return [
@@ -29,7 +34,12 @@ def phone_mnemonic(phone_number: str) -> List[str]:
 
 
 def phone_mnemonic_2(phone_number: str) -> List[str]:
+    """
+    Assume that
+    each of `phone_number`'s characters is one of "0", ..., "9".
+    """
 
+    # Here, a Python sequence is used to _emulate_ a Python dictionary.
     DIGIT_2_CHARACTERS: Tuple[str] = (
         "0",
         "1",
