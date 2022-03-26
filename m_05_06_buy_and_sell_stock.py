@@ -3,15 +3,17 @@ from typing import List
 
 def buy_and_sell_stock_1(prices: List[float]) -> float:
     """
+    (The last 2 of the provided test cases take a _very_ long time to run.)
+
+    The `prices` represent the daily prices of a particular stock.
+
+    Return the max profit that can be made
+    by buying 1 share of the stock in question
+    and selling the bought share on some later day.
+    (If it is impossible to achieve a profit, there is no need to trade at all.)
+
     time:  O(n^2)
     space: O(1)
-
-    Test PASSED (402/402) [ 436  s]
-    Average running time:    2  s
-    Median running time:   246 us
-
-    The last 2 test cases took _very_ long to run,
-    which indicates that the time complexity is _very_ high.
     """
     max_profit = 0
 
@@ -30,24 +32,27 @@ def buy_and_sell_stock_1(prices: List[float]) -> float:
 
 def buy_and_sell_stock_2(prices: List[float]) -> float:
     """
-    time: O(n)
-    space: O(1)
+    The `prices` represent the daily prices of a particular stock.
 
-    Test PASSED (402/402) [  26 ms]
-    Average running time:  187 us
-    Median running time:    27 us
+    Return the max profit that can be made
+    by buying 1 share of the stock in question
+    and selling the bought share on some later day.
+    (If it is impossible to achieve a profit, there is no need to trade at all.)
+
+    time:  O(n)
+    space: O(1)
     """
-    min_over_previous_days = float("inf")
+    running_min_price = float("inf")
     max_profit = 0
 
     for price in prices:
-        max_profit = max(
-            price - min_over_previous_days,
-            max_profit,
-        )
-        min_over_previous_days = min(
-            min_over_previous_days,
+        running_min_price = min(
+            running_min_price,
             price,
+        )
+        max_profit = max(
+            price - running_min_price,
+            max_profit,
         )
 
     return max_profit
