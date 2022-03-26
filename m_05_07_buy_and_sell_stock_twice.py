@@ -1,6 +1,6 @@
 from typing import List
 
-from m_05_06_buy_and_sell_stock import buy_and_sell_stock_2 as _buy_and_sell_stock_once
+# from m_05_06_buy_and_sell_stock import buy_and_sell_stock_2
 
 
 def buy_and_sell_stock_twice_1(prices: List[float]) -> float:
@@ -9,34 +9,13 @@ def buy_and_sell_stock_twice_1(prices: List[float]) -> float:
 
     The `prices` represent the daily prices of a particular stock.
 
-    Return the max profit that can be made
+    Return the max profit that can be achieved
     by buying and selling 1 share of the stock in question at most twice.
 
     time:  O(n^2)
     space: O(1)
     """
-    max_profit = _buy_and_sell_stock_once(prices)
-
-    if len(prices) == 1:
-        return 0
-    elif len(prices) == 2:
-        return max_profit
-
-    buy_1 = float("inf")
-
-    for i in range(1, len(prices) - 1):
-        buy_1 = min(buy_1, prices[i - 1])
-        sell_1 = prices[i]
-        max_profit_1 = sell_1 - buy_1
-
-        max_profit_2 = _buy_and_sell_stock_once(prices[i + 1 :])
-
-        max_profit = max(
-            max_profit,
-            max_profit_1 + max_profit_2,
-        )
-
-    return max_profit
+    pass
 
 
 def buy_and_sell_stock_twice_2(prices: List[float]) -> float:
@@ -45,7 +24,7 @@ def buy_and_sell_stock_twice_2(prices: List[float]) -> float:
 
     The `prices` represent the daily prices of a particular stock.
 
-    Return the max profit that can be made
+    Return the max profit that can be achieved
     by buying and selling 1 share of the stock in question at most twice.
 
     time:  O(n)
