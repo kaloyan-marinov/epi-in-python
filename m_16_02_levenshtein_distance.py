@@ -18,6 +18,10 @@ def levenshtein_distance(A: str, B: str) -> int:
         if A[A_idx] == B[B_idx]:
             return _dist_between_prefixes(A_idx - 1, B_idx - 1)
 
+        # The rest of this represents/implements an observation,
+        # which is quite intuitive to make;
+        # its rigorous proof is based on reordering steps in/of
+        # an optimum solution for the original problem.
         substitute_last = _dist_between_prefixes(A_idx - 1, B_idx - 1) + 1
         add_last_of_B = _dist_between_prefixes(A_idx, B_idx - 1) + 1
         delete_last_of_A = _dist_between_prefixes(A_idx - 1, B_idx) + 1
