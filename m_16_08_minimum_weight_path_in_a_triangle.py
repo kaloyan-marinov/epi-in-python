@@ -1,15 +1,23 @@
 from typing import List
 
+import functools
+
 
 def minimum_path_weight(triangle: List[List[int]]) -> int:
-    global min_weight
+    """
+    This function
+    is recursive,
+    works,
+    but is _very_ slow.
+    """
+
     min_weight = float("inf")
 
-    # TODO: add decorator
+    @functools.lru_cache(maxsize=None)
     def _helper(level: int, idx: int, weight: int) -> None:
-        global min_weight
+        nonlocal min_weight
 
-        if level == len(triangle):  # TODO: replace with `len(triangle) - 1`
+        if level == len(triangle) - 1:
             min_weight = min(
                 min_weight,
                 weight + triangle[level][idx],
@@ -20,37 +28,26 @@ def minimum_path_weight(triangle: List[List[int]]) -> int:
 
         _helper(level + 1, idx + 1, weight + triangle[level][idx])
 
-    # TODO: replace with `if triangle: ... else: ...`
-    _helper(0, 0, 0)
-
-    return min_weight
+    if triangle:
+        _helper(0, 0, 0)
+        return min_weight
+    else:
+        return 0
 
 
 def minimum_path_weight(triangle: List[List[int]]) -> int:
-    # fmt: off
-    '''
-    def _path_weight(target_level: int, target_idx: int) -> int:
-        if target_level == 0:
-            return triangle[0][0]
+    """
+    This function
+    is recursive,
+    and works.
+    """
 
-        return (
-            min(
-                _path_weight(target_level - 1, target_idx),
-                _path_weight(target_level - 1, target_idx - 1),
-            )
-            if target_idx < target_level
-            else _path_weight(target_level - 1, target_idx - 1)
-        )
-
-    return min(_path_weight(len(triangle), idx) for idx in range(len(triangle)))
-    '''
-    # fmt: on
-    # TODO: add decorator
+    @functools.lru_cache(None)
     def _min_path_weight_to_xy(target_level: int, target_idx: int) -> int:
         if target_level == 0:
             return triangle[0][0]
 
-        # TODO: handle _both_ edge cases separately!
+        # handle _both_ edge cases separately!
         if target_idx == 0:
             prefix_weight = _min_path_weight_to_xy(target_level - 1, target_idx)
         elif target_idx == target_level:
@@ -63,7 +60,7 @@ def minimum_path_weight(triangle: List[List[int]]) -> int:
 
         return prefix_weight + triangle[target_level][target_idx]
 
-    # TODO: special-case the handling of an empty triangle!
+    # special-case the handling of an empty triangle!
     return (
         min(
             _min_path_weight_to_xy(len(triangle) - 1, idx)
@@ -75,6 +72,13 @@ def minimum_path_weight(triangle: List[List[int]]) -> int:
 
 
 def minimum_path_weight(triangle: List[List[int]]) -> int:
+    """
+    This function
+    is iterative,
+    works,
+    but may seem a little too mysterious at first sight.
+    """
+
     min_weights_to_curr_row: List[int] = [0]
 
     for curr_row in triangle:
@@ -91,6 +95,11 @@ def minimum_path_weight(triangle: List[List[int]]) -> int:
 
 
 def minimum_path_weight(triangle: List[List[int]]) -> int:
+    """
+    This function
+    is iterative,
+    and works.
+    """
 
     # fmt: off
     '''
@@ -98,6 +107,8 @@ def minimum_path_weight(triangle: List[List[int]]) -> int:
 
     if n == 0:
         return 0
+    elif n == 1:
+        return triangle[0][0]
 
     min_weights_to_prev_row = [triangle[0][0]]
 
@@ -107,11 +118,10 @@ def minimum_path_weight(triangle: List[List[int]]) -> int:
             min_weights_to_prev_row[0] + triangle[i][0]
         ] + [
             min(
-                min_weights_to_prev_row[i - 1], # i >> idx
-                min_weights_to_prev_row[i], # i >> idx
+                min_weights_to_prev_row[idx - 1],
+                min_weights_to_prev_row[idx],
             ) + triangle[i][idx]
-            #for idx in range(1, n - 1)
-            for idx in range(1, i - 1)  # i - 1 >> i
+            for idx in range(1, i)
         ] + [
             min_weights_to_prev_row[-1] + triangle[i][-1]
         ]
@@ -143,7 +153,6 @@ def minimum_path_weight(triangle: List[List[int]]) -> int:
                     min_weights_to_prev_row[idx],
                 )
                 + triangle[i][idx]
-                # for idx in range(1, n - 1)
             )
 
         min_weights_to_curr_row.append(min_weights_to_prev_row[-1] + triangle[i][-1])
