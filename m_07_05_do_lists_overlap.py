@@ -1,11 +1,31 @@
 from typing import Optional
 
-from m_7_00_common import ListNode
-from m_7_03_is_list_cyclic import has_cycle
-from m_7_04_do_terminated_lists_overlap import overlapping_no_cycle_lists
+from typing import Optional
+
+from m_07_00_common import ListNode
+from m_07_03_is_list_cyclic import has_cycle
+from m_07_04_do_terminated_lists_overlap import overlapping_no_cycle_lists
 
 
-def overlapping_lists(l0: ListNode, l1: ListNode) -> Optional[ListNode]:
+def overlapping_lists(
+    l0: Optional[ListNode],
+    l1: Optional[ListNode],
+) -> Optional[ListNode]:
+    """
+    Assume that `l0` and `l1` are the heads of 2 linked lists,
+    each of which may contain a cycle.
+
+    Determine whether `l0` and `l1` have a node in common:
+        (a) if yes, return any node that appears in their overlap,
+        (b) if not, return `None`.
+
+    time:  O(n + m)
+           n := the # of nodes in `l0`
+           m := the # of nodes in `l1`
+
+    space: O(1)
+    """
+
     # Test for cycles in each list.
     cycle_start_0 = has_cycle(l0)
     cycle_start_1 = has_cycle(l1)
