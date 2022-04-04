@@ -1,6 +1,7 @@
 from typing import Optional
 
-from m_07_00_A_singly_linked_list import ListNode, length as compute_length
+from m_07_00_A_singly_linked_list import ListNode
+from m_07_00_B_length_of_linked_list import length as compute_length
 
 
 def cyclically_right_shift_list_1(L: Optional[ListNode], k: int) -> Optional[ListNode]:
@@ -78,7 +79,6 @@ def cyclically_right_shift_list_2(L: Optional[ListNode], k: int) -> Optional[Lis
     if L is None:
         return None
 
-    # TODO: replace this block with the function from `m_07_00_C_tail_node_and_length_of_linked_list.py`
     # Compute the length of `L` and its tail.
     tail = L
     length = 1
