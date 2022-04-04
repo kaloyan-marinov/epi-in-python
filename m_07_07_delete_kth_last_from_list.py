@@ -3,13 +3,21 @@ from typing import Optional
 from m_07_00_common import ListNode
 
 
-def remove_kth_last(L: ListNode, k: int) -> Optional[ListNode]:
+def remove_kth_last_1(L: ListNode, k: int) -> Optional[ListNode]:
     """
+    (This is my own solution.)
+
     Assume `L` has at least `k` nodes.
 
-    Remove the `k`-th last element from (the linked list starting at) `L`.
+    Perform an in-place modification of the linked list starting at `L`, which consists in removing the list's `k`-th last element, and return the head node of the resulting list.
 
-    Return the head node of the resulting list.
+    This solution entails a single traversal of the list
+    (and, in particular, does not rely on computing the length of the list).
+
+    time:  O(n)
+           where n := the # of nodes in `L`
+
+    space: O(1)
     """
 
     slow = L
@@ -30,8 +38,44 @@ def remove_kth_last(L: ListNode, k: int) -> Optional[ListNode]:
     return L  # NB: return the head node of the resulting list
 
 
+def remove_kth_last_2(L: ListNode, k: int) -> Optional[ListNode]:
+    """
+    (This is the official solution. Admittedly, it is safer than the preceding one.)
+
+    Assume `L` has at least `k` nodes.
+
+    Perform an in-place modification of the linked list starting at `L`,
+    which consists in removing the list's `k`-th last element,
+    and return the head node of the resulting list.
+
+    This solution entails a single traversal of the list
+    (and, in particular, does not rely on computing the length of the list).
+
+    time:  O(n)
+           where n := the # of nodes in `L`
+
+    space: O(1)
+    """
+
+    dummy_head = ListNode(data=0, next=L)
+
+    first = dummy_head.next
+    for _ in range(k):
+        first = first.next
+
+    second = dummy_head
+    while first:
+        first = first.next
+        second = second.next
+
+    # `second` is now the (k + 1)-th last node.
+    second.next = second.next.next
+
+    return dummy_head.next
+
+
 if __name__ == "__main__":
     L = ListNode.from_list([2, 1])
     k = 2
 
-    L = remove_kth_last(L, k)
+    L = remove_kth_last_1(L, k)
