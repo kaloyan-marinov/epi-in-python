@@ -1,9 +1,26 @@
 from typing import Optional
 
-from m_7_00_common import ListNode, length
+from m_07_00_common import ListNode, length
 
 
-def overlapping_no_cycle_lists_1(l0: ListNode, l1: ListNode) -> Optional[ListNode]:
+def overlapping_no_cycle_lists_1(
+    l0: Optional[ListNode],
+    l1: Optional[ListNode],
+) -> Optional[ListNode]:
+    """
+    Assume that `l0` and `l1` are the heads of 2 cycle-free linked lists.
+
+    Determine whether `l0` and `l1` have a node in common:
+        (a) if yes, return their 1st common node,
+        (b) if not, return `None`.
+
+    time:  O(n + m)
+           n := the # of nodes in `l0`
+           m := the # of nodes in `l1`
+
+    space: O(1)
+    """
+
     if l0 is None or l1 is None:
         return None
 
@@ -43,11 +60,28 @@ def overlapping_no_cycle_lists_1(l0: ListNode, l1: ListNode) -> Optional[ListNod
         l1 = l1.next
 
 
-def overlapping_no_cycle_lists_2(l0: ListNode, l1: ListNode) -> Optional[ListNode]:
+def overlapping_no_cycle_lists_2(
+    l0: Optional[ListNode],
+    l1: Optional[ListNode],
+) -> Optional[ListNode]:
     """
+    (
     This is the official solution.
     It is empirically observed to be two times faster than the earlier solution,
     but its implementation is a little more difficult to understand.
+    )
+
+    Assume that `l0` and `l1` are the heads of 2 cycle-free linked lists.
+
+    Determine whether `l0` and `l1` have a node in common:
+        (a) if yes, return their 1st common node,
+        (b) if not, return `None`.
+
+    time:  O(n + m)
+           n := the # of nodes in `l0`
+           m := the # of nodes in `l1`
+
+    space: O(1)
     """
 
     length_0 = length(l0)
@@ -71,4 +105,4 @@ def overlapping_no_cycle_lists_2(l0: ListNode, l1: ListNode) -> Optional[ListNod
         l0 = l0.next
         l1 = l1.next
     
-    return l0  # None implies no overlap
+    return l0  # `None` implies no overlap
