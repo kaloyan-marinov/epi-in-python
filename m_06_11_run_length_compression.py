@@ -1,5 +1,26 @@
+"""
+Run-length encoding (RLE) compression offers a fast way
+to do efficient on-the-fly compression and decompression of strings.
+
+The idea is simple
+- encode successive repeated characters by the repetition count and the character.
+
+For example:
+    - the RLE of "aaaabcccaa" if "4a1b3c2a"
+    - the decoding of "3e4f2e" is "eeeffffee"
+"""
+
+from typing import List
+
+
 def encoding(s: str) -> str:
-    result = []
+    """
+    Assume that `s` consists of letters of the alphabet, with no digits.
+
+    Compute the RLE of `s`.
+    """
+
+    result: List[str] = []
 
     i = 0
     while i < len(s):
@@ -17,7 +38,25 @@ def encoding(s: str) -> str:
 
 
 def decoding(s: str) -> str:
-    result = []
+    """
+    Assume that `s` is a valid RLE of some string.
+
+    Compute that string.
+    (= Decode `s`.)
+    ( = Compute a decoding of `s`.)
+
+    (
+    This solution relies on the following:
+        ```
+        >>> l = []
+        >>> l += 'q' * 3
+        >>> l
+        ['q', 'q', 'q']
+        ```
+    )
+    """
+
+    result: List[str] = []
 
     i = 0
     while i < len(s):
@@ -36,7 +75,13 @@ def decoding(s: str) -> str:
 
 
 def encoding_2(s: str) -> str:
-    result = []
+    """
+    Assume that `s` consists of letters of the alphabet, with no digits.
+
+    Compute the RLE of `s`.
+    """
+
+    result: List[str] = []
 
     count = 1
     for i in range(1, len(s) + 1):
@@ -50,7 +95,25 @@ def encoding_2(s: str) -> str:
 
 
 def decoding_2(s: str) -> str:
-    result = []
+    """
+    Assume that `s` is a valid RLE of some string.
+
+    Compute that string.
+    (= Decode `s`.)
+    ( = Compute a decoding of `s`.)
+
+    (
+    This solution relies on the following:
+        ```
+        >>> m = []
+        >>> m.append('q' * 3)
+        >>> m
+        ['qqq']
+        ```
+    )
+    """
+
+    result: List[str] = []
 
     count = 0
     for c in s:
