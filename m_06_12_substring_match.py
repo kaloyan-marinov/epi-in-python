@@ -3,23 +3,26 @@ import functools
 
 def substring_match(t: str, s: str) -> int:
     """
+    Return the starting index of `s`'s first occurrence within `t`;
+    if `s` does not occur within `t` at all, return -1.
+
     This approach is based on brute force.
 
     Use 2 nested loops:
-    - the 1st loop iterates through t
+    - the 1st loop iterates through `t`
     - the 2nd loop tests if
-      s occurs starting at the current index in t
+      `s` occurs starting at the current index in `t`
 
     The worst-case time complexity is high:
-    if t = n * 'a' and s = (n / 2) * 'a' + 'b'
-    this algorithm will perform n/2 unsuccessful string comparison,
-    each of which will entail (n/2 + 1) character comparisons,
+    if `t = n * 'a'` and `s = (n / 2) * 'a' + 'b'`
+    this algorithm will perform `n / 2` unsuccessful string comparison,
+    each of which will entail `(n / 2 + 1)` character comparisons,
     so the time complexity on each example within this 1-param family of examples
-    is O(n^2).
+    is `O(n^2)`.
 
     Intuitively, this brute-force approach is slow because
-    (a) it advances though t one character at a time,
-    and (b) it potentially does O(m) computations with each advance, where m := len(s).
+    (a) it advances though `t` one character at a time,
+    and (b) it potentially does `O(m)` computations with each advance, where m := len(s).
     """
     start_idx = 0
 
@@ -42,6 +45,9 @@ def substring_match(t: str, s: str) -> int:
 
 def robin_karp(t: str, s: str) -> int:
     """
+    Return the starting index of `s`'s first occurrence within `t`;
+    if `s` does not occur within `t` at all, return -1.
+
     There are 3 [sub]string-matching algorithms,
     whose time complexity is linear:
     - KMP
@@ -58,10 +64,13 @@ def robin_karp(t: str, s: str) -> int:
     it is very fast to evaluate upon a _sliding window of characters_.
     (Such a hash function is sometimes called a _rolling hash function_
     or an _incremental hash function_.)
+
+    time:  O(n + m)
+           where n := len(t) and m := len(s)
     """
 
     if len(s) > len(t):
-        # s is not a substring of t.
+        # `s` is not a substring of `t`.
         return -1
 
     # Hash code for s.
@@ -96,7 +105,7 @@ def robin_karp(t: str, s: str) -> int:
     if t_hash == s_hash and t[-len(s) :] == s:
         return len(t) - len(s)
 
-    # s is not a substring of t.
+    # `s` is not a substring of `t`.
     return -1
 
 
