@@ -2,10 +2,19 @@ from typing import List
 
 
 def get_valid_ip_addresses_1(s: str) -> List[str]:
+    """
+    Assume that `s` represents some valid IP[v4] address with all its periods removed.
+
+    Return all valid IP[v4] addresses that `s` could have originated from.
+
+    time:  O(1)
+           (b/c the total # of IP[v4] addresses is constant (2 ** 32).)
+    """
+
     def _is_valid(part: str) -> bool:
         return len(part) == 1 or (part[0] != "0" and int(part) <= 255)
 
-    valid_ips = []
+    valid_ips: List[str] = []
 
     for i in range(1, len(s) - 2):
         part_1 = s[:i]
@@ -32,11 +41,20 @@ def get_valid_ip_addresses_1(s: str) -> List[str]:
 
 
 def get_valid_ip_addresses_2(s: str) -> List[str]:
+    """
+    Assume that `s` represents some valid IP[v4] address with all its periods removed.
+
+    Return all valid IP[v4] addresses that `s` could have originated from.
+
+    time:  O(1)
+           (b/c the total # of IP[v4] addresses is constant (2 ** 32).)
+    """
+
     def _is_valid(part: str) -> bool:
         return len(part) == 1 or (part[0] != "0" and int(part) <= 255)
 
-    valid_ips = []
-    parts = [""] * 4
+    valid_ips: List[str] = []
+    parts: List[str] = [""] * 4
 
     for i in range(1, min(4, len(s))):
         parts[0] = s[:i]
