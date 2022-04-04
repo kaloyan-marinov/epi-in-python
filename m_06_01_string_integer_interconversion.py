@@ -72,13 +72,18 @@ def string_to_int(s: str) -> int:
     (
     This solution is based on:
 
-    ```
-    >>> import string
-    >>> string.digits
-    '0123456789'
-    >>> string.digits.index('7')
-    7
-    ```
+        (a) beginning with the rightmost character
+            and iteratively adding `d_i * (10 ** i)`
+
+        (b) the following examples
+
+            ```
+            >>> import string
+            >>> string.digits
+            '0123456789'
+            >>> string.digits.index('7')
+            7
+            ```
     )
     """
 
@@ -88,11 +93,52 @@ def string_to_int(s: str) -> int:
     if s[0] == "+":
         return string_to_int(s[1:])
 
+    i = 0
+    ten_to_the_i = 1
     x = 0
-    for i in reversed(range(1, len(s) + 1)):
-        x += string.digits.index(s[-i]) * (10 ** (i - 1))
+    while i < len(s):
+        x += string.digits.index(s[-i - 1]) * ten_to_the_i
+
+        i += 1
+        ten_to_the_i *= 10
 
     return x
+
+
+import functools
+
+
+def string_to_int_2(s: str) -> int:
+    """
+    (
+    This solution is based on:
+
+        (a) beginning with the leftmost character;
+            with each successive character,
+            multiply the _partial result_ by 10
+            and add the character's corresponding digit
+
+        (b) the following examples
+
+            ```
+            >>> s = 'abcd'
+            >>> s[True:]
+            'bcd'
+            >>> s[False:]
+            'abcd'
+            ```
+    )
+    """
+
+    sign = -1 if s[0] == "-" else 1
+
+    absolute_value = functools.reduce(
+        lambda running_sum, c: running_sum * 10 + string.digits.index(c),
+        s[s[0] in "-+" :],
+        0,
+    )
+
+    return sign * absolute_value
 
 
 if __name__ == "__main__":
