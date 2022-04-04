@@ -1,14 +1,29 @@
 from typing import Optional
 
-from m_7_00_common import ListNode
+from m_07_00_common import ListNode
 
 
-def merge_two_sorted_lists_2(
+def merge_two_sorted_lists(
     L1: Optional[ListNode],
     L2: Optional[ListNode],
 ) -> Optional[ListNode]:
+    """
+    Assume that each of `L1` and `L2`
+
+        either equals `None`,
+
+        or is the head node of a linked list,
+        whose data are numbers that appear in non-decreasing order.
+
+    Return the head node of a new linked list,
+    which consists of the merge of `L1` and `L2`.
+
+    This solution allocates only an O(1) number of additional nodes.
+    """
+
     # Create a placeholder for the result.
-    dummy_head = tail = ListNode()
+    dummy_head = ListNode()
+    tail = dummy_head
 
     while L1 and L2:
         if L1.data <= L2.data:
