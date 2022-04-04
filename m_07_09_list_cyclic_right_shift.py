@@ -1,9 +1,22 @@
-from typing import List, Optional
+from typing import Optional
 
-from m_7_00_common import ListNode, length as compute_length
+from m_07_00_common import ListNode, length as compute_length
 
 
 def cyclically_right_shift_list(L: Optional[ListNode], k: int) -> Optional[ListNode]:
+    """
+    Perform an in-place modification of the linked list starting at `L`
+    by cyclically shifting it to the right by `k`,
+    and return the head node of the resulting linked list.
+
+    For example, if the input is
+        2 -> 3 -> 5 -> 3 -> 2
+    and
+        k = 2,
+    then your program should "return"
+        5 -> 3 -> 2 -> 2 -> 3
+    """
+
     # Guard clause against an empty linked list.
     if not L:
         return
@@ -11,7 +24,7 @@ def cyclically_right_shift_list(L: Optional[ListNode], k: int) -> Optional[ListN
     length = compute_length(L)
 
     # Handle the special case,
-    # in which the resulting list is the identical to the input list.
+    # in which the resulting list is identical to the input list.
     k %= length
     if k == 0:
         return L
