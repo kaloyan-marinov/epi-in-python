@@ -11,9 +11,6 @@ def get_valid_ip_addresses_1(s: str) -> List[str]:
            (b/c the total # of IP[v4] addresses is constant (2 ** 32).)
     """
 
-    def _is_valid(part: str) -> bool:
-        return len(part) == 1 or (part[0] != "0" and int(part) <= 255)
-
     valid_ips: List[str] = []
 
     for i in range(1, len(s) - 2):
@@ -40,8 +37,23 @@ def get_valid_ip_addresses_1(s: str) -> List[str]:
     return valid_ips
 
 
+def _is_valid(part: str) -> bool:
+    """
+    Determine whether
+    `part` could be among the 8-bit components of a valid IP[v4] address.
+
+    (
+        Neither one of `00`, `01, `000` is valid.
+        But `0` is valid.
+    )
+    """
+    return len(part) == 1 or (part[0] != "0" and int(part) <= 255)
+
+
 def get_valid_ip_addresses_2(s: str) -> List[str]:
     """
+    (This is a mild refactoring of the official solution.)
+
     Assume that `s` represents some valid IP[v4] address with all its periods removed.
 
     Return all valid IP[v4] addresses that `s` could have originated from.
@@ -49,9 +61,6 @@ def get_valid_ip_addresses_2(s: str) -> List[str]:
     time:  O(1)
            (b/c the total # of IP[v4] addresses is constant (2 ** 32).)
     """
-
-    def _is_valid(part: str) -> bool:
-        return len(part) == 1 or (part[0] != "0" and int(part) <= 255)
 
     valid_ips: List[str] = []
     parts: List[str] = [""] * 4
