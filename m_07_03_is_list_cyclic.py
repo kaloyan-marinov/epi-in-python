@@ -1,12 +1,16 @@
 from typing import Optional
 
-from m_7_00_common import ListNode
+from m_07_00_common import ListNode
 
 
 def has_cycle_1(head: ListNode) -> Optional[ListNode]:
     """
-    time:  < O(n)
-    space: < O(n)
+    Determine whether the linked list starting at `head` contains a cycle:
+        (a) if it contains a cycle, return the start node of the cycle,
+        (b) if not, return `None`.
+
+    time:   O(n)
+    space:  O(n)
 
     n := the length of (the linked list starting at) `head`
     """
@@ -21,6 +25,10 @@ def has_cycle_1(head: ListNode) -> Optional[ListNode]:
 
 def has_cycle_2(head: ListNode) -> Optional[ListNode]:
     """
+    Determine whether the linked list starting at `head` contains a cycle:
+        (a) if it contains a cycle, return the start node of the cycle,
+        (b) if not, return `None`.
+
     time:  O(F) + O(C)
            = O(n) - O(F)
            for both pointers to reach the cycle
@@ -51,17 +59,17 @@ def has_cycle_2(head: ListNode) -> Optional[ListNode]:
                 cycle_length += 1
 
             # Find the 1st node on the cycle.
-            slow_new = head
+            node_0 = head
 
-            fast_new = head
+            node_1 = head
             for _ in range(cycle_length):
-                fast_new = fast_new.next
+                node_1 = node_1.next
 
-            while slow_new is not fast_new:  # NB: not "!="
-                slow_new = slow_new.next
-                fast_new = fast_new.next
+            while node_0 is not node_1:  # NB: not "!="
+                node_0 = node_0.next
+                node_1 = node_1.next
 
-            return slow_new
+            return node_0
 
     # No cycle exists.
     return None
