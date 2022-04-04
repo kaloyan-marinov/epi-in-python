@@ -1,6 +1,6 @@
 from typing import Optional
 
-from m_07_00_common import ListNode, length
+from m_07_00_A_singly_linked_list import ListNode, length
 
 
 def overlapping_no_cycle_lists_1(

@@ -1,6 +1,6 @@
 from typing import Optional
 
-from m_07_00_common import ListNode
+from m_07_00_A_singly_linked_list import ListNode
 
 
 def remove_kth_last_1(L: ListNode, k: int) -> Optional[ListNode]:

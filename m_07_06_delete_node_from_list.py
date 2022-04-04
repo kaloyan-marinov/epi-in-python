@@ -11,7 +11,7 @@ provided the following two conditions are satisfied:
     (b) it is easy to copy the value/`data` part of a node.
 """
 
-from m_07_00_common import ListNode
+from m_07_00_A_singly_linked_list import ListNode
 
 
 def deletion_from_list(node_to_delete: ListNode) -> None:

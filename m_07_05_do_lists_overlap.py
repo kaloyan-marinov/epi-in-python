@@ -2,7 +2,7 @@ from typing import Optional
 
 from typing import Optional
 
-from m_07_00_common import ListNode
+from m_07_00_A_singly_linked_list import ListNode
 from m_07_03_is_list_cyclic import has_cycle
 from m_07_04_do_terminated_lists_overlap import overlapping_no_cycle_lists
 
