@@ -1,9 +1,29 @@
 from typing import Optional
 
-from m_7_00_common import ListNode
+from m_07_00_common import ListNode
 
 
-def reverse_sublist(L: ListNode, start: int, finish: int) -> Optional[ListNode]:
+def reverse_sublist(
+    L: Optional[ListNode],
+    start: int,
+    finish: int,
+) -> Optional[ListNode]:
+    """
+    If `L` is not `None`,
+    assume its nodes are numbered beginning at 1
+    (i.e. the head node is the 1st node).
+
+    Return the head node of a new linked list,
+    which is obtained from `L` by reversing the order of the nodes
+    from the `start`-th node to the `finish`-th node, inclusive.
+
+    Assume the triplet `L, start, finish` is a valid one.
+
+    This solution allocates only an O(1) number of additional nodes.
+
+    time:  O(finish)
+    """
+
     dummy_head = ListNode(data=0, next=L)
 
     s_prev = dummy_head
@@ -12,17 +32,17 @@ def reverse_sublist(L: ListNode, start: int, finish: int) -> Optional[ListNode]:
         s_prev = s_prev.next
 
     # Reverse the sublist.
-    s = s_prev.next
+    n = s_prev.next
     for _ in range(finish - start):
-        s_next = s.next
+        n_next = n.next
         # fmt: off
         (
             s_prev.next,
-            s.next,
-            s_next.next,
+            n.next,
+            n_next.next,
         ) = (
-            s_next,
-            s_next.next,
+            n_next,
+            n_next.next,
             s_prev.next,
         )
         # fmt: on
