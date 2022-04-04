@@ -45,34 +45,39 @@ def has_cycle_2(head: ListNode) -> Optional[ListNode]:
     slow = head
     fast = head
 
+    # Determine whether a cycle exists.
+    exists_cycle = False
     while fast and fast.next:
         slow = slow.next
         fast = fast.next.next
 
-        # Test if a cycle exists.
         if slow is fast:
-            # Determine the cycle length.
-            cycle_length = 1
-            n = slow
-            while n.next is not slow:  # NB: not "!="
-                n = n.next
-                cycle_length += 1
+            exists_cycle = True
+            break
 
-            # Find the 1st node on the cycle.
-            node_0 = head
+    if not exists_cycle:
+        # No cycle exists.
+        return None
 
-            node_1 = head
-            for _ in range(cycle_length):
-                node_1 = node_1.next
+    # At this stage, a cycle is known to exist.
+    # Determine the cycle length.
+    cycle_length = 1
+    while fast.next is not slow:  # NB: not "!="
+        fast = fast.next
+        cycle_length += 1
 
-            while node_0 is not node_1:  # NB: not "!="
-                node_0 = node_0.next
-                node_1 = node_1.next
+    # Find the 1st node on the cycle.
+    node_0 = head
 
-            return node_0
+    node_1 = head
+    for _ in range(cycle_length):
+        node_1 = node_1.next
 
-    # No cycle exists.
-    return None
+    while node_0 is not node_1:  # NB: not "!="
+        node_0 = node_0.next
+        node_1 = node_1.next
+
+    return node_0
 
 
 if __name__ == "__main__":
