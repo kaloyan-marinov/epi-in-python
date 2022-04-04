@@ -1,13 +1,17 @@
 from typing import Optional
 
-from m_7_00_common import ListNode
+from m_07_00_common import ListNode
 
 
 def remove_kth_last(L: ListNode, k: int) -> Optional[ListNode]:
     """
-    Remove the k-th last element from (the linked list starting at) L.
+    Assume `L` has at least `k` nodes.
+
+    Remove the `k`-th last element from (the linked list starting at) `L`.
+
     Return the head node of the resulting list.
     """
+
     slow = L
     fast = L
 
