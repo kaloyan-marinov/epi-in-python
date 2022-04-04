@@ -1,11 +1,22 @@
 from typing import Optional
 
-from m_7_00_common import ListNode
+from m_07_00_common import ListNode
 
 
 def even_odd_merge_1(L: Optional[ListNode]) -> Optional[ListNode]:
     """
-    Consider the nodes of (the linked list) L to be indexed starting at 0.
+    (This is my own solution.)
+
+    Perform an in-place modification of the linked list starting at `L`
+    by making the even-numbered nodes be followed by the odd-numbered nodes,
+    and return the head of the resulting linked list.
+
+    Consider the nodes of (the input linked list) `L` to be indexed starting at 0.
+
+    time:  O(n)
+           where n := the # of nodes in `L`
+
+    space: O(1)
     """
 
     if L is None:
@@ -15,7 +26,7 @@ def even_odd_merge_1(L: Optional[ListNode]) -> Optional[ListNode]:
     odd = L.next
 
     while odd and odd.next:
-        odd_next = odd.next
+        odd_next = odd.next  # NB: W/o defining this variable, infinite looping occurs!
         # fmt: off
         (
             even.next,
@@ -36,7 +47,18 @@ def even_odd_merge_1(L: Optional[ListNode]) -> Optional[ListNode]:
 
 def even_odd_merge_2(L: Optional[ListNode]) -> Optional[ListNode]:
     """
-    Consider the nodes of (the linked list) L to be indexed starting at 0.
+    (This is the official solution.)
+
+    Perform an in-place modification of the linked list starting at `L`
+    by making the even-numbered nodes be followed by the odd-numbered nodes,
+    and return the head of the resulting linked list.
+
+    Consider the nodes of (the input linked list) `L` to be indexed starting at 0.
+
+    time:  O(n)
+           where n := the # of nodes in `L`
+
+    space: O(1)
     """
 
     if L is None:
@@ -57,7 +79,7 @@ def even_odd_merge_2(L: Optional[ListNode]) -> Optional[ListNode]:
         tails[turn].next = L
         tails[turn] = tails[turn].next
 
-        turn ^= 1  # achieves alternation between even and odd.
+        turn ^= 1  # Achieves alternation between even and odd. Same as `(turn + 1) % 2`
 
         L = L.next
 
