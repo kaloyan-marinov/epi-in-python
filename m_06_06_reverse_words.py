@@ -3,11 +3,11 @@ from typing import List
 
 def reverse_words(s: List[str]) -> None:
     """
-    This is the official solution.
+    (This is the official solution.)
 
     Assume that each entry in `s` is a single character.
 
-    Perform an in-place transformation of `s` into a string,
+    Perform an in-place transformation of `s` into a "string",
     in which the words appear in reverse order.
 
     For example,
@@ -15,7 +15,12 @@ def reverse_words(s: List[str]) -> None:
     `[c for c in "Bob likes Alice"]`.
 
     This implementation:
-        - does not keep the original string.
+        - does not keep the original "string".
+
+    time:  O(n)
+           where n := len(s)
+
+    space: O(1)
     """
     # First, reverse the whole "string".
     _reverse_slice(s, 0, len(s) - 1)
@@ -41,22 +46,36 @@ def reverse_words(s: List[str]) -> None:
 
 
 def reverse_words(s: List[str]) -> None:
+    """
+    (This is identical to but a less mysterious refactoring of the official solution.)
+
+    Assume that each entry in `s` is a single character.
+
+    Perform an in-place transformation of `s` into a "string", in which the words appear in reverse order.
+
+    For example,
+    `[c for c in "Alice likes Bob"]` should be transformed to
+    `[c for c in "Bob likes Alice"]`.
+
+    This implementation:
+        - does not keep the original "string".
+
+    time:  O(n)
+           where n := len(s)
+
+    space: O(1)
+    """
+
     # First, reverse the whole "string".
     _reverse_slice(s, 0, len(s) - 1)
 
     # Second, reverse each individual word (that is present within the "string").
     word_start = 0
     while word_start < len(s):
-        # Determine the start and final indices that "frame" the current word.
-        if s[word_start] == " ":
-            word_start += 1
-            continue
-
+        # Determine the final index of the current word.
         word_final = word_start
-        while s[word_final] != " ":
+        while word_final < len(s) and s[word_final] != " ":
             word_final += 1
-            if word_final == len(s):
-                break
 
         # Reverse the current word.
         _reverse_slice(s, word_start, word_final - 1)
