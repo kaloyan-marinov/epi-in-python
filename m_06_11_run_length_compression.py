@@ -18,6 +18,9 @@ def encoding(s: str) -> str:
     Assume that `s` consists of letters of the alphabet, with no digits.
 
     Compute the RLE of `s`.
+
+    time:  O(n)
+           where n := len(s)
     """
 
     result: List[str] = []
@@ -54,6 +57,9 @@ def decoding(s: str) -> str:
         ['q', 'q', 'q']
         ```
     )
+
+    time:  O(n)
+           where n := len(s)
     """
 
     result: List[str] = []
@@ -62,9 +68,10 @@ def decoding(s: str) -> str:
     while i < len(s):
         # Read off the repetition count.
         j = i
+        count = 0
         while s[j].isdigit():
+            count = count * 10 + int(s[j])
             j += 1
-            count = int(s[i:j])
 
         # Update `result`.
         result += s[j] * count
@@ -79,6 +86,10 @@ def encoding_2(s: str) -> str:
     Assume that `s` consists of letters of the alphabet, with no digits.
 
     Compute the RLE of `s`.
+
+    time:  O(n)
+           where n := len(s)
+
     """
 
     result: List[str] = []
@@ -111,6 +122,10 @@ def decoding_2(s: str) -> str:
         ['qqq']
         ```
     )
+
+    time:  O(n)
+           where n := len(s)
+
     """
 
     result: List[str] = []
