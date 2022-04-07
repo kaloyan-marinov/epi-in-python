@@ -3,6 +3,10 @@ from typing import List
 
 
 class StackBruteForce:
+    """
+    A stack with a `self.max()` API.
+    """
+
     def __init__(self):
         self.values = []
 
@@ -22,22 +26,26 @@ class StackBruteForce:
         return max(self.values)
 
 
-ElementWithCachedMax = collections.namedtuple(
-    "ElementWithCachedMax",
+ElementMaxPair = collections.namedtuple(
+    "ElementMaxPair",
     ("element", "max"),
 )
 
 
 class Stack:
+    """
+    A stack with a `self.max()` API.
+    """
+
     def __init__(self) -> None:
-        self._element_max_pairs: List[ElementWithCachedMax] = []
+        self._element_max_pairs: List[ElementMaxPair] = []
 
     def empty(self) -> bool:
         return len(self._element_max_pairs) == 0
 
     def push(self, x: int) -> None:
         self._element_max_pairs.append(
-            ElementWithCachedMax(
+            ElementMaxPair(
                 x,
                 x if self.empty() else max(x, self.max()),
             )
