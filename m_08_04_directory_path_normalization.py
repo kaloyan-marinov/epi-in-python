@@ -60,7 +60,7 @@ def shortest_equivalent_path(path: str) -> str:
 
 def shortest_equivalent_path_2(path: str) -> str:
     """
-    (This is the official solution, "version 4".)
+    (This is the official solution, "version 5".)
 
     Assume that:
         (a) `path` specifies a pathname to a file or directory,
@@ -70,18 +70,21 @@ def shortest_equivalent_path_2(path: str) -> str:
             forward slashes (/), the current directory (.), and parent directory (..).
 
     Compute the shortest equivalent pathname.
+
+    time:  O(n)
+           where n := len(path)
     """
 
-    if path == "":
+    if not path:
         raise ValueError("Empty string is not a valid path.")
 
     parts: List[str] = []  # Uses a Python list as a stack.
 
-    for token in (
-        tkn_i
-        for i, tkn_i in enumerate(path.split("/"))
-        if tkn_i not in {".", ""} or (tkn_i == "" and i == 0)
-    ):
+    # Special case: `path` is an absolute path.
+    if path[0] == "/":
+        parts.append("/")
+
+    for token in (tkn for tkn in path.split("/") if tkn not in {".", ""}):
         if token != "..":  # Must be a name.
             parts.append(token)
         else:  # i.e. `token == ".."`
@@ -92,12 +95,13 @@ def shortest_equivalent_path_2(path: str) -> str:
                     raise ValueError("Path error")
                 parts.pop()
 
-    if parts == [""]:
-        result = "/"
-    else:
-        result = "/".join(parts)
+    result = "/".join(parts)
 
-    return result
+    # If `path` was an absolute path, then `result` now starts with `//`,
+    # which should be shortened to `/`.
+    start_idx = int(result.startswith("//"))
+
+    return result[start_idx:]
 
 
 if __name__ == "__main__":
