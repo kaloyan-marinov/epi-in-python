@@ -1,4 +1,32 @@
+"""
+A file or directory can be specified via a string called the pathname.
+
+The string may be:
+    (a) an absolute path (starting from the root, such as `/usr/bin/gcc`), or
+    (b) a path relative to the current working directory (such as `scripts/python`).
+
+The same file (or directory) may be specified by multiple pathnames. For example:
+    (A) `/usr/lib/../bin/gcc` is equivalent to the absolute path in (a), and
+    (B) `scripts/./../scripts/python/././` is equivalent to the relative path in (b).
+"""
+
+from typing import List
+
+
 def shortest_equivalent_path(path: str) -> str:
+    """
+    (This is my own solution.)
+
+    Assume that:
+        (a) `path` specifies a pathname to a file or directory,
+        (b) individual directories or files have names
+            that use only alphanumeric characters, and
+        (c) subdirectory names may be combined using
+            forward slashes (/), the current directory (.), and parent directory (..).
+
+    Compute the shortest equivalent pathname.
+    """
+
     original_parts = path.split("/")
 
     if original_parts[0] == "":
@@ -28,6 +56,45 @@ def shortest_equivalent_path(path: str) -> str:
         return "/"
     else:
         return "/".join(parts)
+
+
+def shortest_equivalent_path_2(path: str) -> str:
+    """
+    (This is the official solution, "version 1".)
+
+    Assume that:
+        (a) `path` specifies a pathname to a file or directory,
+        (b) individual directories or files have names
+            that use only alphanumeric characters, and
+        (c) subdirectory names may be combined using
+            forward slashes (/), the current directory (.), and parent directory (..).
+
+    Compute the shortest equivalent pathname.
+    """
+
+    if not path:
+        raise ValueError("Empty string is not a valid path.")
+
+    parts: List[str] = []  # Uses a Python list as a stack.
+
+    # Special case: `path` is an absolute path.
+    if path[0] == "/":
+        parts.append("/")
+
+    for token in (tkn for tkn in path.split("/") if tkn not in {".", ""}):
+        if token == "..":
+            if not parts or parts[-1] == "..":
+                parts.append(token)
+            else:
+                if parts[-1] == "/":
+                    raise ValueError("Path error")
+                parts.pop()
+        else:  # Must be a name.
+            parts.append(token)
+
+    result = "/".join(parts)
+
+    return result[result.startswith("//") :]  # Avoid starting `//`.
 
 
 if __name__ == "__main__":
