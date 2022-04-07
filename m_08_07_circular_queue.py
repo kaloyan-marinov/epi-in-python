@@ -1,13 +1,14 @@
 class Queue:
     """
+    A [LIFO] queue data structure.
+    Its implementation is based on
+    a `List`/array that is utilized in an efficient “cyclic” fashion.
+
     This implementation tracks and maintains the private fields
     in such a way as to ensure that,
     at any given moment,
     the queue's head is `self._available_entries[self._start]`
     and its tail is `self._available_entries[self._final]`.
-
-    time:   for m combined enqueue and dequeue operations,
-            O(m)
     """
 
     SCALE_FACTOR = 2
@@ -50,13 +51,3 @@ class Queue:
 
     def size(self) -> int:
         return self._num_occupied_entries
-
-
-if __name__ == "__main__":
-    q = Queue(1)
-
-    q.enqueue(-394)
-    q.enqueue(-304)
-
-    v = q.dequeue()
-    print(v)
