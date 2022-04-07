@@ -1,6 +1,6 @@
 from typing import Optional
 
-from m_9_00_common import BinaryTreeNodeWithParent as BinaryTreeNode
+from m_09_00_common import BinaryTreeNodeWithParent as BinaryTreeNode
 
 
 def find_successor(node: BinaryTreeNode) -> Optional[BinaryTreeNode]:

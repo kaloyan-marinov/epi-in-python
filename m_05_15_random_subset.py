@@ -2,7 +2,7 @@ from typing import Dict, List
 
 import random
 
-from m_5_12_offline_sampling import generate_random_sample_inplace
+from m_05_12_offline_sampling import generate_random_sample_inplace
 
 
 # def random_subset_1(n: int, k: int) -> List[int]:

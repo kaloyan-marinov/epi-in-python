@@ -49,7 +49,7 @@ def permutation_2(A: List[int]) -> List[List[int]]:
     return result
 
 
-from m_5_11_next_permutation import next_permutation  # TODO: create this module!
+from m_05_11_next_permutation import next_permutation  # TODO: create this module!
 
 
 def permutation_3(A: List[int]) -> List[List[int]]:

@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from m_7_00_common import ListNode
+from m_07_00_common import ListNode
 
 
 def stable_sort_list_1(L: ListNode) -> Optional[ListNode]:
@@ -99,7 +99,9 @@ def stable_sort_list_2(L: ListNode) -> Optional[ListNode]:
     return dummy_head.next
 
 
-from m_7_01_sorted_lists_merge import merge_two_sorted_lists_2 as merge_two_sorted_lists
+from m_07_01_sorted_lists_merge import (
+    merge_two_sorted_lists_2 as merge_two_sorted_lists,
+)
 
 
 def stable_sort_list_3(L: ListNode) -> Optional[ListNode]:

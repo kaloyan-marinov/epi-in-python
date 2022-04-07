@@ -47,7 +47,7 @@ def generate_random_permutation_1(n: int) -> List[int]:
     return permutation
 
 
-from m_5_12_offline_sampling import generate_random_sample_inplace
+from m_05_12_offline_sampling import generate_random_sample_inplace
 
 
 # def compute_random_permutation_2(n: int) -> List[int]:

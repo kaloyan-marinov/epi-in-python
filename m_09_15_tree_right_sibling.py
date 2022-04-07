@@ -1,4 +1,4 @@
-from m_9_00_common import BinaryTreeNode as BasicBinaryTreeNode
+from m_09_00_common import BinaryTreeNode as BasicBinaryTreeNode
 
 
 class BinaryTreeNode(BasicBinaryTreeNode):

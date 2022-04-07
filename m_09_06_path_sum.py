@@ -1,4 +1,4 @@
-from m_9_00_common import BinaryTreeNode
+from m_09_00_common import BinaryTreeNode
 
 
 def has_path_sum(tree: BinaryTreeNode, remaining_weight: int) -> bool:

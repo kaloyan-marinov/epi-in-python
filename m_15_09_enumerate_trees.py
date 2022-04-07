@@ -1,6 +1,6 @@
 from typing import Optional, List
 
-from m_9_00_common import BinaryTreeNode
+from m_09_00_common import BinaryTreeNode
 
 
 def generate_all_binary_trees(num_nodes: int) -> List[Optional[BinaryTreeNode]]:

@@ -1,7 +1,6 @@
-import collections
 from typing import List
 
-from m_9_00_common import BinaryTreeNode
+from m_09_00_common import BinaryTreeNode
 
 
 def inorder_traversal_recursive(tree: BinaryTreeNode) -> List[int]:

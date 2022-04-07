@@ -2,7 +2,7 @@ from typing import Dict, Iterator, List, Set
 
 import collections
 
-from m_7_00_common import DoublyLinkedList, DoublyLinkedListNode
+from m_07_00_common import DoublyLinkedList, DoublyLinkedListNode
 
 Subarray = collections.namedtuple(
     "Subarray",

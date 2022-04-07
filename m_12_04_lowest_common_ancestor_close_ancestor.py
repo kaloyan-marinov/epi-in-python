@@ -1,6 +1,6 @@
 from typing import Optional, Set
 
-from m_9_00_common import BinaryTreeNodeWithParent as BinaryTreeNode
+from m_09_00_common import BinaryTreeNodeWithParent as BinaryTreeNode
 
 
 def lca_1(node0: BinaryTreeNode, node1: BinaryTreeNode) -> Optional[BinaryTreeNode]:
