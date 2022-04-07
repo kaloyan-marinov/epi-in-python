@@ -11,8 +11,6 @@ class Queue:
     and its tail is `self._available_entries[self._final]`.
     """
 
-    SCALE_FACTOR = 2
-
     def __init__(self, capacity: int) -> None:
         self._available_entries = [None] * capacity
         self._num_occupied_entries = 0
@@ -20,6 +18,10 @@ class Queue:
         self._final = 0
 
     def enqueue(self, x: int) -> None:
+        """
+        amortized time:  O(1)
+        """
+
         if self._num_occupied_entries == len(self._available_entries):
             # Make the queue elements appear consecutively.
             self._available_entries = (
@@ -32,7 +34,7 @@ class Queue:
             self._final = self._num_occupied_entries
 
             # Resize the underlying array.
-            count_new_entries = (self.SCALE_FACTOR - 1) * len(self._available_entries)
+            count_new_entries = len(self._available_entries)
             self._available_entries += [None] * count_new_entries
 
         # Enqueue x.
@@ -41,8 +43,12 @@ class Queue:
         self._num_occupied_entries += 1
 
     def dequeue(self) -> int:
+        """
+        time:  O(1)
+        """
+
         value = self._available_entries[self._start]
-        # Note that the array entry doesn't have to be set to `None`.
+        self._available_entries[self._start] = None  # NB: this isn't necessary!
 
         self._start = (self._start + 1) % len(self._available_entries)
         self._num_occupied_entries -= 1
@@ -50,4 +56,11 @@ class Queue:
         return value
 
     def size(self) -> int:
+        """
+        Return the number of occupied entries
+        (which is <= the number of all available entries).
+
+        time:  O(1)
+        """
+
         return self._num_occupied_entries
