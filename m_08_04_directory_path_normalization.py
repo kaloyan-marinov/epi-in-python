@@ -60,7 +60,7 @@ def shortest_equivalent_path(path: str) -> str:
 
 def shortest_equivalent_path_2(path: str) -> str:
     """
-    (This is the official solution, "version 3".)
+    (This is the official solution, "version 4".)
 
     Assume that:
         (a) `path` specifies a pathname to a file or directory,
@@ -72,7 +72,7 @@ def shortest_equivalent_path_2(path: str) -> str:
     Compute the shortest equivalent pathname.
     """
 
-    if not path:
+    if path == "":
         raise ValueError("Empty string is not a valid path.")
 
     parts: List[str] = []  # Uses a Python list as a stack.
@@ -82,15 +82,15 @@ def shortest_equivalent_path_2(path: str) -> str:
         for i, tkn_i in enumerate(path.split("/"))
         if tkn_i not in {".", ""} or (tkn_i == "" and i == 0)
     ):
-        if token == "..":
+        if token != "..":  # Must be a name.
+            parts.append(token)
+        else:  # i.e. `token == ".."`
             if not parts or parts[-1] == "..":
                 parts.append(token)
             else:
                 if parts[-1] == "/":
                     raise ValueError("Path error")
                 parts.pop()
-        else:  # Must be a name.
-            parts.append(token)
 
     if parts == [""]:
         result = "/"
