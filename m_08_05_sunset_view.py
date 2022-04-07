@@ -12,7 +12,24 @@ def examine_buildings_with_sunset(sequence: Iterator[int]) -> List[int]:
     """
     `sequence`:     represents buildings in east-to-west order,
                     with each building specified by its height
+
+    Return the indices of the maximal set of buildings,
+    each of whose buildings has an unobstructed view of the sunset.
+
+    The returned indices are in east-to-west order.
+
+    time:  O(n)
+           where n := len(sequence)
+
+           although some individual steps may require many `pop`s,
+           each building is `push`ed and `pop`ped at most once
+
+    space: O(n)
+
+           consider an input sequence of this form:
+           [n - 1, n - 2, ..., 1, n]
     """
+
     height_index_pairs: List[HeightIndexPair] = []
 
     for i, s_i in enumerate(sequence):
